@@ -30,7 +30,6 @@ namespace Items.Projectile
         private Projectile OnCreateProjectile()
         {
             Projectile instance = Instantiate(projectilePrefab, transform);
-            Debug.Log(instance);
             return instance;
         }
 
