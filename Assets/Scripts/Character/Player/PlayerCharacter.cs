@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using Items.Weapon;
 using UnityEngine;
 
 namespace Character.Player
@@ -8,21 +10,63 @@ namespace Character.Player
         [Header("Weapon")] 
         [SerializeField] private GameObject shotGunPrefab;
         [SerializeField] private GameObject sniperPrefab;
-        [NonSerialized] public float ShotGunFireInterval;
-        [NonSerialized] public float SniperFireInterval;
-        private float _timer;
-
+        [SerializeField] private Transform shotgunMountTransform;
+        [SerializeField] private Transform sniperMountTransform;
+        private List<WeaponBase> _equippedWeapons = new();
+        
         protected override void Awake()
         {
             base.Awake();
 
-            ShotGunFireInterval = 3f;
-            SniperFireInterval = 5f;
+            InitializeWeapons();
         }
         
         private void FixedUpdate()
         {
             ProcessTranslation();
+        }
+        
+        private void InitializeWeapons()
+        {
+            if (shotGunPrefab != null)
+            {
+                Transform parent = shotgunMountTransform != null ? shotgunMountTransform : transform;
+                GameObject sgObj = Instantiate(shotGunPrefab, parent);
+                sgObj.transform.localPosition = Vector3.zero;
+                sgObj.transform.localRotation = Quaternion.identity;
+                
+                if (sgObj.TryGetComponent(out WeaponBase shotgun))
+                    _equippedWeapons.Add(shotgun);
+            }
+
+            if (sniperPrefab != null)
+            {
+                Transform parent = sniperMountTransform != null ? sniperMountTransform : transform;
+                GameObject snObj = Instantiate(sniperPrefab, parent);
+                snObj.transform.localPosition = Vector3.zero;
+                snObj.transform.localRotation = Quaternion.identity;
+                
+                if (snObj.TryGetComponent(out WeaponBase sniper))
+                    _equippedWeapons.Add(sniper);
+            }
+
+            StartAllWeapons();
+        }
+        
+        public void StartAllWeapons()
+        {
+            foreach (var weapon in _equippedWeapons)
+            {
+                weapon.StartFiring();
+            }
+        }
+
+        public void StopAllWeapons()
+        {
+            foreach (var weapon in _equippedWeapons)
+            {
+                weapon.StopFiring();
+            }
         }
 
         public void SetMoveInput(Vector2 moveInput)
