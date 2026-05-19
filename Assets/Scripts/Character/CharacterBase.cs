@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Character
@@ -11,14 +12,22 @@ namespace Character
 
         private const float BaseMoveSpeed = 5f;
         protected Vector2 MoveInput;
-        public float moveSpeed;
+        [NonSerialized] protected float MoveSpeed;
 
         protected virtual void Awake()
         {
             Rb = GetComponent<Rigidbody2D>();
+            Rb.bodyType = RigidbodyType2D.Dynamic;
+            Rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+            Rb.gravityScale = 0f;
+            
             Col = GetComponent<BoxCollider2D>();
             
-            moveSpeed = BaseMoveSpeed;
+            MoveSpeed = BaseMoveSpeed;
         }
+
+        public virtual void DoAttack() { }
+        
+        public virtual void SetMoveSpeed(float value) { MoveSpeed = value; }
     }
 }

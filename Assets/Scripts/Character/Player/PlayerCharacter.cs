@@ -1,9 +1,25 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Character.Player
 {
     public class PlayerCharacter : CharacterBase
     {
+        [Header("Weapon")] 
+        [SerializeField] private GameObject shotGunPrefab;
+        [SerializeField] private GameObject sniperPrefab;
+        [NonSerialized] public float ShotGunFireInterval;
+        [NonSerialized] public float SniperFireInterval;
+        private float _timer;
+
+        protected override void Awake()
+        {
+            base.Awake();
+
+            ShotGunFireInterval = 3f;
+            SniperFireInterval = 5f;
+        }
+        
         private void FixedUpdate()
         {
             ProcessTranslation();
@@ -13,7 +29,7 @@ namespace Character.Player
         {
             MoveInput = moveInput;
 
-            if (MoveInput.x == 0) return;
+            if (Mathf.Abs(MoveInput.x) < 0.01f) return;
             
             Vector3 scale = transform.localScale;
             scale.x = Mathf.Abs(scale.x) * (MoveInput.x < 0 ? -1 : 1);
@@ -22,7 +38,12 @@ namespace Character.Player
         
         private void ProcessTranslation()
         {
-            Rb?.MovePosition(Rb.position + MoveInput * (moveSpeed * Time.fixedDeltaTime));
+            transform.position += (Vector3)MoveInput * (MoveSpeed * Time.fixedDeltaTime);
+        }
+
+        public override void DoAttack()
+        {
+            
         }
     }
 }
