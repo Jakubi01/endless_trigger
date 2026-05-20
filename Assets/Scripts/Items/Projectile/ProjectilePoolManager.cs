@@ -6,15 +6,15 @@ namespace Items.Projectile
     public class ProjectilePoolManager : MonoBehaviour
     {
         [Header("Pool Settings")]
-        [SerializeField] private Projectile projectilePrefab;
+        [SerializeField] private GameObject projectilePrefab;
         [SerializeField] private int defaultCapacity = 20;
         [SerializeField] private int maxPoolSize = 50;
 
-        private IObjectPool<Projectile> _pool;
+        private IObjectPool<GameObject> _pool;
 
         private void Awake()
         {
-            _pool = new ObjectPool<Projectile>(
+            _pool = new ObjectPool<GameObject>(
                 createFunc: OnCreateProjectile,
                 actionOnGet: OnGetProjectile,
                 actionOnRelease: OnReleaseProjectile,
@@ -27,41 +27,54 @@ namespace Items.Projectile
 
         #region Pool Callbacks
 
-        private Projectile OnCreateProjectile()
+        private GameObject OnCreateProjectile()
         {
-            Projectile instance = Instantiate(projectilePrefab, transform);
+            GameObject instance = Instantiate(projectilePrefab);
+            instance.SetActive(false);
             return instance;
         }
 
-        private void OnGetProjectile(Projectile projectile)
+        private void OnGetProjectile(GameObject projectile)
         {
-            projectile.gameObject.SetActive(true);
+            projectile.SetActive(true);
         }
 
-        private void OnReleaseProjectile(Projectile projectile)
+        private void OnReleaseProjectile(GameObject projectile)
         {
-            projectile.gameObject.SetActive(false);
+            projectile.SetActive(false);
         }
 
-        private void OnDestroyProjectile(Projectile projectile)
+        private void OnDestroyProjectile(GameObject projectile)
         {
-            Destroy(projectile.gameObject);
+            Destroy(projectile);
         }
 
         #endregion
 
-        public Projectile Spawn(Vector3 position, Quaternion rotation, Vector2 direction)
+        public GameObject Spawn(Vector3 position, Quaternion rotation, Vector2 direction)
         {
-            Projectile projectile = _pool.Get();
+            GameObject projectile = _pool.Get();
+    
             projectile.transform.position = position;
             projectile.transform.rotation = rotation;
-            
-            projectile.Initialize(direction, ReleaseProjectile);
-            
+
+            if (projectile.TryGetComponent(out Rigidbody2D rb))
+            {
+                rb.position = position;
+                rb.rotation = rotation.eulerAngles.z;
+                rb.linearVelocity = Vector2.zero; 
+                rb.angularVelocity = 0f;
+            }
+
+            if (projectile.TryGetComponent(out Projectile projectileInstance))
+            {
+                projectileInstance.Initialize(direction, ReleaseProjectile);
+            }
+    
             return projectile;
         }
 
-        private void ReleaseProjectile(Projectile projectile)
+        private void ReleaseProjectile(GameObject projectile)
         {
             _pool.Release(projectile);
         }

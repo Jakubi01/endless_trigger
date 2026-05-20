@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Character.Enemy;
+using UnityEngine;
 
 namespace Items.Weapon
 {
@@ -6,7 +7,12 @@ namespace Items.Weapon
     {
         protected override void Fire()
         {
-            Debug.Log("Sniper Fired");
+            // EnemyCharacterBase target = owner.FindNearestFromCharacter(range);
+        }
+
+        protected override void LookAtTarget()
+        {
+            
         }
     }
 }

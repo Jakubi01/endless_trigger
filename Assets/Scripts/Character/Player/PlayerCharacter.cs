@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Items.Weapon;
+using Managers;
 using UnityEngine;
 
 namespace Character.Player
@@ -13,12 +14,20 @@ namespace Character.Player
         [SerializeField] private Transform shotgunMountTransform;
         [SerializeField] private Transform sniperMountTransform;
         private List<WeaponBase> _equippedWeapons = new();
+
+        private EnemyManager _enemyManager;
         
         protected override void Awake()
         {
             base.Awake();
 
             InitializeWeapons();
+
+            _enemyManager = FindFirstObjectByType<EnemyManager>();
+            if (!_enemyManager)
+            {
+                Debug.LogError("씬에 EnemyManager가 없음.");
+            }
         }
         
         private void FixedUpdate()
@@ -36,7 +45,10 @@ namespace Character.Player
                 sgObj.transform.localRotation = Quaternion.identity;
                 
                 if (sgObj.TryGetComponent(out WeaponBase shotgun))
+                {
                     _equippedWeapons.Add(shotgun);
+                    shotgun.owner = this;
+                }
             }
 
             if (sniperPrefab != null)
@@ -47,7 +59,10 @@ namespace Character.Player
                 snObj.transform.localRotation = Quaternion.identity;
                 
                 if (snObj.TryGetComponent(out WeaponBase sniper))
+                {
                     _equippedWeapons.Add(sniper);
+                    sniper.owner = this;
+                }
             }
 
             StartAllWeapons();
@@ -88,6 +103,11 @@ namespace Character.Player
         public override void DoAttack()
         {
             
+        }
+
+        public GameObject FindNearestFromCharacter(float range)
+        {
+            return _enemyManager.FindNearestEnemy(transform, range);
         }
     }
 }

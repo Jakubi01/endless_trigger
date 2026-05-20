@@ -30,7 +30,6 @@ namespace Controllers.Player
             if (_timer >= _interval)
             {
                 _timer = 0f;
-                // 여기에 공격 로직
                 _playerCharacter.DoAttack();
             }
         }
