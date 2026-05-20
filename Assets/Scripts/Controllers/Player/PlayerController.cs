@@ -1,4 +1,3 @@
-﻿using System;
 using Character.Player;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -17,9 +16,8 @@ namespace Controllers.Player
         protected override void Awake()
         {
             base.Awake();
-            
-            _playerCharacter = GetComponent<PlayerCharacter>();
 
+            _playerCharacter = GetComponent<PlayerCharacter>();
             _interval = 5f;
         }
 
@@ -42,7 +40,6 @@ namespace Controllers.Player
 
         public void OnInteract(InputAction.CallbackContext ctx)
         {
-            throw new NotImplementedException();
         }
     }
 }

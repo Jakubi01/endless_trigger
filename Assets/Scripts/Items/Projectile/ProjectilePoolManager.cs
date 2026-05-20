@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.Pool;
 
 namespace Items.Projectile
@@ -25,7 +25,28 @@ namespace Items.Projectile
             );
         }
 
-        #region Pool Callbacks
+        public GameObject Spawn(Vector3 position, Quaternion rotation, Vector2 direction, float damage = 0f, int pierceCount = 0)
+        {
+            GameObject projectile = _pool.Get();
+
+            projectile.transform.position = position;
+            projectile.transform.rotation = rotation;
+
+            if (projectile.TryGetComponent(out Rigidbody2D rb))
+            {
+                rb.position = position;
+                rb.rotation = rotation.eulerAngles.z;
+                rb.linearVelocity = Vector2.zero;
+                rb.angularVelocity = 0f;
+            }
+
+            if (projectile.TryGetComponent(out Projectile projectileInstance))
+            {
+                projectileInstance.Initialize(direction, ReleaseProjectile, damage, pierceCount);
+            }
+
+            return projectile;
+        }
 
         private GameObject OnCreateProjectile()
         {
@@ -47,31 +68,6 @@ namespace Items.Projectile
         private void OnDestroyProjectile(GameObject projectile)
         {
             Destroy(projectile);
-        }
-
-        #endregion
-
-        public GameObject Spawn(Vector3 position, Quaternion rotation, Vector2 direction)
-        {
-            GameObject projectile = _pool.Get();
-    
-            projectile.transform.position = position;
-            projectile.transform.rotation = rotation;
-
-            if (projectile.TryGetComponent(out Rigidbody2D rb))
-            {
-                rb.position = position;
-                rb.rotation = rotation.eulerAngles.z;
-                rb.linearVelocity = Vector2.zero; 
-                rb.angularVelocity = 0f;
-            }
-
-            if (projectile.TryGetComponent(out Projectile projectileInstance))
-            {
-                projectileInstance.Initialize(direction, ReleaseProjectile);
-            }
-    
-            return projectile;
         }
 
         private void ReleaseProjectile(GameObject projectile)

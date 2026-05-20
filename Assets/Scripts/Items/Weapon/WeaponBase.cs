@@ -1,4 +1,3 @@
-﻿using System;
 using Character.Enemy;
 using Character.Player;
 using Items.Projectile;
@@ -13,29 +12,35 @@ namespace Items.Weapon
         [SerializeField] private float baseFireInterval = 3f;
         [SerializeField] private float damage;
         [SerializeField] private float cooldown;
-        
+        [SerializeField] private float targetRefreshInterval = 0.1f;
+
         private float _attackSpeedMultiplier = 1f;
         private float _timer;
+        private float _targetRefreshTimer;
         private bool _isFiringEnabled;
-        
+
         protected EnemyCharacterBase CurrentTarget;
-        
         protected ProjectilePoolManager ProjectileManager;
         public PlayerCharacter owner;
 
-        public float CurrentFireInterval => Mathf.Max(0.01f, baseFireInterval / _attackSpeedMultiplier);
+        protected float Damage => damage;
+        public float CurrentFireInterval => Mathf.Max(0.1f, (baseFireInterval + cooldown) / _attackSpeedMultiplier);
 
         protected virtual void Awake()
         {
             ProjectileManager = GetComponent<ProjectilePoolManager>();
+            if (damage <= 0f)
+            {
+                damage = GetDefaultDamage();
+            }
         }
-        
+
         public void StartFiring()
         {
             if (_isFiringEnabled) return;
-            
+
             _isFiringEnabled = true;
-            _timer = CurrentFireInterval; 
+            _timer = CurrentFireInterval;
         }
 
         public void StopFiring()
@@ -48,7 +53,12 @@ namespace Items.Weapon
             if (!_isFiringEnabled) return;
 
             _timer += Time.deltaTime;
-            LookAtTarget();
+            _targetRefreshTimer -= Time.deltaTime;
+            if (_targetRefreshTimer <= 0f)
+            {
+                _targetRefreshTimer = targetRefreshInterval;
+                LookAtTarget();
+            }
 
             while (_timer >= CurrentFireInterval)
             {
@@ -63,6 +73,25 @@ namespace Items.Weapon
         public virtual void ModifyAttackSpeed(float newMultiplier)
         {
             _attackSpeedMultiplier = Mathf.Max(0.01f, newMultiplier);
+        }
+
+        public virtual void ApplyRandomUpgrade()
+        {
+        }
+
+        protected void AddDamage(float amount)
+        {
+            damage = Mathf.Max(0f, damage + amount);
+        }
+
+        protected void AddCooldown(float amount)
+        {
+            cooldown += amount;
+        }
+
+        protected virtual float GetDefaultDamage()
+        {
+            return 10f;
         }
     }
 }

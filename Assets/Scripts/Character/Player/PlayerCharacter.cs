@@ -1,4 +1,3 @@
-﻿using System;
 using System.Collections.Generic;
 using Items.Weapon;
 using Managers;
@@ -6,21 +5,34 @@ using UnityEngine;
 
 namespace Character.Player
 {
-    public class PlayerCharacter : CharacterBase
+    public class PlayerCharacter : CharacterBase, IDamageable
     {
-        [Header("Weapon")] 
+        [Header("Status")]
+        [SerializeField] private float maxHp = 100f;
+        [SerializeField] private float baseMoveSpeed = 5f;
+        [SerializeField] private int requiredExperiencePerLevel = 100;
+        [SerializeField] private float experiencePickupRange = 2.5f;
+
+        [Header("Weapon")]
         [SerializeField] private GameObject shotGunPrefab;
         [SerializeField] private GameObject sniperPrefab;
         [SerializeField] private Transform shotgunMountTransform;
         [SerializeField] private Transform sniperMountTransform;
-        private List<WeaponBase> _equippedWeapons = new();
 
+        private readonly List<WeaponBase> _equippedWeapons = new();
         private EnemyManager _enemyManager;
-        
+        private float _currentHp;
+        private int _currentExperience;
+        private int _level = 1;
+
+        public float ExperiencePickupRange => experiencePickupRange;
+
         protected override void Awake()
         {
             base.Awake();
 
+            SetMoveSpeed(baseMoveSpeed);
+            _currentHp = maxHp;
             InitializeWeapons();
 
             _enemyManager = FindFirstObjectByType<EnemyManager>();
@@ -29,12 +41,12 @@ namespace Character.Player
                 Debug.LogError("씬에 EnemyManager가 없음.");
             }
         }
-        
+
         private void FixedUpdate()
         {
             ProcessTranslation();
         }
-        
+
         private void InitializeWeapons()
         {
             if (shotGunPrefab != null)
@@ -43,7 +55,7 @@ namespace Character.Player
                 GameObject sgObj = Instantiate(shotGunPrefab, parent);
                 sgObj.transform.localPosition = Vector3.zero;
                 sgObj.transform.localRotation = Quaternion.identity;
-                
+
                 if (sgObj.TryGetComponent(out WeaponBase shotgun))
                 {
                     _equippedWeapons.Add(shotgun);
@@ -57,7 +69,7 @@ namespace Character.Player
                 GameObject snObj = Instantiate(sniperPrefab, parent);
                 snObj.transform.localPosition = Vector3.zero;
                 snObj.transform.localRotation = Quaternion.identity;
-                
+
                 if (snObj.TryGetComponent(out WeaponBase sniper))
                 {
                     _equippedWeapons.Add(sniper);
@@ -67,7 +79,7 @@ namespace Character.Player
 
             StartAllWeapons();
         }
-        
+
         public void StartAllWeapons()
         {
             foreach (var weapon in _equippedWeapons)
@@ -89,25 +101,62 @@ namespace Character.Player
             MoveInput = moveInput;
 
             if (Mathf.Abs(MoveInput.x) < 0.01f) return;
-            
+
             Vector3 scale = transform.localScale;
             scale.x = Mathf.Abs(scale.x) * (MoveInput.x < 0 ? -1 : 1);
             transform.localScale = scale;
         }
-        
-        private void ProcessTranslation()
-        {
-            transform.position += (Vector3)MoveInput * (MoveSpeed * Time.fixedDeltaTime);
-        }
 
         public override void DoAttack()
         {
-            
         }
 
         public GameObject FindNearestFromCharacter(float range)
         {
-            return _enemyManager.FindNearestEnemy(transform, range);
+            return _enemyManager ? _enemyManager.FindNearestEnemy(transform, range) : null;
+        }
+
+        public GameObject FindFarthestFromCharacter(float range)
+        {
+            return _enemyManager ? _enemyManager.FindFarthestEnemy(transform, range) : null;
+        }
+
+        public void GainExperience(int amount)
+        {
+            if (amount <= 0) return;
+
+            _currentExperience += amount;
+            while (_currentExperience >= requiredExperiencePerLevel)
+            {
+                _currentExperience -= requiredExperiencePerLevel;
+                LevelUp();
+            }
+        }
+
+        public void TakeDamage(float amount)
+        {
+            if (amount <= 0f || _currentHp <= 0f) return;
+
+            _currentHp = Mathf.Max(0f, _currentHp - amount);
+            if (_currentHp <= 0f)
+            {
+                StopAllWeapons();
+                gameObject.SetActive(false);
+            }
+        }
+
+        private void ProcessTranslation()
+        {
+            Move(MoveInput);
+        }
+
+        private void LevelUp()
+        {
+            _level++;
+            if (_equippedWeapons.Count == 0) return;
+
+            int randomIndex = Random.Range(0, _equippedWeapons.Count);
+            _equippedWeapons[randomIndex].ApplyRandomUpgrade();
         }
     }
 }

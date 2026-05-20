@@ -13,6 +13,8 @@ namespace Character
         private const float BaseMoveSpeed = 5f;
         protected Vector2 MoveInput;
         [NonSerialized] protected float MoveSpeed;
+        public Rigidbody2D CharacterRigidbody => Rb;
+        public Collider2D CharacterCollider => Col;
 
         protected virtual void Awake()
         {
@@ -29,5 +31,21 @@ namespace Character
         public virtual void DoAttack() { }
         
         public virtual void SetMoveSpeed(float value) { MoveSpeed = value; }
+
+        public virtual void Move(Vector2 direction)
+        {
+            if (direction.sqrMagnitude > 1f)
+            {
+                direction.Normalize();
+            }
+
+            Rb.MovePosition(Rb.position + direction * (MoveSpeed * Time.fixedDeltaTime));
+        }
+
+        public virtual void MoveToward(Vector2 worldPosition)
+        {
+            Vector2 direction = (worldPosition - Rb.position).normalized;
+            Move(direction);
+        }
     }
 }
