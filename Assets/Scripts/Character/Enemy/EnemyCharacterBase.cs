@@ -30,8 +30,6 @@ namespace Character.Enemy
         protected override void Awake()
         {
             base.Awake();
-            Rb.bodyType = RigidbodyType2D.Kinematic;
-            Rb.simulated = true;
             _enemyManager = EnemyManager.Instance;
         }
 

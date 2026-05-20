@@ -18,7 +18,7 @@ namespace Managers
         [Serializable]
         private struct SpawnRate
         {
-            public int countPerSecond;
+            public int spawnCount;
             public float zombieWeight;
             public float rusherWeight;
             public float tankerWeight;
@@ -29,15 +29,18 @@ namespace Managers
         [SerializeField] private float maxSpawnDistanceFromPlayer = 9f;
         [SerializeField] private float waveDuration = 30f;
         [SerializeField] private float statGrowthPerWave = 0.15f;
-        [SerializeField] private int baseSpawnCountPerSecond = 2;
+        [SerializeField] private int baseSpawnCount = 2;
         [SerializeField] private int spawnCountIncreasePerSection = 2;
-        [SerializeField] private float spawnCountIncreasePerWave = 1.5f;
+        [SerializeField] private int spawnCountIncreasePerWave = 1;
         [SerializeField] private float minimumZombieRatio = 0.05f;
         [SerializeField] private float maximumTankerRatio = 0.75f;
+        [SerializeField] private int enemySortingOrder = 10;
+
+        private const float SpawnInterval = 5f;
 
         private PlayerCharacter _player;
         private float _elapsedTime;
-        private float _spawnAccumulator;
+        private float _nextSpawnTime;
 
         private void Awake()
         {
@@ -57,21 +60,27 @@ namespace Managers
 
             _elapsedTime += Time.deltaTime;
 
-            SpawnRate rate = GetCurrentSpawnRate();
-            _spawnAccumulator += rate.countPerSecond * Time.deltaTime;
-
-            while (_spawnAccumulator >= 1f)
+            while (_elapsedTime >= _nextSpawnTime)
             {
-                _spawnAccumulator -= 1f;
-                SpawnEnemy(PickEnemyType(rate));
+                SpawnWaveSection(_nextSpawnTime);
+                _nextSpawnTime += SpawnInterval;
             }
         }
 
-        private SpawnRate GetCurrentSpawnRate()
+        private void SpawnWaveSection(float spawnTime)
         {
-            int waveNumber = Mathf.FloorToInt(_elapsedTime / waveDuration) + 1;
-            float timeInWave = _elapsedTime % waveDuration;
-            int sectionIndex = Mathf.Clamp(Mathf.FloorToInt(timeInWave / 5f), 0, 5);
+            SpawnRate rate = GetSpawnRate(spawnTime);
+            for (int i = 0; i < rate.spawnCount; i++)
+            {
+                SpawnEnemy(PickEnemyType(rate), spawnTime);
+            }
+        }
+
+        private SpawnRate GetSpawnRate(float spawnTime)
+        {
+            int waveNumber = Mathf.FloorToInt(spawnTime / waveDuration) + 1;
+            float timeInWave = spawnTime % waveDuration;
+            int sectionIndex = Mathf.Clamp(Mathf.FloorToInt(timeInWave / SpawnInterval), 0, 5);
             float sectionProgress = sectionIndex / 5f;
             float difficulty = waveNumber - 1 + sectionProgress;
 
@@ -87,7 +96,7 @@ namespace Managers
 
             return new SpawnRate
             {
-                countPerSecond = GetSpawnCountPerSecond(waveNumber, sectionIndex),
+                spawnCount = GetSpawnCount(waveNumber, sectionIndex),
                 zombieWeight = zombieRatio,
                 rusherWeight = rusherRatio,
                 tankerWeight = tankerRatio
@@ -97,7 +106,7 @@ namespace Managers
         private EnemyType PickEnemyType(SpawnRate rate)
         {
             float totalWeight = rate.zombieWeight + rate.rusherWeight + rate.tankerWeight;
-            if (totalWeight <= 0) return EnemyType.Zombie;
+            if (totalWeight <= 0f) return EnemyType.Zombie;
 
             float roll = UnityEngine.Random.Range(0f, totalWeight);
             if (roll < rate.zombieWeight) return EnemyType.Zombie;
@@ -106,15 +115,22 @@ namespace Managers
             return roll < rate.rusherWeight ? EnemyType.Rusher : EnemyType.Tanker;
         }
 
-        private int GetSpawnCountPerSecond(int waveNumber, int sectionIndex)
+        private int GetSpawnCount(int waveNumber, int sectionIndex)
         {
-            float waveBonus = Mathf.Max(0, waveNumber - 1) * spawnCountIncreasePerWave;
-            float sectionBonus = sectionIndex * spawnCountIncreasePerSection;
-            return Mathf.Max(1, Mathf.RoundToInt(baseSpawnCountPerSecond + waveBonus + sectionBonus));
+            int waveBonus = Mathf.Max(0, waveNumber - 1) * spawnCountIncreasePerWave;
+            int sectionBonus = sectionIndex * spawnCountIncreasePerSection;
+            return Mathf.Max(1, baseSpawnCount + waveBonus + sectionBonus);
         }
 
-        private void SpawnEnemy(EnemyType type)
+        private void SpawnEnemy(EnemyType type, float spawnTime)
         {
+            GameObject prefab = FindPrefab(type);
+            if (!prefab)
+            {
+                Debug.LogError($"{nameof(EnemySpawner)}: {type} prefab is not assigned.", this);
+                return;
+            }
+
             Vector2 direction = UnityEngine.Random.insideUnitCircle.normalized;
             if (direction.sqrMagnitude < 0.01f)
             {
@@ -123,10 +139,7 @@ namespace Managers
 
             float distance = UnityEngine.Random.Range(minSpawnDistanceFromPlayer, maxSpawnDistanceFromPlayer);
             Vector3 spawnPosition = _player.transform.position + (Vector3)(direction * distance);
-            GameObject prefab = FindPrefab(type);
-            GameObject enemyObject = prefab
-                ? Instantiate(prefab, spawnPosition, Quaternion.identity)
-                : CreateFallbackEnemy(type, spawnPosition);
+            GameObject enemyObject = Instantiate(prefab, spawnPosition, Quaternion.identity);
 
             if (!enemyObject.TryGetComponent(out EnemyCharacterBase enemy))
             {
@@ -134,10 +147,11 @@ namespace Managers
             }
 
             GetBaseStats(type, out float hp, out float speed, out float damage, out int experience);
-            int waveNumber = Mathf.FloorToInt(_elapsedTime / waveDuration) + 1;
+            int waveNumber = Mathf.FloorToInt(spawnTime / waveDuration) + 1;
             float statMultiplier = 1f + Mathf.Max(0, waveNumber - 1) * statGrowthPerWave;
             enemy.Initialize(type, hp * statMultiplier, speed, damage * statMultiplier, experience);
             EnsureEnemyController(enemyObject, type);
+            EnsureEnemyVisual(enemyObject, type);
         }
 
         private GameObject FindPrefab(EnemyType type)
@@ -151,17 +165,6 @@ namespace Managers
             }
 
             return null;
-        }
-
-        private GameObject CreateFallbackEnemy(EnemyType type, Vector3 position)
-        {
-            GameObject fallback = new GameObject(type.ToString());
-            fallback.transform.position = position;
-            fallback.AddComponent<SpriteRenderer>().color = GetFallbackColor(type);
-            BoxCollider2D collider = fallback.AddComponent<BoxCollider2D>();
-            collider.size = Vector2.one * 0.7f;
-            fallback.AddComponent<Rigidbody2D>();
-            return fallback;
         }
 
         private static EnemyCharacterBase AddEnemyCharacter(GameObject enemyObject, EnemyType type)
@@ -192,6 +195,26 @@ namespace Managers
             }
         }
 
+        private void EnsureEnemyVisual(GameObject enemyObject, EnemyType type)
+        {
+            SpriteRenderer renderer = enemyObject.GetComponentInChildren<SpriteRenderer>();
+            if (!renderer)
+            {
+                Debug.LogError($"{nameof(EnemySpawner)}: {type} prefab has no SpriteRenderer.", enemyObject);
+                return;
+            }
+
+            if (!renderer.sprite)
+            {
+                Debug.LogError($"{nameof(EnemySpawner)}: {type} prefab has no sprite assigned.", enemyObject);
+            }
+
+            if (renderer.sortingOrder < enemySortingOrder)
+            {
+                renderer.sortingOrder = enemySortingOrder;
+            }
+        }
+
         private static void GetBaseStats(EnemyType type, out float hp, out float speed, out float damage, out int experience)
         {
             switch (type)
@@ -215,16 +238,6 @@ namespace Managers
                     experience = 5;
                     break;
             }
-        }
-
-        private static Color GetFallbackColor(EnemyType type)
-        {
-            return type switch
-            {
-                EnemyType.Rusher => Color.red,
-                EnemyType.Tanker => Color.gray,
-                _ => Color.green
-            };
         }
     }
 }

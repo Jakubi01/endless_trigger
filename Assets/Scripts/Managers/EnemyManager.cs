@@ -33,7 +33,6 @@ namespace Managers
         {
             if (enemy && !_enemies.Contains(enemy))
             {
-                IgnoreEnemyCollisions(enemy);
                 _enemies.Add(enemy);
             }
         }
@@ -68,28 +67,6 @@ namespace Managers
             }
 
             return nearest ? nearest.gameObject : null;
-        }
-
-        private void IgnoreEnemyCollisions(EnemyCharacterBase newEnemy)
-        {
-            Collider2D newCollider = newEnemy.CharacterCollider;
-            if (!newCollider) return;
-
-            for (int i = _enemies.Count - 1; i >= 0; i--)
-            {
-                EnemyCharacterBase enemy = _enemies[i];
-                if (!enemy)
-                {
-                    _enemies.RemoveAt(i);
-                    continue;
-                }
-
-                Collider2D enemyCollider = enemy.CharacterCollider;
-                if (enemyCollider)
-                {
-                    Physics2D.IgnoreCollision(newCollider, enemyCollider, true);
-                }
-            }
         }
 
         public GameObject FindFarthestEnemy(Transform callerTransform, float range)
