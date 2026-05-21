@@ -336,7 +336,7 @@ MonoBehaviour:
   IgnoreTimeScale: 0
   WorldUpOverride: {fileID: 0}
   ChannelMask: -1
-  UpdateMethod: 2
+  UpdateMethod: 0
   BlendUpdateMethod: 1
   LensModeOverride:
     Enabled: 0
@@ -500,15 +500,16 @@ MonoBehaviour:
     prefab: {fileID: 1439484717104750686, guid: 9d34ac30ba3d1874e8f928ee7580a7e7, type: 3}
   - type: 2
     prefab: {fileID: 3663223441208287023, guid: e10996d723a60e44f998b9f76761fac4, type: 3}
-  minSpawnDistanceFromPlayer: 5
-  maxSpawnDistanceFromPlayer: 9
+  minSpawnDistanceFromPlayer: 10
+  maxSpawnDistanceFromPlayer: 20
   waveDuration: 30
   statGrowthPerWave: 0.15
-  baseSpawnCountPerSecond: 2
+  baseSpawnCount: 2
   spawnCountIncreasePerSection: 2
-  spawnCountIncreasePerWave: 1.5
+  spawnCountIncreasePerWave: 1
   minimumZombieRatio: 0.05
   maximumTankerRatio: 0.75
+  enemySortingOrder: 10
 --- !u!1 &935697256
 GameObject:
   m_ObjectHideFlags: 0

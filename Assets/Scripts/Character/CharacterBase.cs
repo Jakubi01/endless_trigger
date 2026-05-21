@@ -21,6 +21,7 @@ namespace Character
             Rb = GetComponent<Rigidbody2D>();
             Rb.bodyType = RigidbodyType2D.Dynamic;
             Rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+            Rb.interpolation = RigidbodyInterpolation2D.Interpolate;
             Rb.gravityScale = 0f;
             
             Col = GetComponent<BoxCollider2D>();

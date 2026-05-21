@@ -8,9 +8,8 @@ namespace Items.Weapon
         [Header("ShotGun Settings")]
         [SerializeField] private int bulletCount = 5;
         [SerializeField] private float spreadAngle = 30;
+        [SerializeField] private float targetRange = 12f;
         [SerializeField] private Transform muzzlePoint;
-
-        private const float Range = 3f;
 
         protected override void Fire()
         {
@@ -36,7 +35,7 @@ namespace Items.Weapon
 
         protected override void LookAtTarget()
         {
-            GameObject nearest = owner.FindNearestFromCharacter(Range);
+            GameObject nearest = owner.FindNearestFromCharacter(targetRange);
             CurrentTarget = nearest ? nearest.GetComponent<EnemyCharacterBase>() : null;
 
             Vector3 targetDirection = owner.transform.localScale.x > 0 ? Vector3.right : Vector3.left;

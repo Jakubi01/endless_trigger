@@ -31,6 +31,7 @@ namespace Character.Enemy
         {
             base.Awake();
             _enemyManager = EnemyManager.Instance;
+            GetComponent<SpriteRenderer>().sortingLayerName = "Enemy";
         }
 
         private void OnEnable()

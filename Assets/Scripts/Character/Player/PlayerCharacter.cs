@@ -40,6 +40,8 @@ namespace Character.Player
             {
                 Debug.LogError("씬에 EnemyManager가 없음.");
             }
+            
+            GetComponent<SpriteRenderer>().sortingLayerName = "Player";
         }
 
         private void FixedUpdate()
@@ -113,11 +115,13 @@ namespace Character.Player
 
         public GameObject FindNearestFromCharacter(float range)
         {
+            ResolveEnemyManager();
             return _enemyManager ? _enemyManager.FindNearestEnemy(transform, range) : null;
         }
 
         public GameObject FindFarthestFromCharacter(float range)
         {
+            ResolveEnemyManager();
             return _enemyManager ? _enemyManager.FindFarthestEnemy(transform, range) : null;
         }
 
@@ -157,6 +161,13 @@ namespace Character.Player
 
             int randomIndex = Random.Range(0, _equippedWeapons.Count);
             _equippedWeapons[randomIndex].ApplyRandomUpgrade();
+        }
+
+        private void ResolveEnemyManager()
+        {
+            if (_enemyManager) return;
+
+            _enemyManager = EnemyManager.Instance ? EnemyManager.Instance : FindFirstObjectByType<EnemyManager>();
         }
     }
 }
