@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace Controllers.Enemy
 {
+    [RequireComponent(typeof(EnemyCharacterBase))]
     public abstract class EnemyControllerBase : Controller
     {
         protected EnemyCharacterBase EnemyCharacter;

@@ -1,4 +1,6 @@
 using Character.Player;
+using Components;
+using System;
 using Managers;
 using UnityEngine;
 
@@ -11,35 +13,45 @@ namespace Character.Enemy
         Tanker
     }
 
+    [RequireComponent(typeof(HealthComponent))]
     public class EnemyCharacterBase : CharacterBase, IDamageable
     {
         [Header("Enemy Status")]
         [SerializeField] private EnemyType enemyType;
-        [SerializeField] private float maxHp = 30f;
         [SerializeField] private float contactDamage = 10f;
         [SerializeField] private int experienceReward = 5;
         [SerializeField] private float contactDamageInterval = 0.5f;
 
         private EnemyManager _enemyManager;
-        private float _currentHp;
         private float _contactDamageTimer;
+        private HealthComponent _healthComponent;
+        private Action<EnemyCharacterBase> _releaseToPool;
 
         public EnemyType EnemyType => enemyType;
-        public bool IsAlive => _currentHp > 0f;
+        public bool IsAlive => _healthComponent && _healthComponent.IsAlive;
 
         protected override void Awake()
         {
             base.Awake();
+            InitializeHealthComponent();
             _enemyManager = EnemyManager.Instance;
             GetComponent<SpriteRenderer>().sortingLayerName = "Enemy";
         }
 
         private void OnEnable()
         {
-            _currentHp = maxHp;
+            _healthComponent?.ResetHealth();
             _contactDamageTimer = 0f;
             _enemyManager ??= EnemyManager.Instance;
             _enemyManager?.Register(this);
+        }
+
+        private void OnDestroy()
+        {
+            if (_healthComponent)
+            {
+                _healthComponent.Died -= Die;
+            }
         }
 
         private void OnDisable()
@@ -68,29 +80,38 @@ namespace Character.Enemy
         public void Initialize(EnemyType type, float hp, float moveSpeed, float damage, int expReward)
         {
             enemyType = type;
-            maxHp = hp;
             contactDamage = damage;
             experienceReward = expReward;
             SetMoveSpeed(moveSpeed);
-            _currentHp = maxHp;
+            _healthComponent.Initialize(hp);
+        }
+
+        public void SetPoolReleaseAction(Action<EnemyCharacterBase> releaseAction)
+        {
+            _releaseToPool = releaseAction;
         }
 
         public void MoveToTargetPosition(Vector2 targetPosition)
         {
-            if (_currentHp <= 0f) return;
+            if (!IsAlive) return;
 
             MoveToward(targetPosition);
         }
 
         public void TakeDamage(float amount)
         {
-            if (amount <= 0f || _currentHp <= 0f) return;
+            _healthComponent?.TakeDamage(amount);
+        }
 
-            _currentHp -= amount;
-            if (_currentHp <= 0f)
+        private void InitializeHealthComponent()
+        {
+            _healthComponent = GetComponent<HealthComponent>();
+            if (!_healthComponent)
             {
-                Die();
+                _healthComponent = gameObject.AddComponent<HealthComponent>();
             }
+
+            _healthComponent.Died += Die;
         }
 
         private void TryDamagePlayer(Collider2D other)
@@ -107,6 +128,12 @@ namespace Character.Enemy
         private void Die()
         {
             _enemyManager?.SpawnExperience(transform.position, experienceReward);
+            if (_releaseToPool != null)
+            {
+                _releaseToPool.Invoke(this);
+                return;
+            }
+
             Destroy(gameObject);
         }
     }

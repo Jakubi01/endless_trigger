@@ -1,17 +1,17 @@
 using System.Collections.Generic;
+using Components;
 using Items.Weapon;
 using Managers;
 using UnityEngine;
 
 namespace Character.Player
 {
+    [RequireComponent(typeof(HealthComponent))]
+    [RequireComponent(typeof(PlayerLevelComponent))]
     public class PlayerCharacter : CharacterBase, IDamageable
     {
         [Header("Status")]
-        [SerializeField] private float maxHp = 100f;
         [SerializeField] private float baseMoveSpeed = 5f;
-        [SerializeField] private int requiredExperiencePerLevel = 100;
-        [SerializeField] private float experiencePickupRange = 2.5f;
 
         [Header("Weapon")]
         [SerializeField] private GameObject shotGunPrefab;
@@ -21,18 +21,17 @@ namespace Character.Player
 
         private readonly List<WeaponBase> _equippedWeapons = new();
         private EnemyManager _enemyManager;
-        private float _currentHp;
-        private int _currentExperience;
-        private int _level = 1;
+        private HealthComponent _healthComponent;
+        private PlayerLevelComponent _levelComponent;
 
-        public float ExperiencePickupRange => experiencePickupRange;
+        public float ExperiencePickupRange => _levelComponent ? _levelComponent.ExperiencePickupRange : 2.5f;
 
         protected override void Awake()
         {
             base.Awake();
 
             SetMoveSpeed(baseMoveSpeed);
-            _currentHp = maxHp;
+            InitializeStatusComponents();
             InitializeWeapons();
 
             _enemyManager = FindFirstObjectByType<EnemyManager>();
@@ -42,6 +41,19 @@ namespace Character.Player
             }
             
             GetComponent<SpriteRenderer>().sortingLayerName = "Player";
+        }
+
+        private void OnDestroy()
+        {
+            if (_healthComponent)
+            {
+                _healthComponent.Died -= HandleDeath;
+            }
+
+            if (_levelComponent)
+            {
+                _levelComponent.LeveledUp -= ApplyLevelUpUpgrade;
+            }
         }
 
         private void FixedUpdate()
@@ -127,26 +139,12 @@ namespace Character.Player
 
         public void GainExperience(int amount)
         {
-            if (amount <= 0) return;
-
-            _currentExperience += amount;
-            while (_currentExperience >= requiredExperiencePerLevel)
-            {
-                _currentExperience -= requiredExperiencePerLevel;
-                LevelUp();
-            }
+            _levelComponent?.GainExperience(amount);
         }
 
         public void TakeDamage(float amount)
         {
-            if (amount <= 0f || _currentHp <= 0f) return;
-
-            _currentHp = Mathf.Max(0f, _currentHp - amount);
-            if (_currentHp <= 0f)
-            {
-                StopAllWeapons();
-                gameObject.SetActive(false);
-            }
+            _healthComponent?.TakeDamage(amount);
         }
 
         private void ProcessTranslation()
@@ -154,9 +152,32 @@ namespace Character.Player
             Move(MoveInput);
         }
 
-        private void LevelUp()
+        private void InitializeStatusComponents()
         {
-            _level++;
+            _healthComponent = GetComponent<HealthComponent>();
+            if (!_healthComponent)
+            {
+                _healthComponent = gameObject.AddComponent<HealthComponent>();
+            }
+
+            _levelComponent = GetComponent<PlayerLevelComponent>();
+            if (!_levelComponent)
+            {
+                _levelComponent = gameObject.AddComponent<PlayerLevelComponent>();
+            }
+
+            _healthComponent.Died += HandleDeath;
+            _levelComponent.LeveledUp += ApplyLevelUpUpgrade;
+        }
+
+        private void HandleDeath()
+        {
+            StopAllWeapons();
+            gameObject.SetActive(false);
+        }
+
+        private void ApplyLevelUpUpgrade()
+        {
             if (_equippedWeapons.Count == 0) return;
 
             int randomIndex = Random.Range(0, _equippedWeapons.Count);

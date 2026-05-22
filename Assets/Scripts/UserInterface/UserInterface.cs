@@ -1,12 +1,12 @@
 ﻿using UnityEngine;
 
-namespace Components
+namespace UserInterface
 {
-    public class ComponentBase : MonoBehaviour
+    public class UserInterface : MonoBehaviour
     {
         public GameObject owner;
 
-        protected virtual void Awake()
+        private void Awake()
         {
             owner = gameObject;
         }

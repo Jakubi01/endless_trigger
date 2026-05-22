@@ -1,21 +1,13 @@
-using System;
+using System.Collections.Generic;
 using Character.Enemy;
 using Character.Player;
-using Controllers.Enemy;
 using UnityEngine;
+using UnityEngine.Pool;
 
 namespace Managers
 {
     public class EnemySpawner : MonoBehaviour
     {
-        [Serializable]
-        private struct EnemyPrefabEntry
-        {
-            public EnemyType type;
-            public GameObject prefab;
-        }
-
-        [Serializable]
         private struct SpawnRate
         {
             public int spawnCount;
@@ -24,23 +16,32 @@ namespace Managers
             public float tankerWeight;
         }
 
-        [SerializeField] private EnemyPrefabEntry[] enemyPrefabs;
+        private sealed class EnemyPool
+        {
+            public EnemyData Data;
+            public IObjectPool<EnemyCharacterBase> Pool;
+        }
+
+        [SerializeField] private EnemyData[] enemyData;
         [SerializeField] private float minSpawnDistanceFromPlayer = 5f;
         [SerializeField] private float maxSpawnDistanceFromPlayer = 9f;
         [SerializeField] private float waveDuration = 30f;
-        [SerializeField] private float statGrowthPerWave = 0.15f;
         [SerializeField] private int baseSpawnCount = 2;
         [SerializeField] private int spawnCountIncreasePerSection = 2;
         [SerializeField] private int spawnCountIncreasePerWave = 1;
         [SerializeField] private float minimumZombieRatio = 0.05f;
         [SerializeField] private float maximumTankerRatio = 0.75f;
-        [SerializeField] private int enemySortingOrder = 10;
+        [SerializeField] private int defaultPoolCapacity = 32;
+        [SerializeField] private int maxPoolSize = 256;
+        [SerializeField] private int prewarmCountPerEnemy = 8;
 
         private const float SpawnInterval = 5f;
 
+        private readonly Dictionary<EnemyType, EnemyPool> _pools = new();
+        private readonly List<EnemyCharacterBase> _prewarmBuffer = new();
         private PlayerCharacter _player;
         private float _elapsedTime;
-        private float _nextSpawnTime;
+        private float _nextSpawnTime = SpawnInterval;
 
         private void Awake()
         {
@@ -48,6 +49,8 @@ namespace Managers
             {
                 maxSpawnDistanceFromPlayer = minSpawnDistanceFromPlayer;
             }
+
+            BuildPools();
         }
 
         private void Update()
@@ -59,11 +62,70 @@ namespace Managers
             }
 
             _elapsedTime += Time.deltaTime;
+            if (_elapsedTime < _nextSpawnTime) return;
 
-            while (_elapsedTime >= _nextSpawnTime)
+            SpawnWaveSection(_nextSpawnTime);
+            _nextSpawnTime = _elapsedTime + SpawnInterval;
+        }
+
+        private void BuildPools()
+        {
+            _pools.Clear();
+            if (enemyData == null || enemyData.Length == 0)
             {
-                SpawnWaveSection(_nextSpawnTime);
-                _nextSpawnTime += SpawnInterval;
+                Debug.LogError($"{nameof(EnemySpawner)}: EnemyData list is empty.", this);
+                return;
+            }
+
+            foreach (EnemyData data in enemyData)
+            {
+                if (!data || !data.Prefab)
+                {
+                    Debug.LogError($"{nameof(EnemySpawner)}: EnemyData or prefab is not assigned.", this);
+                    continue;
+                }
+
+                if (_pools.ContainsKey(data.EnemyType))
+                {
+                    Debug.LogError($"{nameof(EnemySpawner)}: Duplicate EnemyData for {data.EnemyType}.", this);
+                    continue;
+                }
+
+                EnemyPool enemyPool = new EnemyPool { Data = data };
+                enemyPool.Pool = new ObjectPool<EnemyCharacterBase>(
+                    createFunc: () => CreateEnemy(enemyPool),
+                    actionOnGet: enemy => enemy.gameObject.SetActive(true),
+                    actionOnRelease: enemy => enemy.gameObject.SetActive(false),
+                    actionOnDestroy: enemy => Destroy(enemy.gameObject),
+                    collectionCheck: true,
+                    defaultCapacity: defaultPoolCapacity,
+                    maxSize: maxPoolSize
+                );
+
+                _pools.Add(data.EnemyType, enemyPool);
+                Prewarm(enemyPool);
+            }
+        }
+
+        private EnemyCharacterBase CreateEnemy(EnemyPool enemyPool)
+        {
+            EnemyCharacterBase enemy = Instantiate(enemyPool.Data.Prefab, transform);
+            enemy.gameObject.SetActive(false);
+            enemy.SetPoolReleaseAction(enemyPool.Pool.Release);
+            return enemy;
+        }
+
+        private void Prewarm(EnemyPool enemyPool)
+        {
+            _prewarmBuffer.Clear();
+            for (int i = 0; i < prewarmCountPerEnemy; i++)
+            {
+                _prewarmBuffer.Add(enemyPool.Pool.Get());
+            }
+
+            foreach (EnemyCharacterBase enemy in _prewarmBuffer)
+            {
+                enemyPool.Pool.Release(enemy);
             }
         }
 
@@ -124,13 +186,23 @@ namespace Managers
 
         private void SpawnEnemy(EnemyType type, float spawnTime)
         {
-            GameObject prefab = FindPrefab(type);
-            if (!prefab)
+            if (!_pools.TryGetValue(type, out EnemyPool enemyPool))
             {
-                Debug.LogError($"{nameof(EnemySpawner)}: {type} prefab is not assigned.", this);
+                Debug.LogError($"{nameof(EnemySpawner)}: EnemyData for {type} is not assigned.", this);
                 return;
             }
 
+            EnemyCharacterBase enemy = enemyPool.Pool.Get();
+            enemy.transform.position = GetSpawnPosition();
+            enemy.transform.rotation = Quaternion.identity;
+
+            int waveNumber = Mathf.FloorToInt(spawnTime / waveDuration) + 1;
+            enemyPool.Data.GetScaledStats(waveNumber, out float hp, out float speed, out float damage, out int experience);
+            enemy.Initialize(type, hp, speed, damage, experience);
+        }
+
+        private Vector3 GetSpawnPosition()
+        {
             Vector2 direction = UnityEngine.Random.insideUnitCircle.normalized;
             if (direction.sqrMagnitude < 0.01f)
             {
@@ -138,106 +210,7 @@ namespace Managers
             }
 
             float distance = UnityEngine.Random.Range(minSpawnDistanceFromPlayer, maxSpawnDistanceFromPlayer);
-            Vector3 spawnPosition = _player.transform.position + (Vector3)(direction * distance);
-            GameObject enemyObject = Instantiate(prefab, spawnPosition, Quaternion.identity);
-
-            if (!enemyObject.TryGetComponent(out EnemyCharacterBase enemy))
-            {
-                enemy = AddEnemyCharacter(enemyObject, type);
-            }
-
-            GetBaseStats(type, out float hp, out float speed, out float damage, out int experience);
-            int waveNumber = Mathf.FloorToInt(spawnTime / waveDuration) + 1;
-            float statMultiplier = 1f + Mathf.Max(0, waveNumber - 1) * statGrowthPerWave;
-            enemy.Initialize(type, hp * statMultiplier, speed, damage * statMultiplier, experience);
-            EnsureEnemyController(enemyObject, type);
-            EnsureEnemyVisual(enemyObject, type);
-        }
-
-        private GameObject FindPrefab(EnemyType type)
-        {
-            foreach (EnemyPrefabEntry entry in enemyPrefabs)
-            {
-                if (entry.type == type && entry.prefab)
-                {
-                    return entry.prefab;
-                }
-            }
-
-            return null;
-        }
-
-        private static EnemyCharacterBase AddEnemyCharacter(GameObject enemyObject, EnemyType type)
-        {
-            return type switch
-            {
-                EnemyType.Rusher => enemyObject.AddComponent<RusherCharacter>(),
-                EnemyType.Tanker => enemyObject.AddComponent<TankerCharacter>(),
-                _ => enemyObject.AddComponent<ZombieCharacter>()
-            };
-        }
-
-        private static void EnsureEnemyController(GameObject enemyObject, EnemyType type)
-        {
-            if (enemyObject.GetComponent<EnemyControllerBase>()) return;
-
-            switch (type)
-            {
-                case EnemyType.Rusher:
-                    enemyObject.AddComponent<RusherController>();
-                    break;
-                case EnemyType.Tanker:
-                    enemyObject.AddComponent<TankerController>();
-                    break;
-                default:
-                    enemyObject.AddComponent<ZombieController>();
-                    break;
-            }
-        }
-
-        private void EnsureEnemyVisual(GameObject enemyObject, EnemyType type)
-        {
-            SpriteRenderer renderer = enemyObject.GetComponentInChildren<SpriteRenderer>();
-            if (!renderer)
-            {
-                Debug.LogError($"{nameof(EnemySpawner)}: {type} prefab has no SpriteRenderer.", enemyObject);
-                return;
-            }
-
-            if (!renderer.sprite)
-            {
-                Debug.LogError($"{nameof(EnemySpawner)}: {type} prefab has no sprite assigned.", enemyObject);
-            }
-
-            if (renderer.sortingOrder < enemySortingOrder)
-            {
-                renderer.sortingOrder = enemySortingOrder;
-            }
-        }
-
-        private static void GetBaseStats(EnemyType type, out float hp, out float speed, out float damage, out int experience)
-        {
-            switch (type)
-            {
-                case EnemyType.Rusher:
-                    hp = 15f;
-                    speed = 6f;
-                    damage = 15f;
-                    experience = 8;
-                    break;
-                case EnemyType.Tanker:
-                    hp = 30f;
-                    speed = 2.2f;
-                    damage = 25f;
-                    experience = 20;
-                    break;
-                default:
-                    hp = 30f;
-                    speed = 3.2f;
-                    damage = 10f;
-                    experience = 5;
-                    break;
-            }
+            return _player.transform.position + (Vector3)(direction * distance);
         }
     }
 }
