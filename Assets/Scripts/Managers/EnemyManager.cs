@@ -111,15 +111,20 @@ namespace Managers
             }
 
             // fallback object
-            GameObject fallback = new GameObject("ExperiencePickup");
-            fallback.transform.position = position;
+            GameObject fallback = new GameObject("ExperiencePickup")
+            {
+                transform =
+                {
+                    position = position
+                }
+            };
 
-            CircleCollider2D collider = fallback.AddComponent<CircleCollider2D>();
-            collider.isTrigger = true;
-            collider.radius = 0.2f;
+            CircleCollider2D circleCollider2D = fallback.AddComponent<CircleCollider2D>();
+            circleCollider2D.isTrigger = true;
+            circleCollider2D.radius = 0.2f;
 
-            SpriteRenderer renderer = fallback.AddComponent<SpriteRenderer>();
-            renderer.color = Color.cyan;
+            SpriteRenderer spriteRenderer = fallback.AddComponent<SpriteRenderer>();
+            spriteRenderer.color = Color.cyan;
 
             fallback.AddComponent<ExperiencePickup>().Initialize(amount);
         }

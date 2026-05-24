@@ -10,10 +10,10 @@ namespace Managers
     {
         private struct SpawnRate
         {
-            public int spawnCount;
-            public float zombieWeight;
-            public float rusherWeight;
-            public float tankerWeight;
+            public int SpawnCount;
+            public float ZombieWeight;
+            public float RusherWeight;
+            public float TankerWeight;
         }
 
         private sealed class EnemyPool
@@ -132,7 +132,7 @@ namespace Managers
         private void SpawnWaveSection(float spawnTime)
         {
             SpawnRate rate = GetSpawnRate(spawnTime);
-            for (int i = 0; i < rate.spawnCount; i++)
+            for (int i = 0; i < rate.SpawnCount; i++)
             {
                 SpawnEnemy(PickEnemyType(rate), spawnTime);
             }
@@ -158,23 +158,23 @@ namespace Managers
 
             return new SpawnRate
             {
-                spawnCount = GetSpawnCount(waveNumber, sectionIndex),
-                zombieWeight = zombieRatio,
-                rusherWeight = rusherRatio,
-                tankerWeight = tankerRatio
+                SpawnCount = GetSpawnCount(waveNumber, sectionIndex),
+                ZombieWeight = zombieRatio,
+                RusherWeight = rusherRatio,
+                TankerWeight = tankerRatio
             };
         }
 
         private EnemyType PickEnemyType(SpawnRate rate)
         {
-            float totalWeight = rate.zombieWeight + rate.rusherWeight + rate.tankerWeight;
+            float totalWeight = rate.ZombieWeight + rate.RusherWeight + rate.TankerWeight;
             if (totalWeight <= 0f) return EnemyType.Zombie;
 
-            float roll = UnityEngine.Random.Range(0f, totalWeight);
-            if (roll < rate.zombieWeight) return EnemyType.Zombie;
+            float roll = Random.Range(0f, totalWeight);
+            if (roll < rate.ZombieWeight) return EnemyType.Zombie;
 
-            roll -= rate.zombieWeight;
-            return roll < rate.rusherWeight ? EnemyType.Rusher : EnemyType.Tanker;
+            roll -= rate.ZombieWeight;
+            return roll < rate.RusherWeight ? EnemyType.Rusher : EnemyType.Tanker;
         }
 
         private int GetSpawnCount(int waveNumber, int sectionIndex)
@@ -203,13 +203,13 @@ namespace Managers
 
         private Vector3 GetSpawnPosition()
         {
-            Vector2 direction = UnityEngine.Random.insideUnitCircle.normalized;
+            Vector2 direction = Random.insideUnitCircle.normalized;
             if (direction.sqrMagnitude < 0.01f)
             {
                 direction = Vector2.right;
             }
 
-            float distance = UnityEngine.Random.Range(minSpawnDistanceFromPlayer, maxSpawnDistanceFromPlayer);
+            float distance = Random.Range(minSpawnDistanceFromPlayer, maxSpawnDistanceFromPlayer);
             return _player.transform.position + (Vector3)(direction * distance);
         }
     }
