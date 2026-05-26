@@ -1,4 +1,5 @@
 using Character.Player;
+using Managers;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -40,6 +41,15 @@ namespace Controllers.Player
 
         public void OnInteract(InputAction.CallbackContext ctx)
         {
+        }
+
+        public void OnPause(InputAction.CallbackContext ctx)
+        {
+            if (ctx.started)
+            {
+                if (UIManager.Instance)
+                    UIManager.Instance.ShowPauseWindow();
+            }
         }
     }
 }

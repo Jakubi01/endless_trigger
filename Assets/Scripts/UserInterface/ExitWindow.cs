@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace UserInterface
 {
-    public class ExitWindow : MonoBehaviour
+    public class ExitWindow : UserInterface
     {
         [SerializeField] private Button acceptButton;
         [SerializeField] private Button rejectButton;

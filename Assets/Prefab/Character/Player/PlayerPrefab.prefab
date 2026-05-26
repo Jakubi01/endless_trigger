@@ -46,6 +46,8 @@ GameObject:
   - component: {fileID: 5838574079481311458}
   - component: {fileID: 2056072352070308880}
   - component: {fileID: 5082065188802312462}
+  - component: {fileID: 7869963449761756118}
+  - component: {fileID: 8284455876908917826}
   m_Layer: 0
   m_Name: PlayerPrefab
   m_TagString: Untagged
@@ -226,6 +228,22 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 9caa3d8a-6b2f-4e8e-8bad-6ede561bd9be
     m_ActionName: UI/TrackedDeviceOrientation
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5082065188802312462}
+        m_TargetAssemblyTypeName: Controllers.Player.PlayerController, Assembly-CSharp
+        m_MethodName: OnPause
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 2a64e7a8-e054-4d53-b43c-cb64cb77c12f
+    m_ActionName: 'Player/Pause[/Keyboard/escape]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Keyboard&Mouse
   m_DefaultActionMap: Player
@@ -316,6 +334,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ca34a9f0c5e4c2b93dd03c95d53212c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Character.Player.PlayerCharacter
+  baseMoveSpeed: 5
   shotGunPrefab: {fileID: 8024348441957941504, guid: 2b428b8223086e247b23cfecd07c654f, type: 3}
   sniperPrefab: {fileID: 4460326897581478604, guid: 47911d4d7c2839b498b6f57b94660c48, type: 3}
   shotgunMountTransform: {fileID: 8096478807965938621}
@@ -332,6 +351,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa1470c27fa94912aee09fc200c1e0c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Controllers.Player.PlayerController
+--- !u!114 &7869963449761756118
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3916445856850801725}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f0af22386c940079995ed9ddc0eedb5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Components.HealthComponent
+  owner: {fileID: 0}
+  maxHealth: 100
+--- !u!114 &8284455876908917826
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3916445856850801725}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6488b555901491e83af33ad9ee2ec7d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Components.PlayerLevelComponent
+  owner: {fileID: 0}
+  requiredExperiencePerLevel: 100
+  experiencePickupRange: 2.5
 --- !u!1 &5180445790377556185
 GameObject:
   m_ObjectHideFlags: 0
