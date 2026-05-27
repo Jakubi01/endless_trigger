@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: c890e8defbb538a47a2a4f5629f16165
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 370476
+  packageName: Pixel World - Ultimate Bundle
+  packageVersion: 1.0
+  assetPath: Assets/PixelWorld/Animations/Player2/Player2.controller
+  uploadId: 891686

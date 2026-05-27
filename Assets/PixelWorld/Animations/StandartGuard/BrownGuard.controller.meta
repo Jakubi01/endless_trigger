@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 2c64e13ba86741a40ad9059bffe31a14
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 370476
+  packageName: Pixel World - Ultimate Bundle
+  packageVersion: 1.0
+  assetPath: Assets/PixelWorld/Animations/StandartGuard/BrownGuard.controller
+  uploadId: 891686

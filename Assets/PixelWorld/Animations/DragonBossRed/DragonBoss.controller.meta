@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 20d83acc530891540b0e56de8f0ab7b1
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 370476
+  packageName: Pixel World - Ultimate Bundle
+  packageVersion: 1.0
+  assetPath: Assets/PixelWorld/Animations/DragonBossRed/DragonBoss.controller
+  uploadId: 891686

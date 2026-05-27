@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 381f9858a811c3047ad3fc994276a980
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 370476
+  packageName: Pixel World - Ultimate Bundle
+  packageVersion: 1.0
+  assetPath: Assets/PixelWorld/Animations/Lieutenant/Lieutenant_Attack.controller
+  uploadId: 891686

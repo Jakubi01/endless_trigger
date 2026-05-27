@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: a7914a251459d51409dcf28984b57add
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 370476
+  packageName: Pixel World - Ultimate Bundle
+  packageVersion: 1.0
+  assetPath: Assets/PixelWorld/Animations/Flag/FlagGreen.controller
+  uploadId: 891686

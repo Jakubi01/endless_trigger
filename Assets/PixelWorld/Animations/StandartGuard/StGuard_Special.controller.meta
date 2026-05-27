@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: d7baaf6c3651d7d49a53e0fe2eaa82cc
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 370476
+  packageName: Pixel World - Ultimate Bundle
+  packageVersion: 1.0
+  assetPath: Assets/PixelWorld/Animations/StandartGuard/StGuard_Special.controller
+  uploadId: 891686

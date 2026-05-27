@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: d389308bd5adc584d837af375457b9f3
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 370476
+  packageName: Pixel World - Ultimate Bundle
+  packageVersion: 1.0
+  assetPath: Assets/PixelWorld/Animations/UnderKing/UnderKing.controller
+  uploadId: 891686

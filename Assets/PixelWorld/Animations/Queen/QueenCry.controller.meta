@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 706cb21aed98af1418d58cb1d0cb79ee
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 370476
+  packageName: Pixel World - Ultimate Bundle
+  packageVersion: 1.0
+  assetPath: Assets/PixelWorld/Animations/Queen/QueenCry.controller
+  uploadId: 891686

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 094de839312f2664a95183805a921680
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 370476
+  packageName: Pixel World - Ultimate Bundle
+  packageVersion: 1.0
+  assetPath: Assets/PixelWorld/Animations/BlueGuard/BlueG_Special.controller
+  uploadId: 891686

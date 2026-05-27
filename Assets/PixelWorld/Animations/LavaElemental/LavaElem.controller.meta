@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: f493903870fbe88428799c56b99f30ef
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 370476
+  packageName: Pixel World - Ultimate Bundle
+  packageVersion: 1.0
+  assetPath: Assets/PixelWorld/Animations/LavaElemental/LavaElem.controller
+  uploadId: 891686

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 119a5dabcf857944bab07e3e89a90972
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 370476
+  packageName: Pixel World - Ultimate Bundle
+  packageVersion: 1.0
+  assetPath: Assets/PixelWorld/Animations/Other/Gates/Gates.controller
+  uploadId: 891686

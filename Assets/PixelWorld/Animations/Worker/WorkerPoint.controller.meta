@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 78ddd149b41b3fa42a60c5d1bd1e4a7e
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 370476
+  packageName: Pixel World - Ultimate Bundle
+  packageVersion: 1.0
+  assetPath: Assets/PixelWorld/Animations/Worker/WorkerPoint.controller
+  uploadId: 891686

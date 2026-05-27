@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 3c53ce2787de703408c369ff471aa2d9
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 370476
+  packageName: Pixel World - Ultimate Bundle
+  packageVersion: 1.0
+  assetPath: Assets/PixelWorld/Animations/DemonDog/DemonicDog.controller
+  uploadId: 891686

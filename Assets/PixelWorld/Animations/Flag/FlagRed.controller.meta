@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: eaddb4e6daef34f4d85b2e6a55bb1d31
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 370476
+  packageName: Pixel World - Ultimate Bundle
+  packageVersion: 1.0
+  assetPath: Assets/PixelWorld/Animations/Flag/FlagRed.controller
+  uploadId: 891686

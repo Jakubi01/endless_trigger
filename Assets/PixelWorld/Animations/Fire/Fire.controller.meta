@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: b5de7830713fd944a829278e8dfc9a36
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 370476
+  packageName: Pixel World - Ultimate Bundle
+  packageVersion: 1.0
+  assetPath: Assets/PixelWorld/Animations/Fire/Fire.controller
+  uploadId: 891686

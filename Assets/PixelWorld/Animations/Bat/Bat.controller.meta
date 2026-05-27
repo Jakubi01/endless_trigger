@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: c8d64ce9b2429624092fe3580fbfd9c8
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 370476
+  packageName: Pixel World - Ultimate Bundle
+  packageVersion: 1.0
+  assetPath: Assets/PixelWorld/Animations/Bat/Bat.controller
+  uploadId: 891686

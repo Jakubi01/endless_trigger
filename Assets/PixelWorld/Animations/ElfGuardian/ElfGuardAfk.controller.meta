@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 48e30ff15f6f2ee43b410538bd8acf6b
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 370476
+  packageName: Pixel World - Ultimate Bundle
+  packageVersion: 1.0
+  assetPath: Assets/PixelWorld/Animations/ElfGuardian/ElfGuardAfk.controller
+  uploadId: 891686

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 8fe343b3489a2d04fb672748af9c9f4f
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 370476
+  packageName: Pixel World - Ultimate Bundle
+  packageVersion: 1.0
+  assetPath: Assets/PixelWorld/Animations/Necromancer/NecroCast.controller
+  uploadId: 891686
