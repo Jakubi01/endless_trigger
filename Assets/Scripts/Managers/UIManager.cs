@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.SceneManagement;
 using UserInterface;
 
 namespace Managers
@@ -35,10 +34,7 @@ namespace Managers
         
         
 #region TitleScene
-        public void OnStartButtonClicked()
-        {
-            SceneControlManager.Instance.LoadScene(GameScene);
-        }
+        public void OnStartButtonClicked() => SceneControlManager.Instance.LoadScene(GameScene);
 #endregion
 
 
@@ -71,11 +67,7 @@ namespace Managers
             _currentPauseWindow = null;
         }
 
-        public void OnGoToTitleButtonClicked()
-        {
-            SceneControlManager.Instance.LoadScene(TitleScene);
-        }
-
+        public void OnGoToTitleButtonClicked() => SceneControlManager.Instance.LoadScene(TitleScene);
 #endregion
 
 #region ExitWindow
@@ -96,11 +88,6 @@ namespace Managers
             rectTransform.anchoredPosition = Vector2.zero;
 
             TogglePause(true);
-        }
-
-        private Canvas FindActiveCanvasInScene()
-        {
-            return FindFirstObjectByType<Canvas>();
         }
 
         public void OnExitAccept()
@@ -147,21 +134,10 @@ namespace Managers
 #endregion
 
 #region Shared
-        public void OnExitButtonClicked()
-        {
-            ShowExitWindow();
-        }
-
-        public void OnSettingsButtonClicked()
-        {
-            ShowSettingWindow();
-        }
-        
-        private void TogglePause(bool pause)
-        {
-            var timeScale = pause ? 0f : 1f;
-            Time.timeScale = timeScale;
-        }
+        private Canvas FindActiveCanvasInScene() => FindFirstObjectByType<Canvas>();
+        public void OnExitButtonClicked() => ShowExitWindow();
+        public void OnSettingsButtonClicked() => ShowSettingWindow();
+        private void TogglePause(bool pause) => Time.timeScale = pause ? 0f : 1f;
 #endregion
     }
 }

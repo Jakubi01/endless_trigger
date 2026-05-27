@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
 using Managers;
 using TMPro;
+using Types;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace UserInterface
 {
-    public class SettingWindow : UserInterface
+    public class SettingWindow : MonoBehaviour
     {
         [Header("Audio UI")]
         [SerializeField] private Slider masterVolumeSlider;
@@ -16,7 +17,7 @@ namespace UserInterface
         [SerializeField] private Toggle muteToggle;
 
         [Header("Graphics UI")]
-        [SerializeField] private Toggle windowModeToggle;
+        [SerializeField] private Toggle windowModeToggle; 
         [SerializeField] private TMP_Dropdown resolutionDropdown;
         [SerializeField] private TMP_Dropdown qualityDropdown;
         [SerializeField] private TMP_Dropdown frameRateDropdown;
@@ -28,23 +29,19 @@ namespace UserInterface
         [Header("Panels")]
         [SerializeField] private GameObject creditsPanel;
 
-        private List<Resolution> _systemResolutions = new();
-        
+        private readonly List<Resolution> _systemResolutions = new();
+
         private void Awake()
         {
             InitResolutionDropdown();
         }
-        
+
         private void OnEnable()
         {
-            // UI가 켜질 때 현재 설정을 복사(백업)하고 화면 갱신
             SettingManager.Instance.BackupCurrentSettings();
             UpdateUIFromManager();
         }
-        
-        /// <summary>
-        /// 시스템 해상도 목록을 가져와 드롭다운에 빌드합니다.
-        /// </summary>
+
         private void InitResolutionDropdown()
         {
             resolutionDropdown.ClearOptions();
@@ -64,10 +61,11 @@ namespace UserInterface
                     currentResIndex = i;
                 }
             }
-            
+
             resolutionDropdown.AddOptions(options);
-            
-            int savedResIndex = SettingManager.Instance.currentSettings.resolutionIndex;
+
+            // 프로퍼티를 통해 우회 접근
+            int savedResIndex = SettingManager.Instance.ResolutionIndex;
             if (savedResIndex >= 0 && savedResIndex < _systemResolutions.Count)
             {
                 resolutionDropdown.value = savedResIndex;
@@ -75,73 +73,67 @@ namespace UserInterface
             else
             {
                 resolutionDropdown.value = currentResIndex;
-                SettingManager.Instance.currentSettings.resolutionIndex = currentResIndex;
+                SettingManager.Instance.SetResolution(currentResIndex);
             }
 
             resolutionDropdown.RefreshShownValue();
         }
 
-        /// <summary>
-        /// SettingManager의 데이터를 UI 컴포넌트들에 시각적으로 동기화
-        /// </summary>
         private void UpdateUIFromManager()
         {
-            var data = SettingManager.Instance.currentSettings;
+            var manager = SettingManager.Instance;
 
-            // 오디오
-            masterVolumeSlider.value = data.masterVolume;
-            bgmToggle.isOn = data.isBgmOn;
-            bgmVolumeSlider.value = data.bgmVolume;
-            bgmVolumeSlider.interactable = data.isBgmOn; // BGM 꺼져있으면 슬라이더 비활성화
-            sfxVolumeSlider.value = data.sfxVolume;
-            muteToggle.isOn = data.isMute;
+            // 매니저의 Getter 프로퍼티에서 값을 안전하게 바인딩
+            masterVolumeSlider.value = manager.MasterVolume;
+            bgmToggle.isOn = manager.IsBgmOn;
+            bgmVolumeSlider.value = manager.BgmVolume;
+            bgmVolumeSlider.interactable = manager.IsBgmOn;
+            sfxVolumeSlider.value = manager.SfxVolume;
+            muteToggle.isOn = manager.IsMute;
 
-            // 그래픽
-            windowModeToggle.isOn = (data.screenMode == 1);
-            resolutionDropdown.value = data.resolutionIndex;
-            qualityDropdown.value = data.qualityIndex;
-            frameRateDropdown.value = data.frameRateLimit;
+            windowModeToggle.isOn = (manager.CurrentScreenMode == ScreenMode.Windowed);
+            resolutionDropdown.value = manager.ResolutionIndex;
+            qualityDropdown.value = manager.QualityIndex;
+            frameRateDropdown.value = (int)manager.CurrentFrameRateMode;
 
-            // 게임플레이
-            sensitivitySlider.value = data.mouseSensitivity;
-            screenShakeToggle.isOn = data.useScreenShake;
+            sensitivitySlider.value = manager.MouseSensitivity;
+            screenShakeToggle.isOn = manager.UseScreenShake;
         }
-         
-        // ----- UI 값들이 변경될 때 Manager의 임시 데이터를 실시간으로 업데이트(OnValueChanged에 연결) -----
-        
-        public void OnMasterVolumeChanged(float val) { SettingManager.Instance.currentSettings.masterVolume = val; }
+    
+        public void OnMasterVolumeChanged(float val) => SettingManager.Instance.SetMasterVolume(val);
     
         public void OnBgmToggleChanged(bool val) 
         { 
-            SettingManager.Instance.currentSettings.isBgmOn = val;
-            bgmVolumeSlider.interactable = val; // 토글 상태에 따라 슬라이더 활성/비활성
+            SettingManager.Instance.SetBgmOn(val);
+            bgmVolumeSlider.interactable = val; 
         }
-        
-        public void OnBgmVolumeChanged(float val) { SettingManager.Instance.currentSettings.bgmVolume = val; }
-        public void OnSfxVolumeChanged(float val) { SettingManager.Instance.currentSettings.sfxVolume = val; }
-        public void OnMuteToggleChanged(bool val) { SettingManager.Instance.currentSettings.isMute = val; }
+        public void OnBgmVolumeChanged(float val) => SettingManager.Instance.SetBgmVolume(val);
+        public void OnSfxVolumeChanged(float val) => SettingManager.Instance.SetSfxVolume(val);
+        public void OnMuteToggleChanged(bool val) => SettingManager.Instance.SetMute(val);
 
-        public void OnWindowModeToggleChanged(bool val) { SettingManager.Instance.currentSettings.screenMode = val ? 1 : 0; }
-        public void OnResolutionChanged(int index) { SettingManager.Instance.currentSettings.resolutionIndex = index; }
-        public void OnQualityChanged(int index) { SettingManager.Instance.currentSettings.qualityIndex = index; }
-        public void OnFrameRateChanged(int index) { SettingManager.Instance.currentSettings.frameRateLimit = index; }
+        public void OnWindowModeToggleChanged(bool val) => SettingManager.Instance.SetScreenMode(val ? ScreenMode.Windowed : ScreenMode.FullScreen);
+        public void OnResolutionChanged(int index) => SettingManager.Instance.SetResolution(index);
+        public void OnQualityChanged(int index) => SettingManager.Instance.SetQuality(index);
+        public void OnFrameRateChanged(int index) => SettingManager.Instance.SetFrameRate((FrameRateMode)index);
 
-        public void OnSensitivityChanged(float val) { SettingManager.Instance.currentSettings.mouseSensitivity = val; }
-        public void OnScreenShakeToggleChanged(bool val) { SettingManager.Instance.currentSettings.useScreenShake = val; }
-        
+        public void OnSensitivityChanged(float val) => SettingManager.Instance.SetMouseSensitivity(val);
+        public void OnScreenShakeToggleChanged(bool val) => SettingManager.Instance.SetScreenShake(val);
+
+        // --- 제어 버튼 ---
+
         public void OnClickApply()
         {
             SettingManager.Instance.SaveSettings();
-            gameObject.SetActive(false); // 세팅 창 닫기
+            gameObject.SetActive(false);
         }
 
         public void OnClickCancel()
         {
             SettingManager.Instance.RevertSettings();
-            gameObject.SetActive(false); // 세팅 창 닫기
+            gameObject.SetActive(false);
         }
 
-        public void OnClickOpenCredits() { creditsPanel.SetActive(true); }
-        public void OnClickCloseCredits() { creditsPanel.SetActive(false); }
+        public void OnClickOpenCredits() => creditsPanel.SetActive(true);
+        public void OnClickCloseCredits() => creditsPanel.SetActive(false);
     }
 }
