@@ -133,10 +133,24 @@ namespace Managers
         }
         
         // 그래픽 세팅은 조작 단계에서 프리즈/깜빡임 방지를 위해 ApplyGraphicsSettings를 실시간 호출하지 않음
-        public void SetScreenMode(ScreenMode mode)   => _currentSettings.screenMode = mode;
-        public void SetResolution(int index)         => _currentSettings.resolutionIndex = index;
-        public void SetQuality(int index)            => _currentSettings.qualityIndex = index;
-        public void SetFrameRate(FrameRateMode mode) => _currentSettings.frameRateMode = mode;
+        public void SetScreenMode(ScreenMode mode) => _currentSettings.screenMode = mode;
+
+        public void SetResolution(int index)
+        {
+            _currentSettings.resolutionIndex = Mathf.Clamp(index, 0, Mathf.Max(0, Screen.resolutions.Length - 1));
+        }
+
+        public void SetQuality(int index)
+        {
+            _currentSettings.qualityIndex = Mathf.Clamp(index, 0, Mathf.Max(0, QualitySettings.names.Length - 1));
+        }
+
+        public void SetFrameRate(FrameRateMode mode)
+        {
+            _currentSettings.frameRateMode = Enum.IsDefined(typeof(FrameRateMode), mode)
+                ? mode
+                : FrameRateMode.FPS60;
+        }
         
         public void SetMouseSensitivity(float sensitivity)
         {
@@ -179,7 +193,9 @@ namespace Managers
                 Screen.SetResolution(res.width, res.height, mode);
             }
 
+            _currentSettings.qualityIndex = Mathf.Clamp(_currentSettings.qualityIndex, 0, Mathf.Max(0, QualitySettings.names.Length - 1));
             QualitySettings.SetQualityLevel(_currentSettings.qualityIndex, true);
+            QualitySettings.vSyncCount = 0;
 
             switch (_currentSettings.frameRateMode)
             {
@@ -189,6 +205,7 @@ namespace Managers
                 case FrameRateMode.FPS240:   Application.targetFrameRate = 240;  break;
                 case FrameRateMode.FPS300:   Application.targetFrameRate = 300;  break;
                 case FrameRateMode.Uncapped: Application.targetFrameRate = -1;   break;
+                default:                      Application.targetFrameRate = 60;   break;
             }
         }
 

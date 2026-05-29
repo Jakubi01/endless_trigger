@@ -55,19 +55,24 @@ namespace Managers
             
             rectTransform.anchoredPosition = Vector2.zero;
 
-            TogglePause(true);
+            RefreshPauseState();
         }
 
         public void OnContinueButtonClicked()
         {
             if (_currentPauseWindow == null) return;
-            TogglePause(false);
             
             Destroy(_currentPauseWindow.gameObject);
             _currentPauseWindow = null;
+            RefreshPauseState();
         }
 
-        public void OnGoToTitleButtonClicked() => SceneControlManager.Instance.LoadScene(TitleScene);
+        public void OnGoToTitleButtonClicked()
+        {
+            ClearWindowReferences();
+            RefreshPauseState();
+            SceneControlManager.Instance.LoadScene(TitleScene);
+        }
 #endregion
 
 #region ExitWindow
@@ -87,12 +92,13 @@ namespace Managers
             
             rectTransform.anchoredPosition = Vector2.zero;
 
-            TogglePause(true);
+            RefreshPauseState();
         }
 
         public void OnExitAccept()
         {
-            TogglePause(false);
+            ClearWindowReferences();
+            RefreshPauseState();
             
         #if UNITY_EDITOR
             UnityEditor.EditorApplication.isPlaying = false;
@@ -104,10 +110,10 @@ namespace Managers
         public void OnExitReject()
         {
             if (_currentExitWindow == null) return;
-            TogglePause(false);
             
             Destroy(_currentExitWindow.gameObject);
             _currentExitWindow = null;
+            RefreshPauseState();
         }
 #endregion
 
@@ -128,7 +134,22 @@ namespace Managers
             if (!rectTransform) return;
             
             rectTransform.anchoredPosition = Vector2.zero;
-            TogglePause(true);
+            RefreshPauseState();
+        }
+
+        public void OnSettingWindowClosed(SettingWindow settingWindow)
+        {
+            if (_currentSettingWindow == settingWindow)
+            {
+                Destroy(_currentSettingWindow.gameObject);
+                _currentSettingWindow = null;
+            }
+            else if (settingWindow)
+            {
+                Destroy(settingWindow.gameObject);
+            }
+
+            RefreshPauseState();
         }
 
 #endregion
@@ -137,7 +158,23 @@ namespace Managers
         private Canvas FindActiveCanvasInScene() => FindFirstObjectByType<Canvas>();
         public void OnExitButtonClicked() => ShowExitWindow();
         public void OnSettingsButtonClicked() => ShowSettingWindow();
-        private void TogglePause(bool pause) => Time.timeScale = pause ? 0f : 1f;
+
+        private void ClearWindowReferences()
+        {
+            _currentExitWindow = null;
+            _currentSettingWindow = null;
+            _currentPauseWindow = null;
+        }
+
+        private void RefreshPauseState()
+        {
+            Time.timeScale = HasBlockingWindow() ? 0f : 1f;
+        }
+
+        private bool HasBlockingWindow()
+        {
+            return _currentExitWindow || _currentSettingWindow || _currentPauseWindow;
+        }
 #endregion
     }
 }

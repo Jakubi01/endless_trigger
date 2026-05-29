@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+using System;
+using System.Collections.Generic;
 using Managers;
 using TMPro;
 using Types;
@@ -17,7 +18,7 @@ namespace UserInterface
         [SerializeField] private Toggle muteToggle;
 
         [Header("Graphics UI")]
-        [SerializeField] private Toggle windowModeToggle; 
+        [SerializeField] private Toggle windowModeToggle;
         [SerializeField] private TMP_Dropdown resolutionDropdown;
         [SerializeField] private TMP_Dropdown qualityDropdown;
         [SerializeField] private TMP_Dropdown frameRateDropdown;
@@ -34,6 +35,9 @@ namespace UserInterface
         private void Awake()
         {
             InitResolutionDropdown();
+            InitQualityDropdown();
+            InitFrameRateDropdown();
+            RegisterUIEvents();
         }
 
         private void OnEnable()
@@ -42,9 +46,15 @@ namespace UserInterface
             UpdateUIFromManager();
         }
 
+        private void OnDestroy()
+        {
+            UnregisterUIEvents();
+        }
+
         private void InitResolutionDropdown()
         {
             resolutionDropdown.ClearOptions();
+            _systemResolutions.Clear();
             _systemResolutions.AddRange(Screen.resolutions);
 
             List<string> options = new List<string>();
@@ -64,49 +74,111 @@ namespace UserInterface
 
             resolutionDropdown.AddOptions(options);
 
-            // 프로퍼티를 통해 우회 접근
             int savedResIndex = SettingManager.Instance.ResolutionIndex;
             if (savedResIndex >= 0 && savedResIndex < _systemResolutions.Count)
             {
-                resolutionDropdown.value = savedResIndex;
+                resolutionDropdown.SetValueWithoutNotify(savedResIndex);
             }
             else
             {
-                resolutionDropdown.value = currentResIndex;
+                resolutionDropdown.SetValueWithoutNotify(currentResIndex);
                 SettingManager.Instance.SetResolution(currentResIndex);
             }
 
             resolutionDropdown.RefreshShownValue();
         }
 
+        private void InitQualityDropdown()
+        {
+            qualityDropdown.ClearOptions();
+
+            List<string> options = new(QualitySettings.names);
+            qualityDropdown.AddOptions(options);
+
+            qualityDropdown.SetValueWithoutNotify(GetValidQualityIndex(SettingManager.Instance.QualityIndex));
+            qualityDropdown.RefreshShownValue();
+        }
+
+        private void InitFrameRateDropdown()
+        {
+            frameRateDropdown.ClearOptions();
+
+            List<string> options = new List<string>();
+            foreach (FrameRateMode mode in Enum.GetValues(typeof(FrameRateMode)))
+            {
+                options.Add(GetFrameRateLabel(mode));
+            }
+
+            frameRateDropdown.AddOptions(options);
+            frameRateDropdown.SetValueWithoutNotify(GetValidFrameRateIndex((int)SettingManager.Instance.CurrentFrameRateMode));
+            frameRateDropdown.RefreshShownValue();
+        }
+
+        private void RegisterUIEvents()
+        {
+            masterVolumeSlider.onValueChanged.AddListener(OnMasterVolumeChanged);
+            bgmToggle.onValueChanged.AddListener(OnBgmToggleChanged);
+            bgmVolumeSlider.onValueChanged.AddListener(OnBgmVolumeChanged);
+            sfxVolumeSlider.onValueChanged.AddListener(OnSfxVolumeChanged);
+            muteToggle.onValueChanged.AddListener(OnMuteToggleChanged);
+
+            windowModeToggle.onValueChanged.AddListener(OnWindowModeToggleChanged);
+            resolutionDropdown.onValueChanged.AddListener(OnResolutionChanged);
+            qualityDropdown.onValueChanged.AddListener(OnQualityChanged);
+            frameRateDropdown.onValueChanged.AddListener(OnFrameRateChanged);
+
+            sensitivitySlider.onValueChanged.AddListener(OnSensitivityChanged);
+            screenShakeToggle.onValueChanged.AddListener(OnScreenShakeToggleChanged);
+        }
+
+        private void UnregisterUIEvents()
+        {
+            masterVolumeSlider.onValueChanged.RemoveListener(OnMasterVolumeChanged);
+            bgmToggle.onValueChanged.RemoveListener(OnBgmToggleChanged);
+            bgmVolumeSlider.onValueChanged.RemoveListener(OnBgmVolumeChanged);
+            sfxVolumeSlider.onValueChanged.RemoveListener(OnSfxVolumeChanged);
+            muteToggle.onValueChanged.RemoveListener(OnMuteToggleChanged);
+
+            windowModeToggle.onValueChanged.RemoveListener(OnWindowModeToggleChanged);
+            resolutionDropdown.onValueChanged.RemoveListener(OnResolutionChanged);
+            qualityDropdown.onValueChanged.RemoveListener(OnQualityChanged);
+            frameRateDropdown.onValueChanged.RemoveListener(OnFrameRateChanged);
+
+            sensitivitySlider.onValueChanged.RemoveListener(OnSensitivityChanged);
+            screenShakeToggle.onValueChanged.RemoveListener(OnScreenShakeToggleChanged);
+        }
+
         private void UpdateUIFromManager()
         {
             var manager = SettingManager.Instance;
 
-            // 매니저의 Getter 프로퍼티에서 값을 안전하게 바인딩
-            masterVolumeSlider.value = manager.MasterVolume;
-            bgmToggle.isOn = manager.IsBgmOn;
-            bgmVolumeSlider.value = manager.BgmVolume;
+            masterVolumeSlider.SetValueWithoutNotify(manager.MasterVolume);
+            bgmToggle.SetIsOnWithoutNotify(manager.IsBgmOn);
+            bgmVolumeSlider.SetValueWithoutNotify(manager.BgmVolume);
             bgmVolumeSlider.interactable = manager.IsBgmOn;
-            sfxVolumeSlider.value = manager.SfxVolume;
-            muteToggle.isOn = manager.IsMute;
+            sfxVolumeSlider.SetValueWithoutNotify(manager.SfxVolume);
+            muteToggle.SetIsOnWithoutNotify(manager.IsMute);
 
-            windowModeToggle.isOn = (manager.CurrentScreenMode == ScreenMode.Windowed);
-            resolutionDropdown.value = manager.ResolutionIndex;
-            qualityDropdown.value = manager.QualityIndex;
-            frameRateDropdown.value = (int)manager.CurrentFrameRateMode;
+            windowModeToggle.SetIsOnWithoutNotify(manager.CurrentScreenMode == ScreenMode.Windowed);
+            resolutionDropdown.SetValueWithoutNotify(GetValidResolutionIndex(manager.ResolutionIndex));
+            qualityDropdown.SetValueWithoutNotify(GetValidQualityIndex(manager.QualityIndex));
+            frameRateDropdown.SetValueWithoutNotify(GetValidFrameRateIndex((int)manager.CurrentFrameRateMode));
+            resolutionDropdown.RefreshShownValue();
+            qualityDropdown.RefreshShownValue();
+            frameRateDropdown.RefreshShownValue();
 
-            sensitivitySlider.value = manager.MouseSensitivity;
-            screenShakeToggle.isOn = manager.UseScreenShake;
+            sensitivitySlider.SetValueWithoutNotify(manager.MouseSensitivity);
+            screenShakeToggle.SetIsOnWithoutNotify(manager.UseScreenShake);
         }
-    
+
         public void OnMasterVolumeChanged(float val) => SettingManager.Instance.SetMasterVolume(val);
-    
-        public void OnBgmToggleChanged(bool val) 
-        { 
+
+        public void OnBgmToggleChanged(bool val)
+        {
             SettingManager.Instance.SetBgmOn(val);
-            bgmVolumeSlider.interactable = val; 
+            bgmVolumeSlider.interactable = val;
         }
+
         public void OnBgmVolumeChanged(float val) => SettingManager.Instance.SetBgmVolume(val);
         public void OnSfxVolumeChanged(float val) => SettingManager.Instance.SetSfxVolume(val);
         public void OnMuteToggleChanged(bool val) => SettingManager.Instance.SetMute(val);
@@ -119,21 +191,64 @@ namespace UserInterface
         public void OnSensitivityChanged(float val) => SettingManager.Instance.SetMouseSensitivity(val);
         public void OnScreenShakeToggleChanged(bool val) => SettingManager.Instance.SetScreenShake(val);
 
-        // --- 제어 버튼 ---
-
         public void OnClickApply()
         {
             SettingManager.Instance.SaveSettings();
-            gameObject.SetActive(false);
+            CloseWindow();
         }
 
         public void OnClickCancel()
         {
             SettingManager.Instance.RevertSettings();
-            gameObject.SetActive(false);
+            CloseWindow();
         }
 
         public void OnClickOpenCredits() => creditsPanel.SetActive(true);
         public void OnClickCloseCredits() => creditsPanel.SetActive(false);
+
+        private void CloseWindow()
+        {
+            if (UIManager.Instance)
+            {
+                UIManager.Instance.OnSettingWindowClosed(this);
+                return;
+            }
+
+            gameObject.SetActive(false);
+        }
+
+        private int GetValidResolutionIndex(int index)
+        {
+            if (_systemResolutions.Count == 0)
+                return 0;
+
+            return Mathf.Clamp(index, 0, _systemResolutions.Count - 1);
+        }
+
+        private int GetValidQualityIndex(int index)
+        {
+            int maxIndex = Mathf.Max(0, QualitySettings.names.Length - 1);
+            return Mathf.Clamp(index, 0, maxIndex);
+        }
+
+        private int GetValidFrameRateIndex(int index)
+        {
+            int maxIndex = Enum.GetValues(typeof(FrameRateMode)).Length - 1;
+            return Mathf.Clamp(index, 0, maxIndex);
+        }
+
+        private string GetFrameRateLabel(FrameRateMode mode)
+        {
+            return mode switch
+            {
+                FrameRateMode.FPS30 => "30 FPS",
+                FrameRateMode.FPS60 => "60 FPS",
+                FrameRateMode.FPS120 => "120 FPS",
+                FrameRateMode.FPS240 => "240 FPS",
+                FrameRateMode.FPS300 => "300 FPS",
+                FrameRateMode.Uncapped => "Uncapped",
+                _ => mode.ToString()
+            };
+        }
     }
 }
