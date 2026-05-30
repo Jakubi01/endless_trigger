@@ -12,13 +12,16 @@ namespace UserInterface
     {
         [Header("Audio UI")]
         [SerializeField] private Slider masterVolumeSlider;
-        [SerializeField] private Toggle bgmToggle;
         [SerializeField] private Slider bgmVolumeSlider;
         [SerializeField] private Slider sfxVolumeSlider;
+        [SerializeField] private Toggle bgmToggle;
+        [SerializeField] private Text   bgmToggleText;
         [SerializeField] private Toggle muteToggle;
+        [SerializeField] private Text   muteToggleText;
 
         [Header("Graphics UI")]
         [SerializeField] private Toggle windowModeToggle;
+        [SerializeField] private Text   windowModeToggleText;
         [SerializeField] private TMP_Dropdown resolutionDropdown;
         [SerializeField] private TMP_Dropdown qualityDropdown;
         [SerializeField] private TMP_Dropdown frameRateDropdown;
@@ -26,6 +29,7 @@ namespace UserInterface
         [Header("Gameplay UI")]
         [SerializeField] private Slider sensitivitySlider;
         [SerializeField] private Toggle screenShakeToggle;
+        [SerializeField] private Text   screenShakeToggleText;
 
         [Header("Panels")]
         [SerializeField] private GameObject creditsPanel;
@@ -37,6 +41,8 @@ namespace UserInterface
             InitResolutionDropdown();
             InitQualityDropdown();
             InitFrameRateDropdown();
+            InitSlider();
+            InitToggleValue();
             RegisterUIEvents();
         }
 
@@ -114,6 +120,44 @@ namespace UserInterface
             frameRateDropdown.RefreshShownValue();
         }
 
+        private void InitSlider()
+        {
+            var master = masterVolumeSlider.fillRect.GetComponent<Image>();
+            master.type = Image.Type.Filled;
+            master.fillMethod =  Image.FillMethod.Horizontal;
+            master.fillOrigin = 0;
+            
+            var bgm = bgmVolumeSlider.fillRect.GetComponent<Image>();
+            bgm.type = Image.Type.Filled;
+            bgm.fillMethod =  Image.FillMethod.Horizontal;
+            bgm.fillOrigin = 0;
+
+            var sfx = sfxVolumeSlider.fillRect.GetComponent<Image>();
+            sfx.type = Image.Type.Filled;
+            sfx.fillMethod =   Image.FillMethod.Horizontal;
+            sfx.fillOrigin = 0;
+            
+            var sensitivity = sensitivitySlider.fillRect.GetComponent<Image>();
+            sensitivity.type = Image.Type.Filled;
+            sensitivity.fillMethod = Image.FillMethod.Horizontal;
+            sensitivity.fillOrigin = 0;
+        }
+
+        private void InitToggleValue()
+        {
+            SetToggleValue(bgmToggle, true);
+            SetToggleText(bgmToggle, bgmToggleText);
+
+            SetToggleValue(muteToggle, false);
+            SetToggleText(muteToggle, muteToggleText);
+
+            SetToggleValue(windowModeToggle, false);
+            SetToggleText(windowModeToggle, windowModeToggleText);
+
+            SetToggleValue(screenShakeToggle, true);
+            SetToggleText(screenShakeToggle, screenShakeToggleText);
+        }
+
         private void RegisterUIEvents()
         {
             masterVolumeSlider.onValueChanged.AddListener(OnMasterVolumeChanged);
@@ -171,25 +215,49 @@ namespace UserInterface
             screenShakeToggle.SetIsOnWithoutNotify(manager.UseScreenShake);
         }
 
+        private void SetToggleValue(Toggle toggle, bool value)
+        {
+            toggle.isOn = value;
+        }
+        
+        private void SetToggleText(in Toggle toggle, Text text)
+        {
+            text.text = toggle.isOn ? "ON" : "OFF";
+        }
+
         public void OnMasterVolumeChanged(float val) => SettingManager.Instance.SetMasterVolume(val);
 
         public void OnBgmToggleChanged(bool val)
         {
             SettingManager.Instance.SetBgmOn(val);
+            SetToggleText(bgmToggle, bgmToggleText);
             bgmVolumeSlider.interactable = val;
         }
 
         public void OnBgmVolumeChanged(float val) => SettingManager.Instance.SetBgmVolume(val);
         public void OnSfxVolumeChanged(float val) => SettingManager.Instance.SetSfxVolume(val);
-        public void OnMuteToggleChanged(bool val) => SettingManager.Instance.SetMute(val);
 
-        public void OnWindowModeToggleChanged(bool val) => SettingManager.Instance.SetScreenMode(val ? ScreenMode.Windowed : ScreenMode.FullScreen);
+        public void OnMuteToggleChanged(bool val)
+        {
+            SettingManager.Instance.SetMute(val);
+            SetToggleText(muteToggle, muteToggleText);
+        }
+
+        public void OnWindowModeToggleChanged(bool val)
+        {
+            SettingManager.Instance.SetScreenMode(val ? ScreenMode.Windowed : ScreenMode.FullScreen);
+            SetToggleText(windowModeToggle, windowModeToggleText);
+        }
         public void OnResolutionChanged(int index) => SettingManager.Instance.SetResolution(index);
         public void OnQualityChanged(int index) => SettingManager.Instance.SetQuality(index);
         public void OnFrameRateChanged(int index) => SettingManager.Instance.SetFrameRate((FrameRateMode)index);
 
         public void OnSensitivityChanged(float val) => SettingManager.Instance.SetMouseSensitivity(val);
-        public void OnScreenShakeToggleChanged(bool val) => SettingManager.Instance.SetScreenShake(val);
+        public void OnScreenShakeToggleChanged(bool val)
+        { 
+            SettingManager.Instance.SetScreenShake(val);
+            SetToggleText(screenShakeToggle, screenShakeToggleText);
+        }
 
         public void OnClickApply()
         {

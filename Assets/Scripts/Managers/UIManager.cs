@@ -54,6 +54,14 @@ namespace Managers
             if (!rectTransform) return;
             
             rectTransform.anchoredPosition = Vector2.zero;
+            
+            var windowCanvasGroup = _currentPauseWindow.GetComponent<CanvasGroup>();
+            if (windowCanvasGroup == null)
+            {
+                windowCanvasGroup = _currentPauseWindow.gameObject.AddComponent<CanvasGroup>();
+            }
+            windowCanvasGroup.ignoreParentGroups = true;
+            windowCanvasGroup.interactable = true;
 
             RefreshPauseState();
         }
@@ -61,6 +69,10 @@ namespace Managers
         public void OnContinueButtonClicked()
         {
             if (_currentPauseWindow == null) return;
+            
+            var windowCanvasGroup = _currentExitWindow.GetComponent<CanvasGroup>();
+            windowCanvasGroup.ignoreParentGroups = true;
+            windowCanvasGroup.interactable = true;
             
             Destroy(_currentPauseWindow.gameObject);
             _currentPauseWindow = null;
@@ -92,6 +104,16 @@ namespace Managers
             
             rectTransform.anchoredPosition = Vector2.zero;
 
+            activeCanvas.GetComponent<CanvasGroup>().interactable = false;
+            
+            var windowCanvasGroup = _currentExitWindow.GetComponent<CanvasGroup>();
+            if (windowCanvasGroup == null)
+            {
+                windowCanvasGroup = _currentExitWindow.gameObject.AddComponent<CanvasGroup>();
+            }
+            windowCanvasGroup.ignoreParentGroups = true;
+            windowCanvasGroup.interactable = true;
+            
             RefreshPauseState();
         }
 
@@ -111,8 +133,15 @@ namespace Managers
         {
             if (_currentExitWindow == null) return;
             
+            var windowCanvasGroup = _currentExitWindow.GetComponent<CanvasGroup>();
+            windowCanvasGroup.ignoreParentGroups = false;
+            windowCanvasGroup.interactable = false;
+            
+            FindActiveCanvasInScene().GetComponent<CanvasGroup>().interactable = true;
+            
             Destroy(_currentExitWindow.gameObject);
             _currentExitWindow = null;
+            
             RefreshPauseState();
         }
 #endregion
