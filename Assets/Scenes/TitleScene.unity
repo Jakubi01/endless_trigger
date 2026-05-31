@@ -299,6 +299,8 @@ MonoBehaviour:
   exitWindowPrefab: {fileID: 1250526945027613956, guid: 6b81e8ad0890c20458d1d53e99cdd213, type: 3}
   settingWindowPrefab: {fileID: 3559841661632273867, guid: dbc2f4401e1b08c4ab72e8e7c3b07af5, type: 3}
   pauseWindowPrefab: {fileID: 7755613096903097542, guid: 41583e4b1d0361544aea844de53278f3, type: 3}
+  gameOverWindowPrefab: {fileID: 4258283184057386960, guid: b37bf52ab28701b4583b988982d1ad9c, type: 3}
+  goToTitleWindowPrefab: {fileID: -1047304699291107590, guid: 3dc44c5ce64a2d94e92cf14928fff53d, type: 3}
 --- !u!1 &223553412
 GameObject:
   m_ObjectHideFlags: 0
@@ -995,6 +997,7 @@ GameObject:
   - component: {fileID: 1337802993}
   - component: {fileID: 1337802992}
   - component: {fileID: 1337802996}
+  - component: {fileID: 1337802997}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -1101,6 +1104,22 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &1337802997
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1337802991}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62ef54bb9d3f4b2f9d5e728a24a9970d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UserInterface.TitleWindow
+  owner: {fileID: 0}
+  startButton: {fileID: 1997271883}
+  settingButton: {fileID: 50101502}
+  exitButton: {fileID: 438518953}
 --- !u!1 &1414932745
 GameObject:
   m_ObjectHideFlags: 0

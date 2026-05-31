@@ -174,6 +174,7 @@ namespace Character.Player
         {
             StopAllWeapons();
             gameObject.SetActive(false);
+            UIManager.Instance.ShowGameOverWindow();
         }
 
         private void ApplyLevelUpUpgrade()

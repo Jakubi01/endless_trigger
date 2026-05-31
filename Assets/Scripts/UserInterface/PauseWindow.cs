@@ -54,7 +54,7 @@ namespace UserInterface
 
         private void OnGoToTitleButtonClicked()
         {
-            UIManager.Instance.OnGoToTitleButtonClicked();
+            UIManager.Instance.ShowGoToTitleWindow();
         }
 
         private void OnExitButtonClicked()

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
 
@@ -11,6 +12,7 @@ namespace Items.Projectile
         [SerializeField] private int maxPoolSize = 50;
 
         private IObjectPool<GameObject> _pool;
+        private readonly List<GameObject> _createdProjectiles = new();
 
         private void Awake()
         {
@@ -23,6 +25,22 @@ namespace Items.Projectile
                 defaultCapacity: defaultCapacity,
                 maxSize: maxPoolSize
             );
+        }
+
+        private void OnDestroy()
+        {
+            _pool?.Clear();
+            _pool = null;
+
+            foreach (GameObject projectile in _createdProjectiles)
+            {
+                if (projectile)
+                {
+                    Destroy(projectile);
+                }
+            }
+
+            _createdProjectiles.Clear();
         }
 
         public GameObject Spawn(Vector3 position, Quaternion rotation, Vector2 direction, float damage = 0f, int pierceCount = 0)
@@ -51,6 +69,7 @@ namespace Items.Projectile
         private GameObject OnCreateProjectile()
         {
             GameObject instance = Instantiate(projectilePrefab);
+            _createdProjectiles.Add(instance);
             instance.SetActive(false);
             return instance;
         }
@@ -72,6 +91,8 @@ namespace Items.Projectile
 
         private void ReleaseProjectile(GameObject projectile)
         {
+            if (_pool == null || !projectile) return;
+
             _pool.Release(projectile);
         }
     }

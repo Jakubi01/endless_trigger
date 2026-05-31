@@ -8,12 +8,12 @@ namespace UserInterface
     public class ExitWindow : UserInterface
     {
         [SerializeField] private Button acceptButton;
-        [SerializeField] private Button rejectButton;
+        [SerializeField] private Button cancelButton;
 
         private void Start()
         {
             acceptButton.onClick.AddListener(OnAccept);
-            rejectButton.onClick.AddListener(OnReject);
+            cancelButton.onClick.AddListener(OnReject);
         }
         
         private void OnDestroy()
@@ -21,8 +21,8 @@ namespace UserInterface
             if(acceptButton != null)
                 acceptButton.onClick.RemoveListener(OnAccept);
             
-            if(rejectButton != null)
-                rejectButton.onClick.RemoveListener(OnReject);
+            if(cancelButton != null)
+                cancelButton.onClick.RemoveListener(OnReject);
         }
 
         private void OnAccept()
@@ -32,7 +32,7 @@ namespace UserInterface
 
         private void OnReject()
         {
-            UIManager.Instance.OnExitReject();
+            UIManager.Instance.OnExitCancel();
         }
     }
 }

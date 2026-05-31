@@ -719,6 +719,7 @@ MonoBehaviour:
   playerSpawnPoint: {fileID: 635242748}
   cameraBoundingShape: {fileID: 1922341578}
   disableSceneCameraTemplate: 1
+  gameHudPrefab: {fileID: -1142202899732413847, guid: 43074746bcb5331459a324658bfa4ffc, type: 3}
 --- !u!1 &1922341575
 GameObject:
   m_ObjectHideFlags: 0

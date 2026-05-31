@@ -18,6 +18,12 @@ namespace Managers
         
         [SerializeField] private PauseWindow pauseWindowPrefab;
         private PauseWindow _currentPauseWindow;
+        
+        [SerializeField] private GameOverWindow gameOverWindowPrefab;
+        private GameOverWindow _currentGameOverWindow;
+        
+        [SerializeField] private GoToTitleWindow goToTitleWindowPrefab;
+        private GoToTitleWindow _currentGoToTitleWindow;
 
         private void Awake()
         {
@@ -30,6 +36,16 @@ namespace Managers
             {
                 Destroy(gameObject);
             }
+        }
+
+        private void OnDestroy()
+        {
+            if (Instance == this)
+            {
+                Instance = null;
+            }
+
+            Time.timeScale = 1f;
         }
         
         
@@ -70,20 +86,13 @@ namespace Managers
         {
             if (_currentPauseWindow == null) return;
             
-            var windowCanvasGroup = _currentExitWindow.GetComponent<CanvasGroup>();
+            var windowCanvasGroup = _currentPauseWindow.GetComponent<CanvasGroup>();
             windowCanvasGroup.ignoreParentGroups = true;
             windowCanvasGroup.interactable = true;
             
             Destroy(_currentPauseWindow.gameObject);
             _currentPauseWindow = null;
             RefreshPauseState();
-        }
-
-        public void OnGoToTitleButtonClicked()
-        {
-            ClearWindowReferences();
-            RefreshPauseState();
-            SceneControlManager.Instance.LoadScene(TitleScene);
         }
 #endregion
 
@@ -129,7 +138,7 @@ namespace Managers
         #endif
         }
 
-        public void OnExitReject()
+        public void OnExitCancel()
         {
             if (_currentExitWindow == null) return;
             
@@ -183,6 +192,81 @@ namespace Managers
 
 #endregion
 
+#region GameOver
+        public void ShowGameOverWindow()
+        {
+            if (_currentGameOverWindow) return;
+            if (!gameOverWindowPrefab) return;
+            
+            var activeCanvas = FindActiveCanvasInScene();
+            if(!activeCanvas) return;
+            
+            _currentGameOverWindow = Instantiate(gameOverWindowPrefab, activeCanvas.transform);
+            _currentGameOverWindow.transform.SetAsLastSibling();
+            
+            var rectTransform = _currentGameOverWindow.GetComponent<RectTransform>();
+            if (!rectTransform) return;
+            
+            rectTransform.anchoredPosition = Vector2.zero;
+            RefreshPauseState();
+        }
+
+        public void OnGameOverWindowClosed(GameOverWindow gameOverWindow)
+        {
+            if (_currentGameOverWindow == gameOverWindow)
+            {
+                Destroy(_currentGameOverWindow.gameObject);
+                _currentGameOverWindow = null;
+            }
+            else if (gameOverWindow)
+            {
+                Destroy(gameOverWindow.gameObject);
+            }
+        }
+
+#endregion
+
+#region GoToTitle
+
+public void ShowGoToTitleWindow()
+        {
+            if (_currentGoToTitleWindow) return;
+            if (!goToTitleWindowPrefab) return;
+            
+            var activeCanvas = FindActiveCanvasInScene();
+            if(!activeCanvas) return;
+            
+            _currentGoToTitleWindow = Instantiate(goToTitleWindowPrefab, activeCanvas.transform);
+            _currentGoToTitleWindow.transform.SetAsLastSibling();
+            
+            var rectTransform = _currentGoToTitleWindow.GetComponent<RectTransform>();
+            if (!rectTransform) return;
+            
+            rectTransform.anchoredPosition = Vector2.zero;
+            RefreshPauseState();
+        }
+        
+        public void OnGoToTitleButtonClicked()
+        {
+            ClearWindowReferences();
+            RefreshPauseState();
+            SceneControlManager.Instance.LoadScene(TitleScene);
+        }
+
+        public void OnGoToTitleWindowClosed(GoToTitleWindow goToTitleWindow)
+        {
+            if(_currentGoToTitleWindow == goToTitleWindow)
+            {
+                Destroy(_currentGoToTitleWindow.gameObject);
+                _currentGoToTitleWindow = null;
+            }
+            else if (goToTitleWindow)
+            {
+                Destroy(goToTitleWindow.gameObject);
+            }
+        }
+#endregion
+
 #region Shared
         private Canvas FindActiveCanvasInScene() => FindFirstObjectByType<Canvas>();
         public void OnExitButtonClicked() => ShowExitWindow();
@@ -190,9 +274,25 @@ namespace Managers
 
         private void ClearWindowReferences()
         {
+            DestroyWindowIfAlive(_currentExitWindow);
+            DestroyWindowIfAlive(_currentSettingWindow);
+            DestroyWindowIfAlive(_currentPauseWindow);
+            DestroyWindowIfAlive(_currentGameOverWindow);
+            DestroyWindowIfAlive(_currentGoToTitleWindow);
+
             _currentExitWindow = null;
             _currentSettingWindow = null;
             _currentPauseWindow = null;
+            _currentGameOverWindow = null;
+            _currentGoToTitleWindow = null;
+        }
+
+        private void DestroyWindowIfAlive(MonoBehaviour window)
+        {
+            if (window)
+            {
+                Destroy(window.gameObject);
+            }
         }
 
         private void RefreshPauseState()
@@ -202,7 +302,7 @@ namespace Managers
 
         private bool HasBlockingWindow()
         {
-            return _currentExitWindow || _currentSettingWindow || _currentPauseWindow;
+            return _currentExitWindow || _currentSettingWindow || _currentPauseWindow || _currentGameOverWindow || _currentGoToTitleWindow;
         }
 #endregion
     }

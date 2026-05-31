@@ -20,6 +20,14 @@ namespace Managers
             }
         }
 
+        private void OnDestroy()
+        {
+            if (Instance == this)
+            {
+                Instance = null;
+            }
+        }
+
         public void LoadScene(string sceneName)
         {
             Time.timeScale = 1f;

@@ -18,5 +18,13 @@ namespace Managers
                 Destroy(gameObject);
             }
         }
+
+        private void OnDestroy()
+        {
+            if (Instance == this)
+            {
+                Instance = null;
+            }
+        }
     }
 }

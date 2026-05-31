@@ -10,6 +10,7 @@ namespace Components
         private float _currentHealth;
 
         public event Action Died;
+        public event Action HealthChanged;
         public bool IsAlive => _currentHealth > 0f;
         public float CurrentHealth => _currentHealth;
         public float MaxHealth => maxHealth;
@@ -27,11 +28,16 @@ namespace Components
             {
                 ResetHealth();
             }
+            else
+            {
+                HealthChanged?.Invoke();
+            }
         }
 
         public void ResetHealth()
         {
             _currentHealth = maxHealth;
+            HealthChanged?.Invoke();
         }
 
         public void TakeDamage(float amount)
@@ -39,6 +45,8 @@ namespace Components
             if (amount <= 0f || _currentHealth <= 0f) return;
 
             _currentHealth = Mathf.Max(0f, _currentHealth - amount);
+            HealthChanged?.Invoke();
+
             if (_currentHealth <= 0f)
             {
                 Died?.Invoke();

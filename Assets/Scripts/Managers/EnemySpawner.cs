@@ -25,6 +25,7 @@ namespace Managers
         [SerializeField] private EnemyData[] enemyData;
         [SerializeField] private float minSpawnDistanceFromPlayer = 5f;
         [SerializeField] private float maxSpawnDistanceFromPlayer = 9f;
+        [SerializeField] private float initialSpawnDelay = 5f;
         [SerializeField] private float waveDuration = 30f;
         [SerializeField] private int baseSpawnCount = 2;
         [SerializeField] private int spawnCountIncreasePerSection = 2;
@@ -41,7 +42,21 @@ namespace Managers
         private readonly List<EnemyCharacterBase> _prewarmBuffer = new();
         private PlayerCharacter _player;
         private float _elapsedTime;
-        private float _nextSpawnTime = SpawnInterval;
+        private float _nextSpawnTime;
+
+        public float ElapsedTime => _elapsedTime;
+        public float InitialSpawnDelay => initialSpawnDelay;
+        public float WaveDuration => waveDuration;
+        public float TimeUntilGameStart => Mathf.Max(0f, initialSpawnDelay - _elapsedTime);
+        public float CurrentWaveRemainingTime
+        {
+            get
+            {
+                float activeTime = Mathf.Max(0f, _elapsedTime - initialSpawnDelay);
+                float timeInWave = activeTime % waveDuration;
+                return Mathf.Max(0f, waveDuration - timeInWave);
+            }
+        }
 
         private void Awake()
         {
@@ -50,7 +65,21 @@ namespace Managers
                 maxSpawnDistanceFromPlayer = minSpawnDistanceFromPlayer;
             }
 
+            initialSpawnDelay = Mathf.Max(0f, initialSpawnDelay);
+            waveDuration = Mathf.Max(0.1f, waveDuration);
+            _nextSpawnTime = initialSpawnDelay;
             BuildPools();
+        }
+
+        private void OnDestroy()
+        {
+            foreach (EnemyPool enemyPool in _pools.Values)
+            {
+                enemyPool.Pool?.Clear();
+            }
+
+            _pools.Clear();
+            _prewarmBuffer.Clear();
         }
 
         private void Update()
@@ -64,8 +93,9 @@ namespace Managers
             _elapsedTime += Time.deltaTime;
             if (_elapsedTime < _nextSpawnTime) return;
 
-            SpawnWaveSection(_nextSpawnTime);
-            _nextSpawnTime = _elapsedTime + SpawnInterval;
+            float activeSpawnTime = Mathf.Max(0f, _nextSpawnTime - initialSpawnDelay);
+            SpawnWaveSection(activeSpawnTime);
+            _nextSpawnTime += SpawnInterval;
         }
 
         private void BuildPools()

@@ -1,6 +1,7 @@
 using Character.Player;
 using Unity.Cinemachine;
 using UnityEngine;
+using UserInterface;
 
 namespace Managers
 {
@@ -11,15 +12,18 @@ namespace Managers
         [SerializeField] private Transform playerSpawnPoint;
         [SerializeField] private Collider2D cameraBoundingShape;
         [SerializeField] private bool disableSceneCameraTemplate = true;
+        [SerializeField] private GameHUD gameHudPrefab;
 
         private PlayerCharacter _player;
         private CinemachineCamera _cinemachineCamera;
+        private GameHUD _gameHUD;
 
         private void Start()
         {
             SpawnPlayer();
             SpawnCamera();
             ConfigureCamera();
+            SpawnGameHUD();
         }
 
         private void SpawnPlayer()
@@ -66,6 +70,36 @@ namespace Managers
                 confiner.BoundingShape2D = cameraBoundingShape;
                 confiner.InvalidateBoundingShapeCache();
             }
+        }
+
+        private void SpawnGameHUD()
+        {
+            if (!gameHudPrefab)
+            {
+                Debug.LogError($"{nameof(SceneSpawnManager)}: GameHUD prefab is not assigned.", this);
+                return;
+            }
+
+            Canvas canvas = FindFirstObjectByType<Canvas>();
+            if (!canvas)
+            {
+                Debug.LogError($"{nameof(SceneSpawnManager)}: Canvas is not found in the scene.", this);
+                return;
+            }
+
+            _gameHUD = Instantiate(gameHudPrefab, canvas.transform);
+            _gameHUD.transform.SetAsFirstSibling();
+
+            if (_gameHUD.TryGetComponent(out RectTransform rectTransform))
+            {
+                rectTransform.anchorMin = Vector2.zero;
+                rectTransform.anchorMax = Vector2.one;
+                rectTransform.offsetMin = Vector2.zero;
+                rectTransform.offsetMax = Vector2.zero;
+                rectTransform.anchoredPosition = Vector2.zero;
+            }
+
+            _gameHUD.Initialize(_player, FindFirstObjectByType<EnemySpawner>());
         }
     }
 }

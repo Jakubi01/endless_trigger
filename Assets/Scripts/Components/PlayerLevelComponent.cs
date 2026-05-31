@@ -12,8 +12,10 @@ namespace Components
         private int _level = 1;
 
         public event Action LeveledUp;
+        public event Action ExperienceChanged;
         public int Level => _level;
         public int CurrentExperience => _currentExperience;
+        public int RequiredExperiencePerLevel => requiredExperiencePerLevel;
         public float ExperiencePickupRange => experiencePickupRange;
 
         public void GainExperience(int amount)
@@ -27,6 +29,8 @@ namespace Components
                 _level++;
                 LeveledUp?.Invoke();
             }
+
+            ExperienceChanged?.Invoke();
         }
     }
 }

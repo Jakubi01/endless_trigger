@@ -593,7 +593,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Are you sure want to leave?
+  m_text: Are you sure you want to return to Title?
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -620,8 +620,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 70
-  m_fontSizeBase: 70
+  m_fontSize: 52
+  m_fontSizeBase: 52
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -676,9 +676,9 @@ GameObject:
   - component: {fileID: 4209910601708190696}
   - component: {fileID: 415835040174512698}
   - component: {fileID: 5776481161780000276}
-  - component: {fileID: 1250526945027613956}
+  - component: {fileID: -1047304699291107590}
   m_Layer: 5
-  m_Name: ExitWindow
+  m_Name: GoToTitleWindow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -744,7 +744,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &1250526945027613956
+--- !u!114 &-1047304699291107590
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -753,9 +753,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 8979305421068656790}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 922f77a1d1f8beb40a341df66f1a1d94, type: 3}
+  m_Script: {fileID: 11500000, guid: c34487279162447484f5507e7fd9bff6, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::UserInterface.ExitWindow
+  m_EditorClassIdentifier: Assembly-CSharp::UserInterface.GoToTitleWindow
   owner: {fileID: 0}
   acceptButton: {fileID: 4969663038298707195}
   cancelButton: {fileID: 5816330382466137188}
