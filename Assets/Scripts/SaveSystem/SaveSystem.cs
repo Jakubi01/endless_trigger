@@ -49,6 +49,7 @@ namespace SaveSystem
         public int currentStageIndex = 0;
         public int totalPlayTimeSec = 0;
         public int gold = 0;
+        public int totalKillCount = 0;
     
         // 필요 시 인벤토리 목록 등 추가 확장 가능
     }

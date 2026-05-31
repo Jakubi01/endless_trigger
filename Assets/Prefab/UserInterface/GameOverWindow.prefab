@@ -480,6 +480,9 @@ MonoBehaviour:
   reTryButton: {fileID: 7922567798901483788}
   titleButton: {fileID: 2502800209058088467}
   exitButton: {fileID: 9072239673825371872}
+  waveClearedText: {fileID: 7089020566500679982}
+  killCountText: {fileID: 927012011924834754}
+  totalKillCountText: {fileID: 0}
 --- !u!1 &6365110893150114620
 GameObject:
   m_ObjectHideFlags: 0

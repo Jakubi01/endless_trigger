@@ -1,4 +1,5 @@
 using Managers;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,9 +10,13 @@ namespace UserInterface
         [SerializeField] private Button reTryButton;
         [SerializeField] private Button titleButton;
         [SerializeField] private Button exitButton;
+        [SerializeField] private TMP_Text waveClearedText;
+        [SerializeField] private TMP_Text killCountText;
 
         private void Start()
         {
+            RefreshResultTexts();
+
             if (reTryButton)
             {
                 reTryButton.onClick.AddListener(OnReTryButtonClicked);
@@ -60,6 +65,25 @@ namespace UserInterface
         private void OnExitButtonClicked()
         {
             UIManager.Instance.OnExitButtonClicked();
+        }
+
+        private void RefreshResultTexts()
+        {
+            GameManager gameManager = GameManager.Instance;
+            int waveClearedCount = gameManager ? gameManager.WaveClearedCount : 0;
+            int killCount = gameManager ? gameManager.KillCount : 0;
+
+            if (waveClearedText)
+            {
+                waveClearedText.SetText("{0}", waveClearedCount);
+            }
+
+            if (killCountText)
+            {
+                killCountText.SetText("{0}", killCount);
+            }
+
+            gameManager?.SaveRunProgress();
         }
     }
 }

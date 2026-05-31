@@ -33,6 +33,7 @@ namespace Managers
 
         // 인게임 플레이 진행 데이터 접근용
         public InGameSaveData InGameSave => _inGameSaveData;
+        public int TotalKillCount => _inGameSaveData?.totalKillCount ?? 0;
 
         private void Awake()
         {
@@ -106,6 +107,14 @@ namespace Managers
         public void SaveInGameProgress()
         {
             SaveSystem.SaveSystem.Save(INGAME_SAVE_FILE_NAME, _inGameSaveData);
+        }
+
+        public void AddTotalKillCount(int amount)
+        {
+            if (amount <= 0) return;
+
+            _inGameSaveData ??= new InGameSaveData();
+            _inGameSaveData.totalKillCount += amount;
         }
 
         // --- Setter APIs ---

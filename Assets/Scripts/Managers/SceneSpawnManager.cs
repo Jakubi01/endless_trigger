@@ -20,6 +20,7 @@ namespace Managers
 
         private void Start()
         {
+            GameManager.Instance?.BeginRun();
             SpawnPlayer();
             SpawnCamera();
             ConfigureCamera();

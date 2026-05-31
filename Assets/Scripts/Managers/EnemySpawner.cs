@@ -43,6 +43,7 @@ namespace Managers
         private PlayerCharacter _player;
         private float _elapsedTime;
         private float _nextSpawnTime;
+        private int _completedWaveCount;
 
         public float ElapsedTime => _elapsedTime;
         public float InitialSpawnDelay => initialSpawnDelay;
@@ -91,11 +92,25 @@ namespace Managers
             }
 
             _elapsedTime += Time.deltaTime;
+            UpdateWaveClearedCount();
             if (_elapsedTime < _nextSpawnTime) return;
 
             float activeSpawnTime = Mathf.Max(0f, _nextSpawnTime - initialSpawnDelay);
             SpawnWaveSection(activeSpawnTime);
             _nextSpawnTime += SpawnInterval;
+        }
+
+        private void UpdateWaveClearedCount()
+        {
+            float activeTime = _elapsedTime - initialSpawnDelay;
+            if (activeTime < waveDuration) return;
+
+            int completedWaveCount = Mathf.FloorToInt(activeTime / waveDuration);
+            while (_completedWaveCount < completedWaveCount)
+            {
+                _completedWaveCount++;
+                GameManager.Instance?.RegisterWaveCleared();
+            }
         }
 
         private void BuildPools()

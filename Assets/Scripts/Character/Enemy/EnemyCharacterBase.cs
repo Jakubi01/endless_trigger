@@ -127,6 +127,7 @@ namespace Character.Enemy
 
         private void Die()
         {
+            GameManager.Instance?.RegisterKill();
             _enemyManager?.SpawnExperience(transform.position, experienceReward);
             if (_releaseToPool != null)
             {
