@@ -22,6 +22,7 @@ namespace Managers
             public IObjectPool<EnemyCharacterBase> Pool;
         }
 
+        [Header("Spawn Settings")]
         [SerializeField] private EnemyData[] enemyData;
         [SerializeField] private float minSpawnDistanceFromPlayer = 5f;
         [SerializeField] private float maxSpawnDistanceFromPlayer = 9f;
@@ -32,6 +33,8 @@ namespace Managers
         [SerializeField] private int spawnCountIncreasePerWave = 1;
         [SerializeField] private float minimumZombieRatio = 0.05f;
         [SerializeField] private float maximumTankerRatio = 0.75f;
+        
+        [Header("Pool Settings")]
         [SerializeField] private int defaultPoolCapacity = 32;
         [SerializeField] private int maxPoolSize = 256;
         [SerializeField] private int prewarmCountPerEnemy = 8;
@@ -39,8 +42,15 @@ namespace Managers
         private const float SpawnInterval = 5f;
 
         private readonly Dictionary<EnemyType, EnemyPool> _pools = new();
+        private readonly List<EnemyPool> _poolList = new();
         private readonly List<EnemyCharacterBase> _prewarmBuffer = new();
         private PlayerCharacter _player;
+
+        public PlayerCharacter Player
+        {
+            get => _player;
+            set => _player = value;
+        }
         private float _elapsedTime;
         private float _nextSpawnTime;
         private int _completedWaveCount;
@@ -74,23 +84,19 @@ namespace Managers
 
         private void OnDestroy()
         {
-            foreach (EnemyPool enemyPool in _pools.Values)
+            for (int i = 0, count = _poolList.Count; i < count; i++)
             {
+                EnemyPool enemyPool = _poolList[i];
                 enemyPool.Pool?.Clear();
             }
 
             _pools.Clear();
+            _poolList.Clear();
             _prewarmBuffer.Clear();
         }
 
         private void Update()
         {
-            if (!_player)
-            {
-                _player = FindFirstObjectByType<PlayerCharacter>();
-                if (!_player) return;
-            }
-
             _elapsedTime += Time.deltaTime;
             UpdateWaveClearedCount();
             if (_elapsedTime < _nextSpawnTime) return;
@@ -116,14 +122,16 @@ namespace Managers
         private void BuildPools()
         {
             _pools.Clear();
+            _poolList.Clear();
             if (enemyData == null || enemyData.Length == 0)
             {
                 Debug.LogError($"{nameof(EnemySpawner)}: EnemyData list is empty.", this);
                 return;
             }
 
-            foreach (EnemyData data in enemyData)
+            for (int i = 0, count = enemyData.Length; i < count; i++)
             {
+                EnemyData data = enemyData[i];
                 if (!data || !data.Prefab)
                 {
                     Debug.LogError($"{nameof(EnemySpawner)}: EnemyData or prefab is not assigned.", this);
@@ -148,6 +156,7 @@ namespace Managers
                 );
 
                 _pools.Add(data.EnemyType, enemyPool);
+                _poolList.Add(enemyPool);
                 Prewarm(enemyPool);
             }
         }
@@ -168,8 +177,9 @@ namespace Managers
                 _prewarmBuffer.Add(enemyPool.Pool.Get());
             }
 
-            foreach (EnemyCharacterBase enemy in _prewarmBuffer)
+            for (int i = 0, count = _prewarmBuffer.Count; i < count; i++)
             {
+                EnemyCharacterBase enemy = _prewarmBuffer[i];
                 enemyPool.Pool.Release(enemy);
             }
         }

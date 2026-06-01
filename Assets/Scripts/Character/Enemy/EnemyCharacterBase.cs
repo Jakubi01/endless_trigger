@@ -23,7 +23,7 @@ namespace Character.Enemy
         [SerializeField] private float contactDamageInterval = 0.5f;
 
         private EnemyManager _enemyManager;
-        private float _contactDamageTimer;
+        private float _nextContactDamageTime;
         private HealthComponent _healthComponent;
         private Action<EnemyCharacterBase> _releaseToPool;
 
@@ -41,7 +41,7 @@ namespace Character.Enemy
         private void OnEnable()
         {
             _healthComponent?.ResetHealth();
-            _contactDamageTimer = 0f;
+            _nextContactDamageTime = 0f;
             _enemyManager ??= EnemyManager.Instance;
             _enemyManager?.Register(this);
         }
@@ -67,14 +67,6 @@ namespace Character.Enemy
         private void OnTriggerStay2D(Collider2D other)
         {
             TryDamagePlayer(other);
-        }
-
-        private void Update()
-        {
-            if (_contactDamageTimer > 0f)
-            {
-                _contactDamageTimer -= Time.deltaTime;
-            }
         }
 
         public void Initialize(EnemyType type, float hp, float moveSpeed, float damage, int expReward)
@@ -116,12 +108,12 @@ namespace Character.Enemy
 
         private void TryDamagePlayer(Collider2D other)
         {
-            if (_contactDamageTimer > 0f) return;
+            if (Time.time < _nextContactDamageTime) return;
 
             if (other.TryGetComponent(out PlayerCharacter player))
             {
                 player.TakeDamage(contactDamage);
-                _contactDamageTimer = contactDamageInterval;
+                _nextContactDamageTime = Time.time + contactDamageInterval;
             }
         }
 

@@ -38,6 +38,15 @@ namespace Character.Player
             if (!_enemyManager)
             {
                 Debug.LogError("씬에 EnemyManager가 없음.");
+                return;
+            }
+
+            _enemyManager.Player = this;
+
+            var es = _enemyManager.GetComponent<EnemySpawner>();
+            if (es)
+            {
+                es.Player = this;
             }
             
             GetComponent<SpriteRenderer>().sortingLayerName = "Player";
