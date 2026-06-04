@@ -1,4 +1,5 @@
 using System;
+using Managers;
 using UnityEngine;
 
 namespace Character
@@ -15,6 +16,10 @@ namespace Character
         [NonSerialized] protected float MoveSpeed;
         public Rigidbody2D CharacterRigidbody => Rb;
         public Collider2D CharacterCollider => Col;
+        
+        [Header("Events")]
+        [SerializeField] private AudioClip deathSound;
+        private static float _lastDeathSoundTime;
 
         protected virtual void Awake()
         {
@@ -47,6 +52,20 @@ namespace Character
         {
             Vector2 direction = (worldPosition - Rb.position).normalized;
             Move(direction);
+        }
+
+        protected virtual void OnDeath()
+        {
+            PlayDeathSound();
+        }
+        
+        protected void PlayDeathSound()
+        {
+            if (Time.time - _lastDeathSoundTime < 0.05f) 
+                return; 
+
+            _lastDeathSoundTime = Time.time;
+            SoundManager.Instance.PlaySFX(deathSound);
         }
     }
 }

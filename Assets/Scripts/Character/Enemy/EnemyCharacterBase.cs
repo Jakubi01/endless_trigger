@@ -50,7 +50,7 @@ namespace Character.Enemy
         {
             if (_healthComponent)
             {
-                _healthComponent.Died -= Die;
+                _healthComponent.Died -= OnDeath;
             }
         }
 
@@ -103,7 +103,7 @@ namespace Character.Enemy
                 _healthComponent = gameObject.AddComponent<HealthComponent>();
             }
 
-            _healthComponent.Died += Die;
+            _healthComponent.Died += OnDeath;
         }
 
         private void TryDamagePlayer(Collider2D other)
@@ -117,8 +117,10 @@ namespace Character.Enemy
             }
         }
 
-        private void Die()
+        protected override void OnDeath()
         {
+            base.OnDeath();
+            
             GameManager.Instance?.RegisterKill();
             _enemyManager?.SpawnExperience(transform.position, experienceReward);
             if (_releaseToPool != null)

@@ -5,8 +5,8 @@ namespace Components
 {
     public class HealthComponent : ComponentBase
     {
+        [Header("Value")]
         [SerializeField] private float maxHealth = 100f;
-
         private float _currentHealth;
 
         public event Action Died;

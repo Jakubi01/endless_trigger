@@ -56,7 +56,7 @@ namespace Character.Player
         {
             if (_healthComponent)
             {
-                _healthComponent.Died -= HandleDeath;
+                _healthComponent.Died -= OnDeath;
             }
 
             if (_levelComponent)
@@ -175,12 +175,14 @@ namespace Character.Player
                 _levelComponent = gameObject.AddComponent<PlayerLevelComponent>();
             }
 
-            _healthComponent.Died += HandleDeath;
+            _healthComponent.Died += OnDeath;
             _levelComponent.LeveledUp += ApplyLevelUpUpgrade;
         }
 
-        private void HandleDeath()
+        protected override void OnDeath()
         {
+            base.OnDeath();
+            
             StopAllWeapons();
             gameObject.SetActive(false);
             UIManager.Instance.ShowGameOverWindow();
