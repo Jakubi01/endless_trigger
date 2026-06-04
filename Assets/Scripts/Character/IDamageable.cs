@@ -5,4 +5,3 @@ namespace Character
         void TakeDamage(float amount);
     }
 }
-g
