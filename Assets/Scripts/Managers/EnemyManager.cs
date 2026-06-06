@@ -74,6 +74,8 @@ namespace Managers
 
         public GameObject FindNearestEnemy(Transform callerTransform, float range)
         {
+            if (_enemies.Count <= 0) return null;
+            
             EnemyCharacterBase nearest = null;
             float nearestSqrDistance = range * range;
 
@@ -99,6 +101,8 @@ namespace Managers
 
         public GameObject FindFarthestEnemy(Transform callerTransform, float range)
         {
+            if (_enemies.Count <= 0) return null;
+            
             EnemyCharacterBase farthest = null;
             float farthestSqrDistance = -1f;
             float maxSqrDistance = range * range;

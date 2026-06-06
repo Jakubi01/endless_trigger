@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Items.Weapon
 {
-    public class SpearAttack : WeaponBase
+    public class SpearAttack : WeaponAttackBase
     {
         [Header("Spear Attack Settings")]
         [SerializeField] private float range = 20f;
@@ -12,7 +12,7 @@ namespace Items.Weapon
 
         protected override void Attack()
         {
-            if (!CurrentTarget) return;
+            if (!owner) return;
 
             Vector2 direction = (CurrentTarget.transform.position - transform.position).normalized;
             float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
@@ -23,6 +23,8 @@ namespace Items.Weapon
 
         protected override void LookAtTarget()
         {
+            if (!owner) return;
+            
             GameObject farthest = owner.FindFarthestFromCharacter(range);
             CurrentTarget = farthest ? farthest.GetComponent<EnemyCharacterBase>() : null;
             if (!CurrentTarget) return;

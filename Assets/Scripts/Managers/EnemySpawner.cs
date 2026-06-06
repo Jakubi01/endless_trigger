@@ -243,20 +243,48 @@ namespace Managers
         }
 
         /// <summary>
-        /// 진행된 시간에 맞추어 이번 섹션의 [총 스폰 마리 수]와 [종류별 등장 가중치]를 도출
+        /// 현재 게임 진행 시간(spawnTime)을 기준으로
+        /// 이번 섹션에서 사용할 스폰 정보(총 스폰 수, 몬스터 종류별 가중치)를 계산한다.
         /// </summary>
+        /// <param name="spawnTime">게임 시작 이후 경과 시간(초)</param>
+        /// <returns>
+        /// SpawnCount     : 이번 섹션에서 생성할 몬스터 수
+        /// ZombieWeight   : 일반 좀비 등장 가중치
+        /// RusherWeight   : 러셔 등장 가중치
+        /// TankerWeight   : 탱커 등장 가중치
+        /// </returns>
         private SpawnRate GetSpawnRate(float spawnTime)
         {
+            // 현재 진행 중인 웨이브 번호 계산
             int waveNumber = Mathf.FloorToInt(spawnTime / waveDuration) + 1;
+            
+            // 현재 웨이브 내에서 경과한 시간
             float timeInWave = spawnTime % waveDuration;
+            
+            // 웨이브를 6개 섹션(0~5)으로 분할하여 현재 섹션 인덱스 계산
             int sectionIndex = Mathf.Clamp(Mathf.FloorToInt(timeInWave / SpawnInterval), 0, 5);
+            
+            // 현재 웨이브 진행도 (0.0 ~ 1.0)
             float sectionProgress = sectionIndex / 5f;
+            
+            // 전체 난이도 계산
+            // 웨이브가 증가할수록, 그리고 같은 웨이브 내에서도 후반부일수록 증가
             float difficulty = waveNumber - 1 + sectionProgress;
 
+            // 일반 좀비 비율
+            // 난이도가 증가할수록 감소하지만 최소 비율은 유지
             float zombieRatio = Mathf.Clamp(1f - difficulty * 0.18f, minimumZombieRatio, 1f);
+            
+            // 탱커 비율
+            // 2웨이브 이후부터 점진적으로 증가
             float tankerRatio = Mathf.Clamp((difficulty - 1f) * 0.1f, 0f, maximumTankerRatio);
+            
+            // 러셔 비율
+            // 남은 비율을 모두 할당
             float rusherRatio = Mathf.Max(0f, 1f - zombieRatio - tankerRatio);
 
+            // 부동소수점 오차 또는 비율 계산 문제로
+            // 총합이 1을 초과할 경우 일반 좀비 비율을 조정
             if (zombieRatio + rusherRatio + tankerRatio > 1f)
             {
                 float overflow = zombieRatio + rusherRatio + tankerRatio - 1f;
@@ -265,7 +293,10 @@ namespace Managers
 
             return new SpawnRate
             {
+                // 현재 웨이브/섹션에 따른 총 스폰 수
                 SpawnCount = GetSpawnCount(waveNumber, sectionIndex),
+                
+                // 몬스터 종류별 등장 가중치
                 ZombieWeight = zombieRatio,
                 RusherWeight = rusherRatio,
                 TankerWeight = tankerRatio

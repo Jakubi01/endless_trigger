@@ -145,13 +145,13 @@ namespace UserInterface
             SetTimeTextIfChanged(timerText, remainingTime, ref _lastTimerTenths, forceTextRefresh);
         }
 
-        private void RefreshCooldown(Image cooldownImage, TMP_Text cooldownText, WeaponBase weapon, ref int lastTenths, bool forceTextRefresh)
+        private void RefreshCooldown(Image cooldownImage, TMP_Text cooldownText, WeaponAttackBase weaponAttack, ref int lastTenths, bool forceTextRefresh)
         {
-            float remainingCooldown = weapon ? weapon.RemainingCooldown : 0f;
+            float remainingCooldown = weaponAttack ? weaponAttack.RemainingCooldown : 0f;
 
             if (cooldownImage)
             {
-                cooldownImage.fillAmount = weapon ? weapon.CooldownProgress : 0f;
+                cooldownImage.fillAmount = weaponAttack ? weaponAttack.CooldownProgress : 0f;
             }
 
             if (cooldownText)

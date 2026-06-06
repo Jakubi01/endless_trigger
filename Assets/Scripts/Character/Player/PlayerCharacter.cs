@@ -13,13 +13,7 @@ namespace Character.Player
         [Header("Status")]
         [SerializeField] private float baseMoveSpeed = 5f;
 
-        [Header("Weapon")]
-        [SerializeField] private GameObject shotGunPrefab;
-        [SerializeField] private GameObject sniperPrefab;
-        [SerializeField] private Transform shotgunMountTransform;
-        [SerializeField] private Transform sniperMountTransform;
-
-        private readonly List<WeaponBase> _equippedWeapons = new();
+        private readonly List<WeaponAttackBase> _equippedWeapons = new();
         private EnemyManager _enemyManager;
         private HealthComponent _healthComponent;
         private PlayerLevelComponent _levelComponent;
@@ -32,7 +26,18 @@ namespace Character.Player
 
             SetMoveSpeed(baseMoveSpeed);
             InitializeStatusComponents();
-            InitializeWeapons();
+
+            var swordAttack = GetComponentInChildren<SwordAttack>();
+            var spearAttack = GetComponentInChildren<SpearAttack>();
+            if (!swordAttack || !spearAttack)
+            {
+                Debug.LogError("PlayerPrefab 자식 오브젝트에 weapon이 없음.");
+                return;
+            }
+            
+            _equippedWeapons.Add(swordAttack);
+            _equippedWeapons.Add(spearAttack);
+            StartAllWeapons();
 
             _enemyManager = FindFirstObjectByType<EnemyManager>();
             if (!_enemyManager)
@@ -68,39 +73,6 @@ namespace Character.Player
         private void FixedUpdate()
         {
             ProcessTranslation();
-        }
-
-        private void InitializeWeapons()
-        {
-            if (shotGunPrefab != null)
-            {
-                Transform parent = shotgunMountTransform != null ? shotgunMountTransform : transform;
-                GameObject sgObj = Instantiate(shotGunPrefab, parent);
-                sgObj.transform.localPosition = Vector3.zero;
-                sgObj.transform.localRotation = Quaternion.identity;
-
-                if (sgObj.TryGetComponent(out WeaponBase shotgun))
-                {
-                    _equippedWeapons.Add(shotgun);
-                    shotgun.owner = this;
-                }
-            }
-
-            if (sniperPrefab != null)
-            {
-                Transform parent = sniperMountTransform != null ? sniperMountTransform : transform;
-                GameObject snObj = Instantiate(sniperPrefab, parent);
-                snObj.transform.localPosition = Vector3.zero;
-                snObj.transform.localRotation = Quaternion.identity;
-
-                if (snObj.TryGetComponent(out WeaponBase sniper))
-                {
-                    _equippedWeapons.Add(sniper);
-                    sniper.owner = this;
-                }
-            }
-
-            StartAllWeapons();
         }
 
         public void StartAllWeapons()

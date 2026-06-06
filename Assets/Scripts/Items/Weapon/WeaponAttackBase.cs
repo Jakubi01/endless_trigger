@@ -6,7 +6,7 @@ using UnityEngine;
 namespace Items.Weapon
 {
     [RequireComponent(typeof(ProjectilePoolManager))]
-    public abstract class WeaponBase : MonoBehaviour
+    public abstract class WeaponAttackBase : MonoBehaviour
     {
         [Header("Weapon Settings")]
         [SerializeField] private float baseFireInterval = 3f;
@@ -35,6 +35,8 @@ namespace Items.Weapon
             {
                 damage = GetDefaultDamage();
             }
+            
+            owner = GetComponentInParent<PlayerCharacter>();
         }
 
         public void StartFiring()
@@ -62,6 +64,8 @@ namespace Items.Weapon
                 LookAtTarget();
             }
 
+            if (!CurrentTarget) return;
+            
             while (_timer >= CurrentFireInterval)
             {
                 _timer -= CurrentFireInterval;

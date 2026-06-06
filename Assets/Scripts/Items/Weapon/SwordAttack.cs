@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Items.Weapon
 {
-    public class SwordAttack : WeaponBase
+    public class SwordAttack : WeaponAttackBase
     {
         [Header("Sword Attack Settings")]
         [SerializeField] private float targetRange = 12f;
@@ -12,6 +12,8 @@ namespace Items.Weapon
 
         protected override void Attack()
         {
+            if (!owner) return;
+            
             Vector3 muzzlePosition = muzzlePoint ? muzzlePoint.position : transform.position;
             
             Vector3 direction = owner.transform.localScale.x > 0 ? Vector3.right : Vector3.left;
@@ -28,26 +30,10 @@ namespace Items.Weapon
 
         protected override void LookAtTarget()
         {
+            if (!owner) return;
+            
             GameObject nearest = owner.FindNearestFromCharacter(targetRange);
             CurrentTarget = nearest ? nearest.GetComponent<EnemyCharacterBase>() : null;
-
-            Vector3 targetDirection = owner.transform.localScale.x > 0 ? Vector3.right : Vector3.left;
-            if (CurrentTarget)
-            {
-                targetDirection = (CurrentTarget.transform.position - transform.position).normalized;
-            }
-
-            float targetAngle = Mathf.Atan2(targetDirection.y, targetDirection.x) * Mathf.Rad2Deg;
-
-            if (owner.transform.localScale.x < 0)
-            {
-                targetAngle += 180f;
-                transform.localRotation = Quaternion.Euler(0, 180, -targetAngle);
-            }
-            else
-            {
-                transform.localRotation = Quaternion.Euler(0, 0, targetAngle);
-            }
         }
 
         public override void ApplyRandomUpgrade()
