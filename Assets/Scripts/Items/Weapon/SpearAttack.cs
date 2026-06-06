@@ -3,14 +3,14 @@ using UnityEngine;
 
 namespace Items.Weapon
 {
-    public class Sniper : WeaponBase
+    public class SpearAttack : WeaponBase
     {
-        [Header("Sniper Settings")]
+        [Header("Spear Attack Settings")]
         [SerializeField] private float range = 20f;
         [SerializeField] private int pierceCount = 1;
         [SerializeField] private Transform muzzlePoint;
 
-        protected override void Fire()
+        protected override void Attack()
         {
             if (!CurrentTarget) return;
 

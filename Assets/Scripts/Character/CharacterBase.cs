@@ -6,6 +6,7 @@ namespace Character
 {
     [RequireComponent(typeof(Rigidbody2D))]
     [RequireComponent(typeof(BoxCollider2D))]
+    [RequireComponent(typeof(Animator))]
     public class CharacterBase : MonoBehaviour
     {
         protected Rigidbody2D Rb;
@@ -16,6 +17,7 @@ namespace Character
         [NonSerialized] protected float MoveSpeed;
         public Rigidbody2D CharacterRigidbody => Rb;
         public Collider2D CharacterCollider => Col;
+        private Animator _animator;
         
         [Header("Events")]
         [SerializeField] private AudioClip deathSound;
@@ -32,6 +34,8 @@ namespace Character
             Col = GetComponent<BoxCollider2D>();
             
             MoveSpeed = BaseMoveSpeed;
+            
+            _animator = GetComponent<Animator>();
         }
 
         public virtual void DoAttack() { }

@@ -25,8 +25,8 @@ namespace UserInterface
         private HealthComponent _healthComponent;
         private PlayerLevelComponent _levelComponent;
         private EnemySpawner _enemySpawner;
-        private ShotGun _shotgun;
-        private Sniper _sniper;
+        private SwordAttack _swordAttack;
+        private SpearAttack _spearAttack;
         private int _lastTimerTenths = InvalidTenths;
         private int _lastShotgunCooldownTenths = InvalidTenths;
         private int _lastSniperCooldownTenths = InvalidTenths;
@@ -60,8 +60,8 @@ namespace UserInterface
 
             _healthComponent = _player.GetComponent<HealthComponent>();
             _levelComponent = _player.GetComponent<PlayerLevelComponent>();
-            _shotgun = _player.GetComponentInChildren<ShotGun>();
-            _sniper = _player.GetComponentInChildren<Sniper>();
+            _swordAttack = _player.GetComponentInChildren<SwordAttack>();
+            _spearAttack = _player.GetComponentInChildren<SpearAttack>();
         }
 
         private void SubscribeStatEvents()
@@ -99,8 +99,8 @@ namespace UserInterface
         private void RefreshTimeBasedValues(bool forceTextRefresh)
         {
             RefreshTimer(forceTextRefresh);
-            RefreshCooldown(shotgunCooldownImage, shotgunCooldownText, _shotgun, ref _lastShotgunCooldownTenths, forceTextRefresh);
-            RefreshCooldown(sniperCooldownImage, sniperCooldownText, _sniper, ref _lastSniperCooldownTenths, forceTextRefresh);
+            RefreshCooldown(shotgunCooldownImage, shotgunCooldownText, _swordAttack, ref _lastShotgunCooldownTenths, forceTextRefresh);
+            RefreshCooldown(sniperCooldownImage, sniperCooldownText, _spearAttack, ref _lastSniperCooldownTenths, forceTextRefresh);
         }
 
         private void RefreshHealth()

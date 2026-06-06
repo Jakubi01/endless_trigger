@@ -65,11 +65,11 @@ namespace Items.Weapon
             while (_timer >= CurrentFireInterval)
             {
                 _timer -= CurrentFireInterval;
-                Fire();
+                Attack();
             }
         }
 
-        protected abstract void Fire();
+        protected abstract void Attack();
         protected abstract void LookAtTarget();
 
         public virtual void ModifyAttackSpeed(float newMultiplier)
