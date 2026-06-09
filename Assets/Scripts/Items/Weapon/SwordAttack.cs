@@ -28,7 +28,7 @@ namespace Items.Weapon
             ProjectileManager.Spawn(muzzlePosition, rotation, direction, Damage, pierceCount);
         }
 
-        protected override void LookAtTarget()
+        protected override void UpdateTarget()
         {
             if (!owner) return;
             

@@ -12,11 +12,9 @@ namespace Items.Weapon
         [SerializeField] private float baseFireInterval = 3f;
         [SerializeField] private float damage;
         [SerializeField] private float cooldown;
-        [SerializeField] private float targetRefreshInterval = 0.1f;
 
         private float _attackSpeedMultiplier = 1f;
         private float _timer;
-        private float _targetRefreshTimer;
         private bool _isFiringEnabled;
 
         protected EnemyCharacterBase CurrentTarget;
@@ -57,24 +55,24 @@ namespace Items.Weapon
             if (!_isFiringEnabled) return;
 
             _timer += Time.deltaTime;
-            _targetRefreshTimer -= Time.deltaTime;
-            if (_targetRefreshTimer <= 0f)
-            {
-                _targetRefreshTimer = targetRefreshInterval;
-                LookAtTarget();
-            }
-
-            if (!CurrentTarget) return;
+            Debug.Log("Weapon Attack Base: timer...");
             
-            while (_timer >= CurrentFireInterval)
+            if (_timer >= CurrentFireInterval)
             {
-                _timer -= CurrentFireInterval;
-                Attack();
+                Debug.Log("Weapon Attack Base: Fire Interval charged...");
+                UpdateTarget();
+                
+                if (CurrentTarget)
+                {
+                    Debug.Log("Weapon Attack Base: Current Target is valid. Fire Weapon...");
+                    _timer = 0f;
+                    Attack();
+                }
             }
         }
 
         protected abstract void Attack();
-        protected abstract void LookAtTarget();
+        protected abstract void UpdateTarget();
 
         public virtual void ModifyAttackSpeed(float newMultiplier)
         {

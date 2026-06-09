@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Security;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Managers
 {
@@ -46,8 +43,11 @@ namespace Managers
 
         private void SetupAudioSources()
         {
-            bgmSource.loop = true;
-            uiSource.ignoreListenerPause = true; 
+            if (bgmSource != null) 
+                bgmSource.loop = true;
+
+            if (uiSource != null) 
+                uiSource.ignoreListenerPause = true;
         }
 
         public void PlayBGM(AudioClip clip)
