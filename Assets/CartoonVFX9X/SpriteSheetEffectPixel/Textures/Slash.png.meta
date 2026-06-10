@@ -1,12 +1,5 @@
 fileFormatVersion: 2
-guid: a7345e7415b600f458666667d4c07df9
-AssetOrigin:
-  serializedVersion: 1
-  productId: 314215
-  packageName: Super Big Pack Effects Sprite Sheet PIXEL
-  packageVersion: 1.0
-  assetPath: Assets/CartoonVFX9X/SpriteSheetEffectPixel/Textures/Slash_2_Sheet_Blue.png
-  uploadId: 742400
+guid: 21ed8487c0d221246807eea9f8f1aeae
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -50,7 +43,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -102,7 +95,29 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: Slash_2_Sheet_Blue 1_0
+      rect:
+        serializedVersion: 2
+        x: 134
+        y: 344
+        width: 202
+        height: 310
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 76de654daa115db46976cdd7de9908f8
+      internalID: 555084578
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
@@ -116,7 +131,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Slash_2_Sheet_Blue 1_0: 555084578
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

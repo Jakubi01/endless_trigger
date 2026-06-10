@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &432103301494954289
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3131273836581289883}
+  m_Layer: 0
+  m_Name: muzzle
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3131273836581289883
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 432103301494954289}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 9075981322178636701}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3916445856850801725
 GameObject:
   m_ObjectHideFlags: 0
@@ -40,6 +71,7 @@ Transform:
   m_Children:
   - {fileID: 8304685084881510702}
   - {fileID: 3741260977980762123}
+  - {fileID: 3131273836581289883}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &5064362422577700260
@@ -306,10 +338,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Character.Player.PlayerCharacter
   deathSound: {fileID: 0}
   baseMoveSpeed: 5
-  shotGunPrefab: {fileID: 8024348441957941504, guid: 2b428b8223086e247b23cfecd07c654f, type: 3}
-  sniperPrefab: {fileID: 4460326897581478604, guid: 47911d4d7c2839b498b6f57b94660c48, type: 3}
-  shotgunMountTransform: {fileID: 0}
-  sniperMountTransform: {fileID: 0}
 --- !u!114 &5082065188802312462
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -335,7 +363,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Components.HealthComponent
   owner: {fileID: 0}
-  maxHealth: 100
+  maxHealth: 500
 --- !u!114 &8284455876908917826
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -436,11 +464,10 @@ MonoBehaviour:
   baseFireInterval: 3
   damage: 10
   cooldown: 2
-  targetRefreshInterval: 0.1
   owner: {fileID: 0}
-  targetRange: 12
-  pierceCount: 1
-  muzzlePoint: {fileID: 8304685084881510702}
+  targetRange: 4
+  muzzlePoint: {fileID: 3131273836581289883}
+  attackOffset: 1.5
 --- !u!1 &8505701004256974119
 GameObject:
   m_ObjectHideFlags: 0
@@ -504,7 +531,6 @@ MonoBehaviour:
   baseFireInterval: 3
   damage: 40
   cooldown: 5
-  targetRefreshInterval: 0.1
   owner: {fileID: 0}
   range: 20
   pierceCount: 1

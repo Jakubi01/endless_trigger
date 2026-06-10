@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: TankerData
   m_EditorClassIdentifier: Assembly-CSharp::Character.Enemy.EnemyData
   enemyType: 2
-  prefab: {fileID: 7233706201645723664, guid: e10996d723a60e44f998b9f76761fac4, type: 3}
+  prefab: {fileID: 6389508859907954327, guid: e10996d723a60e44f998b9f76761fac4, type: 3}
   health: 30
   moveSpeed: 3.2
   contactDamage: 10

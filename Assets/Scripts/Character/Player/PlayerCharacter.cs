@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Components;
 using Items.Weapon;
 using Managers;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Character.Player
@@ -73,6 +74,15 @@ namespace Character.Player
         private void FixedUpdate()
         {
             ProcessTranslation();
+            UpdateAnimation();
+        }
+
+        protected override bool UpdateAnimation()
+        {
+            var result = base.UpdateAnimation();
+            animator.SetBool(AnimatorParamToHash.IsRunning, result);
+
+            return result;
         }
 
         public void StartAllWeapons()
@@ -96,23 +106,29 @@ namespace Character.Player
             MoveInput = moveInput;
 
             if (Mathf.Abs(MoveInput.x) < 0.01f) return;
-
-            Vector3 scale = transform.localScale;
-            scale.x = Mathf.Abs(scale.x) * (MoveInput.x < 0 ? -1 : 1);
-            transform.localScale = scale;
+            
+            // ~ Legacy flip
+            // Vector3 scale = transform.localScale;
+            // scale.x = Mathf.Abs(scale.x) * (MoveInput.x < 0 ? -1 : 1);
+            // transform.localScale = scale;
+            
+            if (characterSprite != null)
+            {
+                characterSprite.flipX = MoveInput.x < 0;
+            }
         }
 
         public override void DoAttack()
         {
         }
 
-        public GameObject FindNearestFromCharacter(float range)
+        public override GameObject FindNearestFromCharacter(float range)
         {
             ResolveEnemyManager();
             return _enemyManager ? _enemyManager.FindNearestEnemy(transform, range) : null;
         }
 
-        public GameObject FindFarthestFromCharacter(float range)
+        public override GameObject FindFarthestFromCharacter(float range)
         {
             ResolveEnemyManager();
             return _enemyManager ? _enemyManager.FindFarthestEnemy(transform, range) : null;

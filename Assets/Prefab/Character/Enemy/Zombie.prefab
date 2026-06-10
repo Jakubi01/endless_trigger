@@ -14,6 +14,8 @@ GameObject:
   - component: {fileID: 6351098800684941806}
   - component: {fileID: -3073805174648510613}
   - component: {fileID: 3214155010038559728}
+  - component: {fileID: 5156533856450255768}
+  - component: {fileID: 1914593702332468275}
   m_Layer: 0
   m_Name: Zombie
   m_TagString: Untagged
@@ -85,7 +87,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 21300000, guid: 04013cad8b76f574c99a2414c87b6f98, type: 3}
+  m_Sprite: {fileID: -1476713397, guid: 5c3c8cd184093c94c87dba4ddb161360, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -159,8 +161,8 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.63, y: 1.52}
+    pivot: {x: 0.5, y: 0.234375}
+    oldSize: {x: 2, y: 2}
     newSize: {x: 1.63, y: 1.52}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -180,8 +182,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd79282aceb34fceae88fcbb734a23b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Character.Enemy.ZombieCharacter
+  deathSound: {fileID: 0}
   enemyType: 0
-  maxHp: 30
   contactDamage: 10
   experienceReward: 5
   contactDamageInterval: 0.5
@@ -197,3 +199,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d3cdd1131d04d0db32b8bcb3d5c5d49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Controllers.Enemy.ZombieController
+--- !u!114 &5156533856450255768
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6374114329541882754}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f0af22386c940079995ed9ddc0eedb5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Components.HealthComponent
+  owner: {fileID: 0}
+  maxHealth: 100
+--- !u!95 &1914593702332468275
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6374114329541882754}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 12e842c49538cd74cb8dfb202609beb3, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

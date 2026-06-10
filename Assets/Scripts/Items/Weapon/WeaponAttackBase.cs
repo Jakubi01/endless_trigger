@@ -1,5 +1,6 @@
+using System.Linq.Expressions;
+using Character;
 using Character.Enemy;
-using Character.Player;
 using Items.Projectile;
 using UnityEngine;
 
@@ -19,7 +20,7 @@ namespace Items.Weapon
 
         protected EnemyCharacterBase CurrentTarget;
         protected ProjectilePoolManager ProjectileManager;
-        public PlayerCharacter owner;
+        public CharacterBase owner;
 
         protected float Damage => damage;
         public float CurrentFireInterval => Mathf.Max(0.1f, (baseFireInterval + cooldown) / _attackSpeedMultiplier);
@@ -34,7 +35,7 @@ namespace Items.Weapon
                 damage = GetDefaultDamage();
             }
             
-            owner = GetComponentInParent<PlayerCharacter>();
+            owner = GetComponentInParent<CharacterBase>();
         }
 
         public void StartFiring()
@@ -55,19 +56,14 @@ namespace Items.Weapon
             if (!_isFiringEnabled) return;
 
             _timer += Time.deltaTime;
-            Debug.Log("Weapon Attack Base: timer...");
             
             if (_timer >= CurrentFireInterval)
             {
-                Debug.Log("Weapon Attack Base: Fire Interval charged...");
                 UpdateTarget();
+                if (!CurrentTarget) return;
                 
-                if (CurrentTarget)
-                {
-                    Debug.Log("Weapon Attack Base: Current Target is valid. Fire Weapon...");
-                    _timer = 0f;
-                    Attack();
-                }
+                _timer = 0f;
+                Attack();
             }
         }
 

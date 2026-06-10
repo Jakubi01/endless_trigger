@@ -17,7 +17,8 @@ namespace Character
         [NonSerialized] protected float MoveSpeed;
         public Rigidbody2D CharacterRigidbody => Rb;
         public Collider2D CharacterCollider => Col;
-        private Animator _animator;
+        protected Animator animator;
+        protected SpriteRenderer characterSprite;
         
         [Header("Events")]
         [SerializeField] private AudioClip deathSound;
@@ -35,7 +36,9 @@ namespace Character
             
             MoveSpeed = BaseMoveSpeed;
             
-            _animator = GetComponent<Animator>();
+            characterSprite = GetComponent<SpriteRenderer>();
+            
+            animator = GetComponent<Animator>();
         }
 
         public virtual void DoAttack() { }
@@ -44,6 +47,8 @@ namespace Character
 
         public virtual void Move(Vector2 direction)
         {
+            MoveInput = direction;
+            
             if (direction.sqrMagnitude > 1f)
             {
                 direction.Normalize();
@@ -60,6 +65,10 @@ namespace Character
 
         protected virtual void OnDeath()
         {
+            Rb.linearVelocity = Vector2.zero;
+            animator.SetBool(AnimatorParamToHash.IsRunning, false);
+            // _animator.SetBool(AnimatorParamToHash.Death, true);
+            
             PlayDeathSound();
         }
         
@@ -71,5 +80,15 @@ namespace Character
             _lastDeathSoundTime = Time.time;
             SoundManager.Instance.PlaySFX(deathSound);
         }
+        
+        protected virtual bool UpdateAnimation()
+        {
+            if (!animator) return false;
+            
+            return MoveInput.sqrMagnitude > 0.001f;
+        }
+
+        public virtual GameObject FindFarthestFromCharacter(float range) { return null;}
+        public virtual GameObject FindNearestFromCharacter(float range) { return null; }
     }
 }

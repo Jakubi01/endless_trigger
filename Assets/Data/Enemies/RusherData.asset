@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: RusherData
   m_EditorClassIdentifier: Assembly-CSharp::Character.Enemy.EnemyData
   enemyType: 1
-  prefab: {fileID: -798286195423800762, guid: 9d34ac30ba3d1874e8f928ee7580a7e7, type: 3}
+  prefab: {fileID: 4280838832269063721, guid: 9d34ac30ba3d1874e8f928ee7580a7e7, type: 3}
   health: 30
   moveSpeed: 3.2
   contactDamage: 10

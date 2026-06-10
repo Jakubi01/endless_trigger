@@ -78,6 +78,20 @@ namespace Character.Enemy
             _healthComponent.Initialize(hp);
         }
 
+        private void FixedUpdate()
+        {
+            if (!IsAlive) return;
+            
+            UpdateAnimation();
+        }
+
+        protected override bool UpdateAnimation()
+        {
+            var result = base.UpdateAnimation();
+            animator.SetBool(AnimatorParamToHash.Move, result);
+            return result;
+        }
+
         public void SetPoolReleaseAction(Action<EnemyCharacterBase> releaseAction)
         {
             _releaseToPool = releaseAction;
