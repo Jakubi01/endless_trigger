@@ -5,13 +5,15 @@ namespace Components
 {
     public class PlayerLevelComponent : ComponentBase
     {
+        [Header("Level")] 
+        [SerializeField] private GameObject levelUpVFXPrefab;
         [SerializeField] private int requiredExperiencePerLevel = 100;
         [SerializeField] private float experiencePickupRange = 2.5f;
 
         private int _currentExperience;
         private int _level = 1;
 
-        public event Action LeveledUp;
+        public event Action<GameObject> LeveledUp;
         public event Action ExperienceChanged;
         public int Level => _level;
         public int CurrentExperience => _currentExperience;
@@ -27,7 +29,7 @@ namespace Components
             {
                 _currentExperience -= requiredExperiencePerLevel;
                 _level++;
-                LeveledUp?.Invoke();
+                LeveledUp?.Invoke(levelUpVFXPrefab);
             }
 
             ExperienceChanged?.Invoke();

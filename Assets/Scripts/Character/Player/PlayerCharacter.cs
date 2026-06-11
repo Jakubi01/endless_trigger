@@ -176,12 +176,21 @@ namespace Character.Player
             UIManager.Instance.ShowGameOverWindow();
         }
 
-        private void ApplyLevelUpUpgrade()
+        private void ApplyLevelUpUpgrade(GameObject levelUpVFXPrefab)
         {
             if (_equippedWeapons.Count == 0) return;
 
+            // enhance weapon status
             int randomIndex = Random.Range(0, _equippedWeapons.Count);
             _equippedWeapons[randomIndex].ApplyRandomUpgrade();
+            
+            // spawn levelUp vfx
+            if (!levelUpVFXPrefab) return;
+            
+            var levelUpVFX = Instantiate(levelUpVFXPrefab, transform);
+            if (!levelUpVFX) return;
+
+            levelUpVFX.transform.localPosition = Vector3.left * 2f;
         }
 
         private void ResolveEnemyManager()

@@ -1,9 +1,16 @@
 fileFormatVersion: 2
 guid: 99877a04f22edc54380496f6fbc49478
+AssetOrigin:
+  serializedVersion: 1
+  productId: 314215
+  packageName: Super Big Pack Effects Sprite Sheet PIXEL
+  packageVersion: 1.0
+  assetPath: Assets/CartoonVFX9X/SpriteSheetEffectPixel/Textures/Upgrade_FX_Sheet_Red.png
+  uploadId: 742400
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
-  serializedVersion: 11
+  serializedVersion: 13
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -20,10 +27,12 @@ TextureImporter:
     externalNormalMap: 0
     heightScale: 0.25
     normalMapFilter: 0
+    flipGreenChannel: 0
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMipmapLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -41,7 +50,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -62,8 +71,10 @@ TextureImporter:
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 1
   platformSettings:
-  - serializedVersion: 3
+  - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
     maxTextureSize: 2048
     resizeAlgorithm: 0
@@ -73,12 +84,357 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: Upgrade_FX_Sheet_Red_0
+      rect:
+        serializedVersion: 2
+        x: 177
+        y: 1539
+        width: 154
+        height: 237
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4e647a6fd432bca439d86df6c4cd23fa
+      internalID: -789605550
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Upgrade_FX_Sheet_Red_1
+      rect:
+        serializedVersion: 2
+        x: 674
+        y: 1551
+        width: 189
+        height: 272
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bbb6f4c264b46b0489d177ce086dbfa1
+      internalID: 1805694809
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Upgrade_FX_Sheet_Red_2
+      rect:
+        serializedVersion: 2
+        x: 1195
+        y: 1622
+        width: 189
+        height: 213
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a0ff8da8755589c45ab63e581395fceb
+      internalID: 1509988693
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Upgrade_FX_Sheet_Red_3
+      rect:
+        serializedVersion: 2
+        x: 1703
+        y: 1646
+        width: 189
+        height: 236
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 09f1b9d7e83ad2a4587c5b66075fb7ab
+      internalID: 839666967
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Upgrade_FX_Sheet_Red_4
+      rect:
+        serializedVersion: 2
+        x: 166
+        y: 1125
+        width: 189
+        height: 296
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 29fed34c8949f7e4294efacf9741913d
+      internalID: 1008577153
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Upgrade_FX_Sheet_Red_5
+      rect:
+        serializedVersion: 2
+        x: 674
+        y: 1125
+        width: 189
+        height: 332
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4433657f0f94a5e48b6fd5c412a7f006
+      internalID: 1362225085
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Upgrade_FX_Sheet_Red_6
+      rect:
+        serializedVersion: 2
+        x: 1195
+        y: 1137
+        width: 189
+        height: 355
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cb9c610e900367545bd52fa35ff06b9a
+      internalID: -363313519
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Upgrade_FX_Sheet_Red_7
+      rect:
+        serializedVersion: 2
+        x: 1703
+        y: 1137
+        width: 189
+        height: 355
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d33a82df6e262a94eae4ada6bd4fddd1
+      internalID: -979002910
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Upgrade_FX_Sheet_Red_8
+      rect:
+        serializedVersion: 2
+        x: 166
+        y: 617
+        width: 189
+        height: 366
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1014c14d1d6656b49a1729ffeb253b7e
+      internalID: 1170247807
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Upgrade_FX_Sheet_Red_9
+      rect:
+        serializedVersion: 2
+        x: 674
+        y: 617
+        width: 189
+        height: 378
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dbd8b3095263c0b4bbccaeb167802645
+      internalID: 916424893
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Upgrade_FX_Sheet_Red_10
+      rect:
+        serializedVersion: 2
+        x: 1195
+        y: 617
+        width: 189
+        height: 378
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 743613e2e82e6604fbc933c3ee70bd4d
+      internalID: -1660238792
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Upgrade_FX_Sheet_Red_11
+      rect:
+        serializedVersion: 2
+        x: 1703
+        y: 617
+        width: 189
+        height: 378
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3349f0e801142db44a3ffaf3600ed87a
+      internalID: 702349301
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Upgrade_FX_Sheet_Red_12
+      rect:
+        serializedVersion: 2
+        x: 166
+        y: 108
+        width: 189
+        height: 367
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 572d9393aff81bb43a4981db9cfbc642
+      internalID: -212949771
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Upgrade_FX_Sheet_Red_13
+      rect:
+        serializedVersion: 2
+        x: 674
+        y: 108
+        width: 189
+        height: 367
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d1bb1f282a948c3488fac7fdcdc19e2f
+      internalID: 1729687287
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Upgrade_FX_Sheet_Red_14
+      rect:
+        serializedVersion: 2
+        x: 1195
+        y: 108
+        width: 189
+        height: 367
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 89aabb626448825428516309ced08ee5
+      internalID: -1032681480
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
+    customData: 
     physicsShape: []
     bones: []
     spriteID: 5e97eb03825dee720800000000000000
@@ -88,16 +444,28 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-  spritePackingTag: 
+    spriteCustomMetadata:
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":2048.0,"y":2048.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":0,"keepEmptyRects":false,"isAlternate":false}'
+    nameFileIdTable:
+      Upgrade_FX_Sheet_Red_0: -789605550
+      Upgrade_FX_Sheet_Red_1: 1805694809
+      Upgrade_FX_Sheet_Red_10: -1660238792
+      Upgrade_FX_Sheet_Red_11: 702349301
+      Upgrade_FX_Sheet_Red_12: -212949771
+      Upgrade_FX_Sheet_Red_13: 1729687287
+      Upgrade_FX_Sheet_Red_14: -1032681480
+      Upgrade_FX_Sheet_Red_2: 1509988693
+      Upgrade_FX_Sheet_Red_3: 839666967
+      Upgrade_FX_Sheet_Red_4: 1008577153
+      Upgrade_FX_Sheet_Red_5: 1362225085
+      Upgrade_FX_Sheet_Red_6: -363313519
+      Upgrade_FX_Sheet_Red_7: -979002910
+      Upgrade_FX_Sheet_Red_8: 1170247807
+      Upgrade_FX_Sheet_Red_9: 916424893
+  mipmapLimitGroupName: 
   pSDRemoveMatte: 0
-  pSDShowRemoveMatteOption: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 
-AssetOrigin:
-  serializedVersion: 1
-  productId: 314215
-  packageName: Super Big Pack Effects Sprite Sheet PIXEL
-  packageVersion: 1.0
-  assetPath: Assets/CartoonVFX9X/SpriteSheetEffectPixel/Textures/Upgrade_FX_Sheet_Red.png
-  uploadId: 742400

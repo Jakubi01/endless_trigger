@@ -377,7 +377,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Components.PlayerLevelComponent
   owner: {fileID: 0}
-  requiredExperiencePerLevel: 100
+  levelUpVFXPrefab: {fileID: 217846322293083766, guid: ae40f1f028ac5e14cb8b32618f67c7c5, type: 3}
+  requiredExperiencePerLevel: 10
   experiencePickupRange: 2.5
 --- !u!95 &7388993825907985339
 Animator:

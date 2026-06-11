@@ -13,7 +13,7 @@ namespace Character
                     return clip.length;
             }
 
-            return 1f;
+            return 0f;
         }
 
         public static float GetRandomizedClipDuration(Animator animator, string clipName, float variance)

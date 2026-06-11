@@ -94,7 +94,7 @@ namespace Items.Projectile
             if (_isReleased) return;
             if (!collision.TryGetComponent(out EnemyCharacterBase damageable)) return;
 
-            if (!_overlappedObjects.Contains(collision.gameObject)) return;
+            if (_overlappedObjects.Contains(collision.gameObject)) return;
             _overlappedObjects.Add(collision.gameObject);
             
             damageable.TakeDamage(_damage);
