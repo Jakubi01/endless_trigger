@@ -52,13 +52,5 @@ namespace Items.Weapon
         {
             return 10f;
         }
-
-        private void OnDrawGizmos()
-        {
-            if (!CurrentTarget) return;
-            Gizmos.color = Color.red;
-            Gizmos.DrawWireCube(CurrentTarget.transform.position, new Vector3(2, 2, 2));
-            Debug.Log(CurrentTarget.name);
-        }
     }
 }

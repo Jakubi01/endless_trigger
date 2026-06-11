@@ -16,10 +16,10 @@ namespace UserInterface
         [SerializeField] private Slider expBarSlider;
         [SerializeField] private TMP_Text timerText;
         [SerializeField] private TMP_Text levelText;
-        [SerializeField] private Image shotgunCooldownImage;
-        [SerializeField] private Image sniperCooldownImage;
-        [SerializeField] private TMP_Text shotgunCooldownText;
-        [SerializeField] private TMP_Text sniperCooldownText;
+        [SerializeField] private Image swordAttackCooldownImage;
+        [SerializeField] private Image spearAttackCooldownImage;
+        [SerializeField] private TMP_Text swordAttackCooldownText;
+        [SerializeField] private TMP_Text spearAttackCooldownText;
 
         private PlayerCharacter _player;
         private HealthComponent _healthComponent;
@@ -99,8 +99,8 @@ namespace UserInterface
         private void RefreshTimeBasedValues(bool forceTextRefresh)
         {
             RefreshTimer(forceTextRefresh);
-            RefreshCooldown(shotgunCooldownImage, shotgunCooldownText, _swordAttack, ref _lastShotgunCooldownTenths, forceTextRefresh);
-            RefreshCooldown(sniperCooldownImage, sniperCooldownText, _spearAttack, ref _lastSniperCooldownTenths, forceTextRefresh);
+            RefreshCooldown(swordAttackCooldownImage, swordAttackCooldownText, _swordAttack, ref _lastShotgunCooldownTenths, forceTextRefresh);
+            RefreshCooldown(spearAttackCooldownImage, spearAttackCooldownText, _spearAttack, ref _lastSniperCooldownTenths, forceTextRefresh);
         }
 
         private void RefreshHealth()
@@ -171,26 +171,26 @@ namespace UserInterface
 
         private void EnsureCooldownWidgets()
         {
-            if (!shotgunCooldownImage)
+            if (!swordAttackCooldownImage)
             {
-                shotgunCooldownImage = CreateCooldownWidget("ShotgunCooldown", "SG", new Vector2(-126f, 64f), out shotgunCooldownText);
+                swordAttackCooldownImage = CreateCooldownWidget("ShotgunCooldown", "SG", new Vector2(-126f, 64f), out swordAttackCooldownText);
             }
-            else if (!shotgunCooldownText)
+            else if (!swordAttackCooldownText)
             {
-                shotgunCooldownText = ResolveOrCreateCooldownText(shotgunCooldownImage, "SG");
-            }
-
-            if (!sniperCooldownImage)
-            {
-                sniperCooldownImage = CreateCooldownWidget("SniperCooldown", "SR", new Vector2(-48f, 64f), out sniperCooldownText);
-            }
-            else if (!sniperCooldownText)
-            {
-                sniperCooldownText = ResolveOrCreateCooldownText(sniperCooldownImage, "SR");
+                swordAttackCooldownText = ResolveOrCreateCooldownText(swordAttackCooldownImage, "SG");
             }
 
-            ConfigureCooldownImage(shotgunCooldownImage);
-            ConfigureCooldownImage(sniperCooldownImage);
+            if (!spearAttackCooldownImage)
+            {
+                spearAttackCooldownImage = CreateCooldownWidget("SniperCooldown", "SR", new Vector2(-48f, 64f), out spearAttackCooldownText);
+            }
+            else if (!spearAttackCooldownText)
+            {
+                spearAttackCooldownText = ResolveOrCreateCooldownText(spearAttackCooldownImage, "SR");
+            }
+
+            ConfigureCooldownImage(swordAttackCooldownImage);
+            ConfigureCooldownImage(spearAttackCooldownImage);
         }
 
         private Image CreateCooldownWidget(string widgetName, string label, Vector2 anchoredPosition, out TMP_Text cooldownText)
