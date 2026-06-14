@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7058023673478270786}
   - component: {fileID: 8735728428833648963}
   - component: {fileID: -4232409269010566742}
+  - component: {fileID: 4097843188031260570}
   m_Layer: 0
   m_Name: slashProjectile
   m_TagString: Untagged
@@ -84,12 +85,12 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 555084578, guid: 21ed8487c0d221246807eea9f8f1aeae, type: 3}
+  m_Sprite: {fileID: -7862110, guid: 21ed8487c0d221246807eea9f8f1aeae, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.2, y: 0.2}
+  m_Size: {x: 1.95, y: 2.97}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -171,3 +172,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Items.Projectile.Projectile
   speed: 15
   lifeTime: 3
+--- !u!95 &4097843188031260570
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8895858484480888672}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 70d666f3c1fc3eb499d87accfd3b1632, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

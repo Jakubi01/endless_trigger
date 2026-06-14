@@ -11,7 +11,7 @@ namespace Items.Projectile
     public class Projectile : MonoBehaviour
     {
         [SerializeField] private float speed = 15f;
-        [SerializeField] private float lifeTime = 3f;
+        [SerializeField] private string animationName;
 
         private Rigidbody2D _rb;
         private Collider2D _col;
@@ -24,6 +24,8 @@ namespace Items.Projectile
         private bool _snapToParent;
         private Transform _parentTarget;
         private readonly List<GameObject> _overlappedObjects = new();
+        
+        private readonly int _animHash = Animator.StringToHash("Play");
 
         private void Awake()
         {
@@ -38,11 +40,10 @@ namespace Items.Projectile
             _overlappedObjects.Clear();
         }
 
-        public void Initialize(Vector2 direction, Action<GameObject> returnAction, CharacterBase owner, float damage = 0f,
+        public void Initialize(Vector2 direction, Action<GameObject> returnAction, float damage = 0f,
             int pierceCount = 0, bool bSnapToParent = false, Transform snapPosition = null)
         {
             _returnToPool = returnAction;
-            _lifeTimer = lifeTime;
             _damage = damage;
             _remainingHits = Mathf.Max(1, pierceCount + 1);
             _isReleased = false;
@@ -57,7 +58,7 @@ namespace Items.Projectile
             _rb.position = transform.position;
             _rb.linearVelocity = Vector2.zero;
             _rb.linearVelocity = direction.normalized * speed;
-            if (_snapToParent && _parentTarget != null)
+            if (_snapToParent && _parentTarget)
             {
                 _rb.linearVelocity = Vector2.zero;
             }
@@ -67,8 +68,9 @@ namespace Items.Projectile
             }
 
             if (!_animator) return;
-            
-            // _animator.Play()
+
+            _animator.Play(_animHash, 0, 0);
+            _lifeTimer = AnimationExtension.GetAnimClipLength(_animator, animationName);
         }
 
         private void Update()

@@ -53,6 +53,11 @@ namespace Character
             {
                 direction.Normalize();
             }
+            
+            if (characterSprite && Mathf.Abs(direction.x) > 0.01f)
+            {
+                characterSprite.flipX = direction.x < 0;
+            }
 
             Rb.MovePosition(Rb.position + direction * (MoveSpeed * Time.fixedDeltaTime));
         }

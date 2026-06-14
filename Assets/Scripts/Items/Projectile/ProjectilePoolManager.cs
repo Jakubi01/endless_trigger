@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Character;
 using UnityEngine;
 using UnityEngine.Pool;
 
@@ -44,7 +43,7 @@ namespace Items.Projectile
             _createdProjectiles.Clear();
         }
 
-        public GameObject Spawn(Vector3 position, Quaternion rotation, Vector2 direction, CharacterBase owner, float damage = 0f, int pierceCount = 0
+        public GameObject Spawn(Vector3 position, Quaternion rotation, Vector2 direction, float damage = 0f, int pierceCount = 0
             , bool bSnapToParent = false, Transform snapTarget = null)
         {
             GameObject projectile = _pool.Get();
@@ -62,7 +61,7 @@ namespace Items.Projectile
 
             if (projectile.TryGetComponent(out Projectile projectileInstance))
             {
-                projectileInstance.Initialize(direction, ReleaseProjectile, owner, damage, pierceCount, bSnapToParent, snapTarget);
+                projectileInstance.Initialize(direction, ReleaseProjectile, damage, pierceCount, bSnapToParent, snapTarget);
             }
 
             return projectile;

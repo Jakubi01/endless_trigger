@@ -31,7 +31,7 @@ namespace Items.Weapon
             
             Transform trackingTarget = muzzlePoint ? muzzlePoint : owner.transform;
             
-            ProjectileManager.Spawn(spawnPosition, rotation, Vector2.zero, owner, Damage, PierceCount, true, trackingTarget);
+            ProjectileManager.Spawn(spawnPosition, rotation, Vector2.zero, Damage, PierceCount, true, trackingTarget);
         }
 
         protected override void UpdateTarget()

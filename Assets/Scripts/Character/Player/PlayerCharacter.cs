@@ -104,18 +104,6 @@ namespace Character.Player
         public void SetMoveInput(Vector2 moveInput)
         {
             MoveInput = moveInput;
-
-            if (Mathf.Abs(MoveInput.x) < 0.01f) return;
-            
-            // ~ Legacy flip
-            // Vector3 scale = transform.localScale;
-            // scale.x = Mathf.Abs(scale.x) * (MoveInput.x < 0 ? -1 : 1);
-            // transform.localScale = scale;
-            
-            if (characterSprite != null)
-            {
-                characterSprite.flipX = MoveInput.x < 0;
-            }
         }
 
         public override void DoAttack()
