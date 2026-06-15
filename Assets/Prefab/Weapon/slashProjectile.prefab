@@ -171,7 +171,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Items.Projectile.Projectile
   speed: 15
-  lifeTime: 3
+  animationName: Play
+  shouldPlayerAnimation: 1
 --- !u!95 &4097843188031260570
 Animator:
   serializedVersion: 7

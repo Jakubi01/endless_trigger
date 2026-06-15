@@ -24,6 +24,7 @@ namespace Items.Projectile
         private bool _snapToParent;
         private Transform _parentTarget;
         private readonly List<GameObject> _overlappedObjects = new();
+        [SerializeField] private bool shouldPlayerAnimation;
         
         private readonly int _animHash = Animator.StringToHash("Play");
 
@@ -67,7 +68,11 @@ namespace Items.Projectile
                 _rb.linearVelocity = direction.normalized * speed;
             }
 
-            if (!_animator) return;
+            if (!_animator || !shouldPlayerAnimation)
+            {
+                _lifeTimer = 3f;
+                return;
+            }
 
             _animator.Play(_animHash, 0, 0);
             _lifeTimer = AnimationExtension.GetAnimClipLength(_animator, animationName);

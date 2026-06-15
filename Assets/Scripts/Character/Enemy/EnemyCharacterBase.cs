@@ -124,7 +124,6 @@ namespace Character.Enemy
 
             if (other.TryGetComponent(out PlayerCharacter player))
             {
-                Debug.Log(contactDamage);
                 player.TakeDamage(contactDamage);
                 _nextContactDamageTime = Time.time + contactDamageInterval;
             }
