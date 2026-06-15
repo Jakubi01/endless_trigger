@@ -33,6 +33,7 @@ namespace Character
             Rb.gravityScale = 0f;
             
             Col = GetComponent<BoxCollider2D>();
+            Col.isTrigger = true;
             
             MoveSpeed = BaseMoveSpeed;
             

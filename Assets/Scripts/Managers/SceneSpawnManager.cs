@@ -1,4 +1,5 @@
 using Character.Player;
+using Effects.DamageText;
 using Unity.Cinemachine;
 using UnityEngine;
 using UserInterface;
@@ -9,6 +10,8 @@ namespace Managers
     {
         [SerializeField] private PlayerCharacter playerPrefab;
         [SerializeField] private CinemachineCamera cinemachineCameraPrefab;
+        [SerializeField] private DamageTextManager damageTextManagerPrefab;
+        
         [SerializeField] private Transform playerSpawnPoint;
         [SerializeField] private Collider2D cameraBoundingShape;
         [SerializeField] private bool disableSceneCameraTemplate = true;
@@ -17,6 +20,7 @@ namespace Managers
         private PlayerCharacter _player;
         private CinemachineCamera _cinemachineCamera;
         private GameHUD _gameHUD;
+        private DamageTextManager _damageTextManager;
 
         private void Start()
         {
@@ -25,6 +29,7 @@ namespace Managers
             SpawnCamera();
             ConfigureCamera();
             SpawnGameHUD();
+            SpawnDamageTextManager();
         }
 
         private void SpawnPlayer()
@@ -53,6 +58,17 @@ namespace Managers
             {
                 cinemachineCameraPrefab.gameObject.SetActive(false);
             }
+        }
+
+        private void SpawnDamageTextManager()
+        {
+            if (!damageTextManagerPrefab)
+            {
+                Debug.LogError($"{nameof(SceneSpawnManager)}: DamageTextManager prefab is not assigned.", this);
+                return; 
+            }
+            
+            _damageTextManager = Instantiate(damageTextManagerPrefab, Vector3.zero, Quaternion.identity);
         }
 
         private void ConfigureCamera()

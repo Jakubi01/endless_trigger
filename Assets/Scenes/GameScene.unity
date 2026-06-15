@@ -405184,8 +405184,8 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_VertexColorAlwaysGammaSpace: 0
-  m_AdditionalShaderChannelsFlag: 25
+  m_VertexColorAlwaysGammaSpace: 1
+  m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
@@ -405525,6 +405525,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Managers.SceneSpawnManager
   playerPrefab: {fileID: 2056072352070308880, guid: 4a715c867967d6a45a5379f982609ad2, type: 3}
   cinemachineCameraPrefab: {fileID: 4639213535453530687, guid: 48ee590e94ea8364d8cd7b810f07bd20, type: 3}
+  damageTextManagerPrefab: {fileID: -6754930296553276788, guid: ebd0503a1e109af429d0786ac2a38b10, type: 3}
   playerSpawnPoint: {fileID: 635242748}
   cameraBoundingShape: {fileID: 574660354}
   disableSceneCameraTemplate: 1

@@ -1,6 +1,7 @@
 using Character.Player;
 using Components;
 using System;
+using Effects.DamageText;
 using Managers;
 using UnityEngine;
 
@@ -59,11 +60,6 @@ namespace Character.Enemy
             _enemyManager?.Unregister(this);
         }
 
-        private void OnCollisionStay2D(Collision2D collision)
-        {
-            TryDamagePlayer(collision.collider);
-        }
-
         private void OnTriggerStay2D(Collider2D other)
         {
             TryDamagePlayer(other);
@@ -107,6 +103,8 @@ namespace Character.Enemy
         public void TakeDamage(float amount)
         {
             _healthComponent?.TakeDamage(amount);
+            var currentHealth = _healthComponent?.CurrentHealth;
+            DamageTextManager.Instance?.ShowDamageText(transform.position, currentHealth.ToString());
         }
 
         private void InitializeHealthComponent()
