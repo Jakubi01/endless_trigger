@@ -21,6 +21,7 @@ namespace Managers
         private CinemachineCamera _cinemachineCamera;
         private GameHUD _gameHUD;
         private DamageTextManager _damageTextManager;
+        private Canvas _mainCanvas;
 
         private void Start()
         {
@@ -30,6 +31,8 @@ namespace Managers
             ConfigureCamera();
             SpawnGameHUD();
             SpawnDamageTextManager();
+            _mainCanvas = FindFirstObjectByType<Canvas>();
+            UIManager.Instance.SetMainCanvas(_mainCanvas);
         }
 
         private void SpawnPlayer()

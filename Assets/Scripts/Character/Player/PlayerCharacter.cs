@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using System.Globalization;
 using Components;
+using Effects.DamageText;
 using Items.Weapon;
 using Managers;
 using Unity.VisualScripting;
@@ -130,6 +132,7 @@ namespace Character.Player
         public void TakeDamage(float amount)
         {
             _healthComponent?.TakeDamage(amount);
+            DamageTextManager.Instance?.ShowDamageText(transform.position, amount.ToString(CultureInfo.InvariantCulture), true);
         }
 
         private void ProcessTranslation()

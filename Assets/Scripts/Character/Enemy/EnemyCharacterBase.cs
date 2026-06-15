@@ -1,6 +1,7 @@
 using Character.Player;
 using Components;
 using System;
+using System.Globalization;
 using Effects.DamageText;
 using Managers;
 using UnityEngine;
@@ -103,8 +104,7 @@ namespace Character.Enemy
         public void TakeDamage(float amount)
         {
             _healthComponent?.TakeDamage(amount);
-            var currentHealth = _healthComponent?.CurrentHealth;
-            DamageTextManager.Instance?.ShowDamageText(transform.position, currentHealth.ToString());
+            DamageTextManager.Instance?.ShowDamageText(transform.position, amount.ToString(CultureInfo.InvariantCulture));
         }
 
         private void InitializeHealthComponent()
@@ -124,6 +124,7 @@ namespace Character.Enemy
 
             if (other.TryGetComponent(out PlayerCharacter player))
             {
+                Debug.Log(contactDamage);
                 player.TakeDamage(contactDamage);
                 _nextContactDamageTime = Time.time + contactDamageInterval;
             }

@@ -6,6 +6,8 @@ namespace Managers
     public class UIManager : MonoBehaviour
     {
         public static UIManager Instance { get; private set; }
+
+        private Canvas _mainCanvas;
         
         public const string TitleScene = "TitleScene";
         public const string GameScene = "GameScene";
@@ -60,7 +62,7 @@ namespace Managers
             if (_currentPauseWindow) return;
             if (!pauseWindowPrefab) return;
 
-            var activeCanvas = FindActiveCanvasInScene();
+            var activeCanvas = _mainCanvas;
             if (!activeCanvas) return;
 
             _currentPauseWindow = Instantiate(pauseWindowPrefab, activeCanvas.transform);
@@ -102,7 +104,7 @@ namespace Managers
             if (_currentExitWindow) return;
             if (!exitWindowPrefab) return;
 
-            var activeCanvas = FindActiveCanvasInScene();
+            var activeCanvas = _mainCanvas;
             if (!activeCanvas) return;
 
             _currentExitWindow = Instantiate(exitWindowPrefab, activeCanvas.transform);
@@ -146,7 +148,7 @@ namespace Managers
             windowCanvasGroup.ignoreParentGroups = false;
             windowCanvasGroup.interactable = false;
             
-            FindActiveCanvasInScene().GetComponent<CanvasGroup>().interactable = true;
+            _mainCanvas.GetComponent<CanvasGroup>().interactable = true;
             
             Destroy(_currentExitWindow.gameObject);
             _currentExitWindow = null;
@@ -161,8 +163,8 @@ namespace Managers
         {
             if (_currentSettingWindow) return;
             if (!settingWindowPrefab) return;
-            
-            var activeCanvas = FindActiveCanvasInScene();
+
+            var activeCanvas = _mainCanvas;
             if(!activeCanvas) return;
             
             _currentSettingWindow = Instantiate(settingWindowPrefab, activeCanvas.transform);
@@ -197,8 +199,8 @@ namespace Managers
         {
             if (_currentGameOverWindow) return;
             if (!gameOverWindowPrefab) return;
-            
-            var activeCanvas = FindActiveCanvasInScene();
+
+            var activeCanvas = _mainCanvas;
             if(!activeCanvas) return;
             
             _currentGameOverWindow = Instantiate(gameOverWindowPrefab, activeCanvas.transform);
@@ -232,8 +234,8 @@ public void ShowGoToTitleWindow()
         {
             if (_currentGoToTitleWindow) return;
             if (!goToTitleWindowPrefab) return;
-            
-            var activeCanvas = FindActiveCanvasInScene();
+
+            var activeCanvas = _mainCanvas;
             if(!activeCanvas) return;
             
             _currentGoToTitleWindow = Instantiate(goToTitleWindowPrefab, activeCanvas.transform);
@@ -268,7 +270,6 @@ public void ShowGoToTitleWindow()
 #endregion
 
 #region Shared
-        private Canvas FindActiveCanvasInScene() => FindFirstObjectByType<Canvas>();
         public void OnExitButtonClicked() => ShowExitWindow();
         public void OnSettingsButtonClicked() => ShowSettingWindow();
 
@@ -303,6 +304,11 @@ public void ShowGoToTitleWindow()
         private bool HasBlockingWindow()
         {
             return _currentExitWindow || _currentSettingWindow || _currentPauseWindow || _currentGameOverWindow || _currentGoToTitleWindow;
+        }
+        
+        public void SetMainCanvas(Canvas mainCanvas)
+        {
+            _mainCanvas = mainCanvas;
         }
 #endregion
     }

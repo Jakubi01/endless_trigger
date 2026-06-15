@@ -55,7 +55,7 @@ namespace Effects.DamageText
             Destroy(obj);
         }
 
-        public void ShowDamageText(Vector3 worldPosition, string damageAmount, bool isCritical = false)
+        public void ShowDamageText(Vector3 worldPosition, string damageAmount, bool isPlayer = false)
         {
             GameObject textObj = _pool.Get();
 
@@ -64,7 +64,7 @@ namespace Effects.DamageText
             textObj.transform.position = spawnPos;
 
             FloatingText floatingText = textObj.GetComponent<FloatingText>();
-            Color textColor = isCritical ? Color.red : Color.yellow;
+            Color textColor = isPlayer ? Color.red : Color.yellow;
 
             floatingText.Setup(damageAmount, textColor, _pool);
         }
