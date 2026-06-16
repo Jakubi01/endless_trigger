@@ -141,5 +141,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d1b2139212e412cb2e9f8c56fa03244, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Managers.ExperiencePickup
-  amount: 50
+  amount: 5
   attractSpeed: 8

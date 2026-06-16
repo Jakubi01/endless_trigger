@@ -70,6 +70,65 @@ namespace Managers
         {
             _currentSettings = SaveSystem.SaveSystem.Load<SettingData>(SETTINGS_FILE_NAME);
             _inGameSaveData = SaveSystem.SaveSystem.Load<InGameSaveData>(INGAME_SAVE_FILE_NAME);
+
+            if (_currentSettings == null)
+            {
+                _currentSettings = new SettingData();
+                SetDefaultInitSettings();
+            }
+        }
+        
+        /// <summary>
+        /// 최초 실행 기본값: 전체 화면 + 1920x1080 + 모니터 최고 주사율
+        /// </summary>
+        private void SetDefaultInitSettings()
+        {
+            // 1. 최초 실행은 무조건 전체 화면
+            _currentSettings.screenMode = ScreenMode.FullScreen;
+
+            int targetIndex = -1;
+            double maxRefreshRate = 0;
+
+            // 2. 로컬 모니터가 지원하는 해상도 중 1920x1080 이면서 주사율이 가장 높은 항목 탐색
+            for (int i = 0; i < Screen.resolutions.Length; i++)
+            {
+                var res = Screen.resolutions[i];
+                if (res.width == 1920 && res.height == 1080)
+                {
+                    double hz = res.refreshRateRatio.value;
+                    if (hz > maxRefreshRate)
+                    {
+                        maxRefreshRate = hz;
+                        targetIndex = i;
+                    }
+                }
+            }
+
+            // 예외 방어 코드: 만약 모니터가 1920x1080 자체를 지원하지 않는 기괴한 디스플레이 환경일 때
+            if (targetIndex == -1)
+            {
+                double maxHz = 0;
+                for (int i = 0; i < Screen.resolutions.Length; i++)
+                {
+                    var res = Screen.resolutions[i];
+                    if (res.width == Screen.currentResolution.width && res.height == Screen.currentResolution.height)
+                    {
+                        double hz = res.refreshRateRatio.value;
+                        if (hz > maxHz)
+                        {
+                            maxHz = hz;
+                            targetIndex = i;
+                        }
+                    }
+                }
+            }
+
+            _currentSettings.resolutionIndex = targetIndex >= 0 ? targetIndex : 0;
+
+            // 3. 주사율에 맞게 프레임 레이트 모드도 매칭 (240hz 모니터면 FPS240, 144hz면 FPS120이나 Uncapped 등 원하는 방식으로 분기 가능)
+            if (maxRefreshRate >= 240) _currentSettings.frameRateMode = FrameRateMode.FPS240;
+            else if (maxRefreshRate >= 120) _currentSettings.frameRateMode = FrameRateMode.FPS120;
+            else _currentSettings.frameRateMode = FrameRateMode.FPS60;
         }
 
         /// <summary>
@@ -207,13 +266,22 @@ namespace Managers
             if (Screen.resolutions.Length > _currentSettings.resolutionIndex && _currentSettings.resolutionIndex >= 0)
             {
                 Resolution res = Screen.resolutions[_currentSettings.resolutionIndex];
-                Screen.SetResolution(res.width, res.height, mode);
+                Screen.SetResolution(res.width, res.height, mode, res.refreshRateRatio);
+                ApplyFrameRateLimit(res.refreshRateRatio.value);
+            }
+            else
+            {
+                Screen.SetResolution(1920, 1080, mode);
+                ApplyFrameRateLimit(60);
             }
 
             _currentSettings.qualityIndex = Mathf.Clamp(_currentSettings.qualityIndex, 0, Mathf.Max(0, QualitySettings.names.Length - 1));
             QualitySettings.SetQualityLevel(_currentSettings.qualityIndex, true);
             QualitySettings.vSyncCount = 0;
+        }
 
+        private void ApplyFrameRateLimit(double monitorHz)
+        {
             switch (_currentSettings.frameRateMode)
             {
                 case FrameRateMode.FPS30:    Application.targetFrameRate = 30;   break;
@@ -222,7 +290,7 @@ namespace Managers
                 case FrameRateMode.FPS240:   Application.targetFrameRate = 240;  break;
                 case FrameRateMode.FPS300:   Application.targetFrameRate = 300;  break;
                 case FrameRateMode.Uncapped: Application.targetFrameRate = -1;   break;
-                default:                      Application.targetFrameRate = 60;   break;
+                default:                      Application.targetFrameRate = (int)Math.Round(monitorHz);   break;
             }
         }
 

@@ -214,9 +214,9 @@ AnimatorStateTransition:
   m_ExitTime: 0
   m_HasExitTime: 0
   m_HasFixedDuration: 1
-  m_InterruptionSource: 0
+  m_InterruptionSource: 2
   m_OrderedInterruption: 1
-  m_CanTransitionToSelf: 1
+  m_CanTransitionToSelf: 0
 --- !u!1101 &3497009710735060919
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -280,13 +280,13 @@ AnimatorStateMachine:
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: 5023628211500130974}
-    m_Position: {x: 270.5, y: 155.5, z: 0}
+    m_Position: {x: 270, y: 140, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 323811017082311103}
-    m_Position: {x: 540, y: 160, z: 0}
+    m_Position: {x: 540, y: 140, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -6918950078481079318}
-    m_Position: {x: 270, y: 80, z: 0}
+    m_Position: {x: 330, y: 80, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -8316398774462950917}
     m_Position: {x: 280, y: 0, z: 0}

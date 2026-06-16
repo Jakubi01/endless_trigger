@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Character.Enemy;
 using Character.Player;
+using Items.Exp;
 using UnityEngine;
 
 namespace Managers

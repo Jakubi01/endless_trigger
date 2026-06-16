@@ -165,7 +165,10 @@ namespace Managers
             if (!settingWindowPrefab) return;
 
             var activeCanvas = _mainCanvas;
-            if(!activeCanvas) return;
+            if(!activeCanvas)
+            {
+                activeCanvas = FindFirstObjectByType<Canvas>();
+            }
             
             _currentSettingWindow = Instantiate(settingWindowPrefab, activeCanvas.transform);
             _currentSettingWindow.transform.SetAsLastSibling();

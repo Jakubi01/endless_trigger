@@ -35,7 +35,7 @@ namespace Character
         static AnimatorParamToHash()
         {
             IsRunning = Animator.StringToHash("IsRunning");
-            Attack = Animator.StringToHash("Attack");
+            Attack = Animator.StringToHash("PlayerAttack");
             
             Move = Animator.StringToHash("Move");
             EnemyAttack = Animator.StringToHash("EnemyAttack");

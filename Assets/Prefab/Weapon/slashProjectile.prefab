@@ -171,7 +171,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Items.Projectile.Projectile
   speed: 15
-  animationName: Play
+  animationName: Slash
   shouldPlayerAnimation: 1
 --- !u!95 &4097843188031260570
 Animator:

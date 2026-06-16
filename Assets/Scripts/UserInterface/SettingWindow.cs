@@ -151,7 +151,8 @@ namespace UserInterface
             SetToggleValue(muteToggle, false);
             SetToggleText(muteToggle, muteToggleText);
 
-            SetToggleValue(windowModeToggle, false);
+            bool isWindowMode = SettingManager.Instance.CurrentScreenMode == ScreenMode.Windowed;
+            SetToggleValue(windowModeToggle, isWindowMode);
             SetToggleText(windowModeToggle, windowModeToggleText);
 
             SetToggleValue(screenShakeToggle, true);

@@ -21,6 +21,7 @@ namespace Items.Weapon
         protected EnemyCharacterBase CurrentTarget;
         protected ProjectilePoolManager ProjectileManager;
         public CharacterBase owner;
+        protected Animator OwnerAnimator;
 
         protected float Damage => damage;
         public float CurrentFireInterval => Mathf.Max(0.1f, (baseFireInterval + cooldown) / _attackSpeedMultiplier);
@@ -36,6 +37,7 @@ namespace Items.Weapon
             }
             
             owner = GetComponentInParent<CharacterBase>();
+            OwnerAnimator = owner.GetComponent<Animator>();
         }
 
         public void StartFiring()

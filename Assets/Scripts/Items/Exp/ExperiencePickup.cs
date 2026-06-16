@@ -1,7 +1,7 @@
 using Character.Player;
 using UnityEngine;
 
-namespace Managers
+namespace Items.Exp
 {
     [RequireComponent(typeof(CircleCollider2D))]
     public class ExperiencePickup : MonoBehaviour
