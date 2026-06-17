@@ -42,7 +42,7 @@ namespace UserInterface
             
             Canvas.ForceUpdateCanvases();
         }
-        
+        // TODO : 모든 UI 앵커 조절하기
         public void Initialize(PlayerCharacter player, EnemySpawner enemySpawner)
         {
             UnsubscribeStatEvents();

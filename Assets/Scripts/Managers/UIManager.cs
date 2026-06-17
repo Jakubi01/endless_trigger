@@ -46,92 +46,81 @@ namespace Managers
             {
                 Instance = null;
             }
-
             Time.timeScale = 1f;
         }
-        
-        
+
+        /// <summary>
+        /// 현재 사용 가능한 유효한 캔버스를 반환합니다.
+        /// </summary>
+        private Canvas GetActiveCanvas()
+        {
+            if (_mainCanvas != null) return _mainCanvas;
+            
+            _mainCanvas = FindFirstObjectByType<Canvas>();
+            return _mainCanvas;
+        }
+
+        /// <summary>
+        /// UI 윈도우 생성을 일반화한 제네릭 메서드
+        /// </summary>
+        private T OpenWindow<T>(T prefab, ref T currentWindowReference) where T : MonoBehaviour
+        {
+            if (currentWindowReference != null) return currentWindowReference;
+            if (prefab == null) return null;
+
+            Canvas activeCanvas = GetActiveCanvas();
+            if (activeCanvas == null)
+            {
+                Debug.LogError("씬에 사용 가능한 Canvas가 없습니다.");
+                return null;
+            }
+
+            currentWindowReference = Instantiate(prefab, activeCanvas.transform);
+            currentWindowReference.transform.SetAsLastSibling();
+            
+            var rectTransform = currentWindowReference.GetComponent<RectTransform>();
+            if (rectTransform) rectTransform.anchoredPosition = Vector2.zero;
+
+            var canvasGroup = currentWindowReference.GetComponent<CanvasGroup>();
+            if (canvasGroup == null) canvasGroup = currentWindowReference.gameObject.AddComponent<CanvasGroup>();
+            canvasGroup.ignoreParentGroups = true;
+            canvasGroup.interactable = true;
+
+            RefreshPauseState();
+            return currentWindowReference;
+        }
+
 #region TitleScene
         public void OnStartButtonClicked() => SceneControlManager.Instance.LoadScene(GameScene);
 #endregion
 
-
 #region Pause
-        public void ShowPauseWindow()
-        {
-            if (_currentPauseWindow) return;
-            if (!pauseWindowPrefab) return;
-
-            var activeCanvas = _mainCanvas;
-            if (!activeCanvas) return;
-
-            _currentPauseWindow = Instantiate(pauseWindowPrefab, activeCanvas.transform);
-            _currentPauseWindow.transform.SetAsLastSibling();
-            
-            var rectTransform = _currentPauseWindow.GetComponent<RectTransform>();
-            if (!rectTransform) return;
-            
-            rectTransform.anchoredPosition = Vector2.zero;
-            
-            var windowCanvasGroup = _currentPauseWindow.GetComponent<CanvasGroup>();
-            if (windowCanvasGroup == null)
-            {
-                windowCanvasGroup = _currentPauseWindow.gameObject.AddComponent<CanvasGroup>();
-            }
-            windowCanvasGroup.ignoreParentGroups = true;
-            windowCanvasGroup.interactable = true;
-
-            RefreshPauseState();
-        }
+        public void ShowPauseWindow() => OpenWindow(pauseWindowPrefab, ref _currentPauseWindow);
 
         public void OnContinueButtonClicked()
         {
             if (_currentPauseWindow == null) return;
             
-            var windowCanvasGroup = _currentPauseWindow.GetComponent<CanvasGroup>();
-            windowCanvasGroup.ignoreParentGroups = true;
-            windowCanvasGroup.interactable = true;
-            
             Destroy(_currentPauseWindow.gameObject);
             _currentPauseWindow = null;
+            
             RefreshPauseState();
         }
 #endregion
 
 #region ExitWindow
-        private void ShowExitWindow()
+        public void OnExitButtonClicked()
         {
-            if (_currentExitWindow) return;
-            if (!exitWindowPrefab) return;
+            var win = OpenWindow(exitWindowPrefab, ref _currentExitWindow);
+            if (win == null) return;
 
-            var activeCanvas = _mainCanvas;
-            if (!activeCanvas) return;
-
-            _currentExitWindow = Instantiate(exitWindowPrefab, activeCanvas.transform);
-            _currentExitWindow.transform.SetAsLastSibling();
-            
-            var rectTransform = _currentExitWindow.GetComponent<RectTransform>();
-            if (!rectTransform) return;
-            
-            rectTransform.anchoredPosition = Vector2.zero;
-
-            activeCanvas.GetComponent<CanvasGroup>().interactable = false;
-            
-            var windowCanvasGroup = _currentExitWindow.GetComponent<CanvasGroup>();
-            if (windowCanvasGroup == null)
-            {
-                windowCanvasGroup = _currentExitWindow.gameObject.AddComponent<CanvasGroup>();
-            }
-            windowCanvasGroup.ignoreParentGroups = true;
-            windowCanvasGroup.interactable = true;
-            
-            RefreshPauseState();
+            var parentGroup = GetActiveCanvas().GetComponent<CanvasGroup>();
+            if (parentGroup) parentGroup.interactable = false;
         }
 
         public void OnExitAccept()
         {
-            ClearWindowReferences();
-            RefreshPauseState();
+            Time.timeScale = 1f; 
             
         #if UNITY_EDITOR
             UnityEditor.EditorApplication.isPlaying = false;
@@ -144,11 +133,8 @@ namespace Managers
         {
             if (_currentExitWindow == null) return;
             
-            var windowCanvasGroup = _currentExitWindow.GetComponent<CanvasGroup>();
-            windowCanvasGroup.ignoreParentGroups = false;
-            windowCanvasGroup.interactable = false;
-            
-            _mainCanvas.GetComponent<CanvasGroup>().interactable = true;
+            var parentGroup = GetActiveCanvas().GetComponent<CanvasGroup>();
+            if (parentGroup) parentGroup.interactable = true;
             
             Destroy(_currentExitWindow.gameObject);
             _currentExitWindow = null;
@@ -158,27 +144,7 @@ namespace Managers
 #endregion
 
 #region SettingWindow
-
-        private void ShowSettingWindow()
-        {
-            if (_currentSettingWindow) return;
-            if (!settingWindowPrefab) return;
-
-            var activeCanvas = _mainCanvas;
-            if(!activeCanvas)
-            {
-                activeCanvas = FindFirstObjectByType<Canvas>();
-            }
-            
-            _currentSettingWindow = Instantiate(settingWindowPrefab, activeCanvas.transform);
-            _currentSettingWindow.transform.SetAsLastSibling();
-            
-            var rectTransform = _currentSettingWindow.GetComponent<RectTransform>();
-            if (!rectTransform) return;
-            
-            rectTransform.anchoredPosition = Vector2.zero;
-            RefreshPauseState();
-        }
+        public void OnSettingsButtonClicked() => OpenWindow(settingWindowPrefab, ref _currentSettingWindow);
 
         public void OnSettingWindowClosed(SettingWindow settingWindow)
         {
@@ -194,27 +160,10 @@ namespace Managers
 
             RefreshPauseState();
         }
-
 #endregion
 
 #region GameOver
-        public void ShowGameOverWindow()
-        {
-            if (_currentGameOverWindow) return;
-            if (!gameOverWindowPrefab) return;
-
-            var activeCanvas = _mainCanvas;
-            if(!activeCanvas) return;
-            
-            _currentGameOverWindow = Instantiate(gameOverWindowPrefab, activeCanvas.transform);
-            _currentGameOverWindow.transform.SetAsLastSibling();
-            
-            var rectTransform = _currentGameOverWindow.GetComponent<RectTransform>();
-            if (!rectTransform) return;
-            
-            rectTransform.anchoredPosition = Vector2.zero;
-            RefreshPauseState();
-        }
+        public void ShowGameOverWindow() => OpenWindow(gameOverWindowPrefab, ref _currentGameOverWindow);
 
         public void OnGameOverWindowClosed(GameOverWindow gameOverWindow)
         {
@@ -227,34 +176,19 @@ namespace Managers
             {
                 Destroy(gameOverWindow.gameObject);
             }
+            
+            RefreshPauseState();
         }
-
 #endregion
 
 #region GoToTitle
-
-public void ShowGoToTitleWindow()
-        {
-            if (_currentGoToTitleWindow) return;
-            if (!goToTitleWindowPrefab) return;
-
-            var activeCanvas = _mainCanvas;
-            if(!activeCanvas) return;
-            
-            _currentGoToTitleWindow = Instantiate(goToTitleWindowPrefab, activeCanvas.transform);
-            _currentGoToTitleWindow.transform.SetAsLastSibling();
-            
-            var rectTransform = _currentGoToTitleWindow.GetComponent<RectTransform>();
-            if (!rectTransform) return;
-            
-            rectTransform.anchoredPosition = Vector2.zero;
-            RefreshPauseState();
-        }
+        public void ShowGoToTitleWindow() => OpenWindow(goToTitleWindowPrefab, ref _currentGoToTitleWindow);
         
         public void OnGoToTitleButtonClicked()
         {
             ClearWindowReferences();
-            RefreshPauseState();
+            
+            Time.timeScale = 1f; 
             SceneControlManager.Instance.LoadScene(TitleScene);
         }
 
@@ -269,13 +203,12 @@ public void ShowGoToTitleWindow()
             {
                 Destroy(goToTitleWindow.gameObject);
             }
+            
+            RefreshPauseState();
         }
 #endregion
 
 #region Shared
-        public void OnExitButtonClicked() => ShowExitWindow();
-        public void OnSettingsButtonClicked() => ShowSettingWindow();
-
         private void ClearWindowReferences()
         {
             DestroyWindowIfAlive(_currentExitWindow);
@@ -293,10 +226,7 @@ public void ShowGoToTitleWindow()
 
         private void DestroyWindowIfAlive(MonoBehaviour window)
         {
-            if (window)
-            {
-                Destroy(window.gameObject);
-            }
+            if (window) Destroy(window.gameObject);
         }
 
         private void RefreshPauseState()
