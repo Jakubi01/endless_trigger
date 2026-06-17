@@ -278,6 +278,8 @@ namespace Managers
             _currentSettings.qualityIndex = Mathf.Clamp(_currentSettings.qualityIndex, 0, Mathf.Max(0, QualitySettings.names.Length - 1));
             QualitySettings.SetQualityLevel(_currentSettings.qualityIndex, true);
             QualitySettings.vSyncCount = 0;
+            
+            Canvas.ForceUpdateCanvases();
         }
 
         private void ApplyFrameRateLimit(double monitorHz)

@@ -10,6 +10,21 @@ namespace UserInterface
         [SerializeField] private Button settingButton;
         [SerializeField] private Button exitButton;
 
+        private void Awake()
+        {
+            var cs = GetComponent<CanvasScaler>();
+            if (!cs)
+            {
+                gameObject.AddComponent<CanvasScaler>();
+            }
+            
+            cs.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
+            cs.referenceResolution = new Vector2(1920, 1080);
+            cs.screenMatchMode = CanvasScaler.ScreenMatchMode.MatchWidthOrHeight;
+            cs.matchWidthOrHeight = 0.5f;
+            cs.referencePixelsPerUnit = 100f;
+        }
+        
         private void Start()
         {
             if (startButton)

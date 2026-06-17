@@ -409,10 +409,10 @@ MonoBehaviour:
   expBarSlider: {fileID: 5996596668865366811}
   timerText: {fileID: 1729665983729917258}
   levelText: {fileID: 8832829899137092960}
-  shotgunCooldownImage: {fileID: 0}
-  sniperCooldownImage: {fileID: 0}
-  shotgunCooldownText: {fileID: 0}
-  sniperCooldownText: {fileID: 0}
+  swordAttackCooldownImage: {fileID: 0}
+  spearAttackCooldownImage: {fileID: 0}
+  swordAttackCooldownText: {fileID: 0}
+  spearAttackCooldownText: {fileID: 0}
 --- !u!1 &4728904404825376039
 GameObject:
   m_ObjectHideFlags: 0
