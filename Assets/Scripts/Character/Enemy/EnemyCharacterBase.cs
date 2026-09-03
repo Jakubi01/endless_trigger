@@ -16,6 +16,7 @@ namespace Character.Enemy
     }
 
     [RequireComponent(typeof(HealthComponent))]
+    [RequireComponent(typeof(CircleCollider2D))]
     public class EnemyCharacterBase : CharacterBase, IDamageable
     {
         [Header("Enemy Status")]
@@ -28,6 +29,7 @@ namespace Character.Enemy
         private float _nextContactDamageTime;
         private HealthComponent _healthComponent;
         private Action<EnemyCharacterBase> _releaseToPool;
+        private CircleCollider2D _proximityLimitCircleCollider2D;
 
         public EnemyType EnemyType => enemyType;
         public bool IsAlive => _healthComponent && _healthComponent.IsAlive;
@@ -38,6 +40,8 @@ namespace Character.Enemy
             InitializeHealthComponent();
             _enemyManager = EnemyManager.Instance;
             GetComponent<SpriteRenderer>().sortingLayerName = "Enemy";
+            _proximityLimitCircleCollider2D = GetComponent<CircleCollider2D>();
+            SetProximityLimitRadius(1f);
         }
 
         private void OnEnable()
@@ -142,6 +146,11 @@ namespace Character.Enemy
             }
 
             Destroy(gameObject);
+        }
+        
+        protected void SetProximityLimitRadius(float radius)
+        {
+            _proximityLimitCircleCollider2D.radius = radius;
         }
     }
 }

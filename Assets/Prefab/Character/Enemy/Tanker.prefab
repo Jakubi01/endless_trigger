@@ -16,7 +16,8 @@ GameObject:
   - component: {fileID: 7000156566759109897}
   - component: {fileID: 6389508859907954327}
   - component: {fileID: -2880152546609908833}
-  m_Layer: 0
+  - component: {fileID: 5535607555779551821}
+  m_Layer: 7
   m_Name: Tanker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -235,3 +236,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6255557b08364a148865e66a4e880869, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Controllers.Enemy.TankerController
+--- !u!58 &5535607555779551821
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7085437813263961426}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 1.45}
+  m_Radius: 1

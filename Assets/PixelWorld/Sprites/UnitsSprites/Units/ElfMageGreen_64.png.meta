@@ -1,5 +1,12 @@
 fileFormatVersion: 2
 guid: 6bd0627f0a8982646ae34fa79f98be04
+AssetOrigin:
+  serializedVersion: 1
+  productId: 370476
+  packageName: Pixel World - Ultimate Bundle
+  packageVersion: 1.0
+  assetPath: Assets/PixelWorld/Sprites/UnitsSprites/Units/ElfMageGreen_64.png
+  uploadId: 891686
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -123,7 +130,51 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: KnightSpriteSheet_0
+      name: ElfMageGreen_64_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 256
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c24ce38a69128c14290d90cceee759e2
+      internalID: -1704277858
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ElfMageGreen_64_1
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 256
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c599394b90cac50498ceb57a9ab1b5c3
+      internalID: -437895967
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ElfMageGreen_64_2
       rect:
         serializedVersion: 2
         x: 0
@@ -131,21 +182,21 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 96e82d5ae66b55540a3ed3843a6ee20b
-      internalID: -8703504
+      spriteID: 8bc27b28832fcea448bbd30c97559282
+      internalID: 2007754349
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: KnightSpriteSheet_1
+      name: ElfMageGreen_64_3
       rect:
         serializedVersion: 2
         x: 64
@@ -153,21 +204,43 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: acb8fe55fb12bac4da6268869ebcbe11
-      internalID: 960066189
+      spriteID: 0bb0af60d6ea2274997257d86c3cc676
+      internalID: 717260198
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: KnightSpriteSheet_2
+      name: ElfMageGreen_64_4
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 192
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 09e230dcee2ebba458bff8c431c37a97
+      internalID: -835017644
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ElfMageGreen_64_5
       rect:
         serializedVersion: 2
         x: 0
@@ -175,21 +248,21 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 344ac6fbe56afdf4ab39955de972ae61
-      internalID: 901865677
+      spriteID: 2cb89090c46d2d44cae7750f655e8e70
+      internalID: 1806038492
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: KnightSpriteSheet_3
+      name: ElfMageGreen_64_6
       rect:
         serializedVersion: 2
         x: 64
@@ -197,21 +270,21 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 129401182beebe24c9970c91f8c4413c
-      internalID: 356220108
+      spriteID: b933bf36e70a69046b95df8386e872d7
+      internalID: -1395788489
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: KnightSpriteSheet_4
+      name: ElfMageGreen_64_7
       rect:
         serializedVersion: 2
         x: 128
@@ -219,191 +292,191 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 25f9e83c2f19f5346b6da56287fb581d
-      internalID: 249331854
+      spriteID: b47c91b029b49eb45bfffff07cc8a031
+      internalID: 1087557467
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: KnightSpriteSheet_5
+      name: ElfMageGreen_64_8
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 64
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 78ff370a1d7138d4d8966b57dd1dbcf1
+      internalID: 2064031774
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ElfMageGreen_64_9
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 64
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a183d015831e12245a87fef99558a6ca
+      internalID: 1642138818
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ElfMageGreen_64_10
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 64
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6cdf28c0f50952d41acac17ea67fc1f4
+      internalID: -1240422042
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ElfMageGreen_64_11
       rect:
         serializedVersion: 2
         x: 192
-        y: 128
+        y: 64
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 17c58b27c2faf984fbacb735ac3ec8dc
-      internalID: 518087088
+      spriteID: 59cb5fe9950b6744d916c019be4713e1
+      internalID: 1781557722
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: KnightSpriteSheet_6
+      name: ElfMageGreen_64_12
       rect:
         serializedVersion: 2
         x: 0
-        y: 64
+        y: 0
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5c169584ee3ed2741b99a38ca51a3540
-      internalID: -406917328
+      spriteID: 9037d9ade1c7b8c4692360f99debbf6f
+      internalID: 869375740
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: KnightSpriteSheet_7
+      name: ElfMageGreen_64_13
       rect:
         serializedVersion: 2
         x: 64
-        y: 64
+        y: 0
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fc91a08fdabcaeb42b3ff05c162faee7
-      internalID: -290476427
+      spriteID: 4b68dcbbb1b8c7d4e92addd3db2cfd46
+      internalID: 903730292
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: KnightSpriteSheet_8
+      name: ElfMageGreen_64_14
       rect:
         serializedVersion: 2
         x: 128
-        y: 64
+        y: 0
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 274295de003a4a9469178233e70fab44
-      internalID: -1603388998
+      spriteID: 651879086dd56a04584348800c0ba626
+      internalID: 781264585
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: KnightSpriteSheet_9
+      name: ElfMageGreen_64_15
       rect:
         serializedVersion: 2
         x: 192
-        y: 64
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 453f07b7a8ab1824e80c38ab0dc7cfe1
-      internalID: -87084472
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: KnightSpriteSheet_10
-      rect:
-        serializedVersion: 2
-        x: 0
         y: 0
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 34fde0bf20dfeb44f8ab3c6a006fd5ba
-      internalID: 584021974
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: KnightSpriteSheet_11
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 0
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 96f0c4e1cb5b1e142bec5d9880c7cadc
-      internalID: 1023121331
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: KnightSpriteSheet_12
-      rect:
-        serializedVersion: 2
-        x: 128
-        y: 0
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 03443d8458aa4ba488223a94bdf0a598
-      internalID: -1884161154
+      spriteID: c07590b998ed5bb4c9f2c9074c3d9a0b
+      internalID: 863399917
       vertices: []
       indices: 
       edges: []
@@ -420,30 +493,28 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-      entries: []
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      KnightSpriteSheet_0: -8703504
-      KnightSpriteSheet_1: 960066189
-      KnightSpriteSheet_10: 584021974
-      KnightSpriteSheet_11: 1023121331
-      KnightSpriteSheet_12: -1884161154
-      KnightSpriteSheet_2: 901865677
-      KnightSpriteSheet_3: 356220108
-      KnightSpriteSheet_4: 249331854
-      KnightSpriteSheet_5: 518087088
-      KnightSpriteSheet_6: -406917328
-      KnightSpriteSheet_7: -290476427
-      KnightSpriteSheet_8: -1603388998
-      KnightSpriteSheet_9: -87084472
+      ElfMageGreen_64_0: -1704277858
+      ElfMageGreen_64_1: -437895967
+      ElfMageGreen_64_10: -1240422042
+      ElfMageGreen_64_11: 1781557722
+      ElfMageGreen_64_12: 869375740
+      ElfMageGreen_64_13: 903730292
+      ElfMageGreen_64_14: 781264585
+      ElfMageGreen_64_15: 863399917
+      ElfMageGreen_64_2: 2007754349
+      ElfMageGreen_64_3: 717260198
+      ElfMageGreen_64_4: -835017644
+      ElfMageGreen_64_5: 1806038492
+      ElfMageGreen_64_6: -1395788489
+      ElfMageGreen_64_7: 1087557467
+      ElfMageGreen_64_8: 2064031774
+      ElfMageGreen_64_9: 1642138818
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 
-AssetOrigin:
-  serializedVersion: 1
-  productId: 370476
-  packageName: Pixel World - Ultimate Bundle
-  packageVersion: 1.0
-  assetPath: Assets/PixelWorld/Sprites/UnitsSprites/Units/ElfMageGreen_64.png
-  uploadId: 891686
