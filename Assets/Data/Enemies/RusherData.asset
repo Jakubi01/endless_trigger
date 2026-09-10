@@ -17,7 +17,7 @@ MonoBehaviour:
   health: 10
   moveSpeed: 2
   contactDamage: 8
-  experienceReward: 5
+  experienceReward: 15
   healthGrowthPerWave: 0.15
   moveSpeedGrowthPerWave: 0.02
   damageGrowthPerWave: 0.15

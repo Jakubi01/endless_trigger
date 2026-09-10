@@ -17,10 +17,15 @@ namespace Character.Player
         [Header("Status")]
         [SerializeField] private float baseMoveSpeed = 5f;
 
+        [Header("Level Up")]
+        [SerializeField] private List<PlayerUpgradeDefinition> upgradeDefinitions = new();
+
         private readonly List<WeaponAttackBase> _equippedWeapons = new();
         private EnemyManager _enemyManager;
         private HealthComponent _healthComponent;
         private PlayerLevelComponent _levelComponent;
+        private float _currentMoveSpeed;
+        private readonly Dictionary<PlayerUpgradeDefinition, int> _upgradeStacks = new();
 
         public float ExperiencePickupRange => _levelComponent ? _levelComponent.ExperiencePickupRange : 2.5f;
 
@@ -28,7 +33,8 @@ namespace Character.Player
         {
             base.Awake();
 
-            SetMoveSpeed(baseMoveSpeed);
+            _currentMoveSpeed = baseMoveSpeed;
+            SetMoveSpeed(_currentMoveSpeed);
             InitializeStatusComponents();
 
             var swordAttack = GetComponentInChildren<SwordAttack>();
@@ -70,7 +76,7 @@ namespace Character.Player
 
             if (_levelComponent)
             {
-                _levelComponent.LeveledUp -= ApplyLevelUpUpgrade;
+                _levelComponent.LeveledUp -= ShowLevelUpSelection;
             }
         }
 
@@ -156,7 +162,7 @@ namespace Character.Player
             }
 
             _healthComponent.Died += OnDeath;
-            _levelComponent.LeveledUp += ApplyLevelUpUpgrade;
+            _levelComponent.LeveledUp += ShowLevelUpSelection;
         }
 
         protected override void OnDeath()
@@ -168,15 +174,83 @@ namespace Character.Player
             UIManager.Instance.ShowGameOverWindow();
         }
 
-        private void ApplyLevelUpUpgrade(GameObject levelUpVFXPrefab)
+        public int GetUpgradeStackCount(PlayerUpgradeDefinition definition)
+        {
+            return definition && _upgradeStacks.TryGetValue(definition, out int stackCount) ? stackCount : 0;
+        }
+
+        public void ApplyUpgrade(PlayerUpgradeDefinition definition)
+        {
+            if (!definition || !definition.CanApply(this)) return;
+
+            definition.Apply(this);
+            _upgradeStacks[definition] = GetUpgradeStackCount(definition) + 1;
+        }
+
+        public void AddMoveSpeed(float amount)
+        {
+            if (amount <= 0f) return;
+            _currentMoveSpeed += amount;
+            SetMoveSpeed(_currentMoveSpeed);
+        }
+
+        public void AddMaxHealth(float amount) => _healthComponent?.AddMaxHealth(amount);
+        public void Heal(float amount) => _healthComponent?.Heal(amount);
+
+        public void UpgradeWeaponDamage(PlayerWeaponTarget target, float amount)
+        {
+            foreach (WeaponAttackBase weapon in GetWeapons(target)) weapon.AddDamageBonus(amount);
+        }
+
+        public void UpgradeWeaponAttackSpeed(PlayerWeaponTarget target, float amount)
+        {
+            foreach (WeaponAttackBase weapon in GetWeapons(target)) weapon.AddAttackSpeedBonus(amount);
+        }
+
+        private IEnumerable<WeaponAttackBase> GetWeapons(PlayerWeaponTarget target)
+        {
+            foreach (WeaponAttackBase weapon in _equippedWeapons)
+            {
+                if (target == PlayerWeaponTarget.All ||
+                    (target == PlayerWeaponTarget.Sword && weapon is SwordAttack) ||
+                    (target == PlayerWeaponTarget.Spear && weapon is SpearAttack))
+                    yield return weapon;
+            }
+        }
+
+        private void ShowLevelUpSelection()
+        {
+            List<PlayerUpgradeDefinition> choices = PlayerUpgradeDefinition.GetRandomChoices(this, upgradeDefinitions, 3);
+            if (choices.Count == 0)
+            {
+                Debug.LogError("PlayerCharacter에 선택 가능한 PlayerUpgradeDefinition이 없습니다.", this);
+                _levelComponent.CompleteUpgradeSelection();
+                return;
+            }
+
+            if (UIManager.Instance)
+            {
+                UIManager.Instance.ShowLevelUpSelection(choices, SelectUpgrade);
+            }
+            else
+            {
+                SelectUpgrade(choices[0]);
+            }
+        }
+
+        private void SelectUpgrade(PlayerUpgradeDefinition definition)
+        {
+            ApplyUpgrade(definition);
+            SpawnLevelUpVfx(_levelComponent ? _levelComponent.LevelUpVFXPrefab : null);
+            _levelComponent.CompleteUpgradeSelection();
+        }
+
+        private void SpawnLevelUpVfx(GameObject levelUpVFXPrefab)
         {
             if (_equippedWeapons.Count == 0) return;
 
+            // TODO : 이 랜덤 무기 강화를 덱으로 넣어버리고 여기에 덱 카드 선택 추가
             // enhance weapon status
-            int randomIndex = Random.Range(0, _equippedWeapons.Count);
-            _equippedWeapons[randomIndex].ApplyRandomUpgrade();
-            
-            // spawn levelUp vfx
             if (!levelUpVFXPrefab) return;
             
             var levelUpVFX = Instantiate(levelUpVFXPrefab, transform);

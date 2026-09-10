@@ -77,6 +77,13 @@ namespace Items.Weapon
             _attackSpeedMultiplier = Mathf.Max(0.01f, newMultiplier);
         }
 
+        public void AddDamageBonus(float amount) => AddDamage(amount);
+
+        public void AddAttackSpeedBonus(float multiplierBonus)
+        {
+            _attackSpeedMultiplier = Mathf.Max(0.01f, _attackSpeedMultiplier + multiplierBonus);
+        }
+
         public virtual void ApplyRandomUpgrade()
         {
         }

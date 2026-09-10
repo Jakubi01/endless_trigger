@@ -40,6 +40,23 @@ namespace Components
             HealthChanged?.Invoke();
         }
 
+        public void AddMaxHealth(float amount, bool healByAddedAmount = true)
+        {
+            if (amount <= 0f) return;
+
+            maxHealth += amount;
+            _currentHealth = Mathf.Min(maxHealth, _currentHealth + (healByAddedAmount ? amount : 0f));
+            HealthChanged?.Invoke();
+        }
+
+        public void Heal(float amount)
+        {
+            if (amount <= 0f || _currentHealth <= 0f) return;
+
+            _currentHealth = Mathf.Min(maxHealth, _currentHealth + amount);
+            HealthChanged?.Invoke();
+        }
+
         public void TakeDamage(float amount)
         {
             if (amount <= 0f || _currentHealth <= 0f) return;

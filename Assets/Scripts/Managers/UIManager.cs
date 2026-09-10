@@ -1,6 +1,10 @@
 ﻿using UnityEngine;
 using UserInterface;
 
+using System;
+using System.Collections.Generic;
+using Character.Player;
+
 namespace Managers
 {
     public class UIManager : MonoBehaviour
@@ -26,6 +30,9 @@ namespace Managers
         
         [SerializeField] private GoToTitleWindow goToTitleWindowPrefab;
         private GoToTitleWindow _currentGoToTitleWindow;
+        
+        [SerializeField] private LevelUpSelectionWindow levelUpSelectionWindowPrefab;
+        private LevelUpSelectionWindow _currentLevelUpSelectionWindow;
 
         private void Awake()
         {
@@ -181,6 +188,33 @@ namespace Managers
         }
 #endregion
 
+#region LevelUp
+        public void ShowLevelUpSelection(IReadOnlyList<PlayerUpgradeDefinition> choices, Action<PlayerUpgradeDefinition> onSelected)
+        {
+            if (_currentLevelUpSelectionWindow || choices == null || choices.Count == 0) return;
+
+            Canvas activeCanvas = GetActiveCanvas();
+            if (!activeCanvas)
+            {
+                Debug.LogError("레벨업 선택 창을 표시할 Canvas가 없습니다.");
+                return;
+            }
+            
+            _currentLevelUpSelectionWindow = OpenWindow(levelUpSelectionWindowPrefab, ref _currentLevelUpSelectionWindow);
+            _currentLevelUpSelectionWindow.Setup(choices, definition =>
+            {
+                LevelUpSelectionWindow currentWindow = _currentLevelUpSelectionWindow;
+                _currentLevelUpSelectionWindow = null;
+                if (currentWindow) Destroy(currentWindow.gameObject);
+                RefreshPauseState();
+                onSelected?.Invoke(definition);
+            });
+            
+            _currentLevelUpSelectionWindow.transform.SetAsLastSibling();
+            RefreshPauseState();
+        }
+#endregion
+
 #region GoToTitle
         public void ShowGoToTitleWindow() => OpenWindow(goToTitleWindowPrefab, ref _currentGoToTitleWindow);
         
@@ -216,12 +250,14 @@ namespace Managers
             DestroyWindowIfAlive(_currentPauseWindow);
             DestroyWindowIfAlive(_currentGameOverWindow);
             DestroyWindowIfAlive(_currentGoToTitleWindow);
+            DestroyWindowIfAlive(_currentLevelUpSelectionWindow);
 
             _currentExitWindow = null;
             _currentSettingWindow = null;
             _currentPauseWindow = null;
             _currentGameOverWindow = null;
             _currentGoToTitleWindow = null;
+            _currentLevelUpSelectionWindow = null;
         }
 
         private void DestroyWindowIfAlive(MonoBehaviour window)
@@ -236,7 +272,7 @@ namespace Managers
 
         private bool HasBlockingWindow()
         {
-            return _currentExitWindow || _currentSettingWindow || _currentPauseWindow || _currentGameOverWindow || _currentGoToTitleWindow;
+            return _currentExitWindow || _currentSettingWindow || _currentPauseWindow || _currentGameOverWindow || _currentGoToTitleWindow || _currentLevelUpSelectionWindow;
         }
         
         public void SetMainCanvas(Canvas mainCanvas)

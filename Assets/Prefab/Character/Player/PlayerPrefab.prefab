@@ -339,6 +339,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Character.Player.PlayerCharacter
   deathSound: {fileID: 0}
   baseMoveSpeed: 5
+  upgradeDefinitions:
+  - {fileID: 11400000, guid: c2c5137943b8441ebfa5017685c2a1a1, type: 2}
+  - {fileID: 11400000, guid: 42c392ab66d243789f57a4fe157f8c52, type: 2}
+  - {fileID: 11400000, guid: 66ffd55ae0c6486f943f3f334eb34542, type: 2}
+  - {fileID: 11400000, guid: d9a0f49fbc154f3bbf00d2215e6709d6, type: 2}
+  - {fileID: 11400000, guid: b549ed6fd8a345ee9d916c10c4407199, type: 2}
 --- !u!114 &5082065188802312462
 MonoBehaviour:
   m_ObjectHideFlags: 0

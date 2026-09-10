@@ -13,3 +13,6 @@ UI
     - https://docs.google.com/spreadsheets/d/1gSHKB8sdqL59RkS08nA1YXr7gkM_IeX58YTDsC7sKM0/edit?gid=485062987#gid=485062987
     - 유저에게 n가지의 선택지를 제공해 원하는 능력을 얻거나 능력을 강화함
 - 능력을 얻을때마다 ui message로 유저에게 알림
+
+LevelUp
+- 경험치 대폭 증가

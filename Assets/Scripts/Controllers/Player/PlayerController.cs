@@ -11,26 +11,12 @@ namespace Controllers.Player
     {
         private PlayerCharacter _playerCharacter;
         private Vector2 _moveInput;
-        private float _timer;
-        private float _interval;
 
         protected override void Awake()
         {
             base.Awake();
 
             _playerCharacter = GetComponent<PlayerCharacter>();
-            _interval = 5f;
-        }
-
-        private void Update()
-        {
-            _timer += Time.deltaTime;
-
-            if (_timer >= _interval)
-            {
-                _timer = 0f;
-                _playerCharacter.DoAttack();
-            }
         }
 
         public void OnMove(InputAction.CallbackContext ctx)

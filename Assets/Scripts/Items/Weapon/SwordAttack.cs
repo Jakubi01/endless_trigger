@@ -7,7 +7,7 @@ namespace Items.Weapon
     public class SwordAttack : WeaponAttackBase
     {
         [Header("Sword Attack Settings")]
-        [SerializeField] private float targetRange = 4f;
+        [SerializeField] private float targetRange = 6f;
         [SerializeField] private Transform muzzlePoint;
         [SerializeField] private float attackOffset = 1.5f; // 플레이어 중심에서 슬래시가 생성될 반지름 거리
         private const int PierceCount = 999;                // 슬래시는 범위 내 적을 모두 베어야 하므로 관통 수를 높게 설정

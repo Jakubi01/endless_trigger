@@ -155,7 +155,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 408, y: -194}
+  m_AnchoredPosition: {x: 500, y: -194}
   m_SizeDelta: {x: 500, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &50101502
@@ -301,6 +301,7 @@ MonoBehaviour:
   pauseWindowPrefab: {fileID: 7755613096903097542, guid: 41583e4b1d0361544aea844de53278f3, type: 3}
   gameOverWindowPrefab: {fileID: 4258283184057386960, guid: b37bf52ab28701b4583b988982d1ad9c, type: 3}
   goToTitleWindowPrefab: {fileID: -1047304699291107590, guid: 3dc44c5ce64a2d94e92cf14928fff53d, type: 3}
+  levelUpSelectionWindowPrefab: {fileID: 4040594509147121085, guid: 62ce44ce364ef314b995b94c1ba6af5a, type: 3}
 --- !u!1 &223553412
 GameObject:
   m_ObjectHideFlags: 0
@@ -601,7 +602,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 408, y: -344}
+  m_AnchoredPosition: {x: 500, y: -344}
   m_SizeDelta: {x: 500, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &438518953
@@ -1123,7 +1124,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 158, y: -100}
-  m_SizeDelta: {x: 500, y: 302.00006}
+  m_SizeDelta: {x: 700, y: 302.00006}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1146816253
 MonoBehaviour:
@@ -1781,7 +1782,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 408, y: -44}
+  m_AnchoredPosition: {x: 500, y: -44}
   m_SizeDelta: {x: 500, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1997271883

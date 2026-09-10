@@ -10,7 +10,7 @@ namespace Character.Enemy
         [SerializeField] private float health = 10f;
         [SerializeField] private float moveSpeed = 1f;
         [SerializeField] private float contactDamage = 5f;
-        [SerializeField] private int experienceReward = 5;
+        [SerializeField] private int experienceReward = 10;
         [SerializeField] private float healthGrowthPerWave = 0.15f;
         [SerializeField] private float moveSpeedGrowthPerWave = 0.02f;
         [SerializeField] private float damageGrowthPerWave = 0.15f;
@@ -20,11 +20,11 @@ namespace Character.Enemy
 
         public void GetScaledStats(int waveNumber, out float scaledHealth, out float scaledMoveSpeed, out float scaledDamage, out int scaledExperienceReward)
         {
-            int completedWaveCount = Mathf.Max(0, waveNumber - 1);
+            var completedWaveCount = Mathf.Max(0, waveNumber - 1);
             scaledHealth = health * (1f + completedWaveCount * healthGrowthPerWave);
             scaledMoveSpeed = moveSpeed * (1f + completedWaveCount * moveSpeedGrowthPerWave);
             scaledDamage = contactDamage * (1f + completedWaveCount * damageGrowthPerWave);
-            scaledExperienceReward = experienceReward;
+            scaledExperienceReward = experienceReward + Mathf.RoundToInt(completedWaveCount * 1.2f);
         }
     }
 }
