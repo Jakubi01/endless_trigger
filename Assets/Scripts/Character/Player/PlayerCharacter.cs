@@ -187,36 +187,36 @@ namespace Character.Player
             _upgradeStacks[definition] = GetUpgradeStackCount(definition) + 1;
         }
 
-        public void AddMoveSpeed(float amount)
-        {
-            if (amount <= 0f) return;
-            _currentMoveSpeed += amount;
-            SetMoveSpeed(_currentMoveSpeed);
-        }
-
-        public void AddMaxHealth(float amount) => _healthComponent?.AddMaxHealth(amount);
-        public void Heal(float amount) => _healthComponent?.Heal(amount);
-
-        public void UpgradeWeaponDamage(PlayerWeaponTarget target, float amount)
-        {
-            foreach (WeaponAttackBase weapon in GetWeapons(target)) weapon.AddDamageBonus(amount);
-        }
-
-        public void UpgradeWeaponAttackSpeed(PlayerWeaponTarget target, float amount)
-        {
-            foreach (WeaponAttackBase weapon in GetWeapons(target)) weapon.AddAttackSpeedBonus(amount);
-        }
-
-        private IEnumerable<WeaponAttackBase> GetWeapons(PlayerWeaponTarget target)
-        {
-            foreach (WeaponAttackBase weapon in _equippedWeapons)
-            {
-                if (target == PlayerWeaponTarget.All ||
-                    (target == PlayerWeaponTarget.Sword && weapon is SwordAttack) ||
-                    (target == PlayerWeaponTarget.Spear && weapon is SpearAttack))
-                    yield return weapon;
-            }
-        }
+        // public void AddMoveSpeed(float amount)
+        // {
+        //     if (amount <= 0f) return;
+        //     _currentMoveSpeed += amount;
+        //     SetMoveSpeed(_currentMoveSpeed);
+        // }
+        //
+        // public void AddMaxHealth(float amount) => _healthComponent?.AddMaxHealth(amount);
+        // public void Heal(float amount) => _healthComponent?.Heal(amount);
+        //
+        // public void UpgradeWeaponDamage(PlayerWeaponTarget target, float amount)
+        // {
+        //     foreach (WeaponAttackBase weapon in GetWeapons(target)) weapon.AddDamageBonus(amount);
+        // }
+        //
+        // public void UpgradeWeaponAttackSpeed(PlayerWeaponTarget target, float amount)
+        // {
+        //     foreach (WeaponAttackBase weapon in GetWeapons(target)) weapon.AddAttackSpeedBonus(amount);
+        // }
+        //
+        // private IEnumerable<WeaponAttackBase> GetWeapons(PlayerWeaponTarget target)
+        // {
+        //     foreach (WeaponAttackBase weapon in _equippedWeapons)
+        //     {
+        //         if (target == PlayerWeaponTarget.All ||
+        //             (target == PlayerWeaponTarget.Sword && weapon is SwordAttack) ||
+        //             (target == PlayerWeaponTarget.Spear && weapon is SpearAttack))
+        //             yield return weapon;
+        //     }
+        // }
 
         private void ShowLevelUpSelection()
         {
