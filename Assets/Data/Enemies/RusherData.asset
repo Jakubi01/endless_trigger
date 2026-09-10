@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Character.Enemy.EnemyData
   enemyType: 1
   prefab: {fileID: 4280838832269063721, guid: 9d34ac30ba3d1874e8f928ee7580a7e7, type: 3}
-  health: 30
-  moveSpeed: 3.2
-  contactDamage: 10
+  health: 10
+  moveSpeed: 2
+  contactDamage: 8
   experienceReward: 5
   healthGrowthPerWave: 0.15
   moveSpeedGrowthPerWave: 0.02

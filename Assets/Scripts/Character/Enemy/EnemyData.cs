@@ -7,9 +7,9 @@ namespace Character.Enemy
     {
         [SerializeField] private EnemyType enemyType;
         [SerializeField] private EnemyCharacterBase prefab;
-        [SerializeField] private float health = 30f;
-        [SerializeField] private float moveSpeed = 3.2f;
-        [SerializeField] private float contactDamage = 10f;
+        [SerializeField] private float health = 10f;
+        [SerializeField] private float moveSpeed = 1f;
+        [SerializeField] private float contactDamage = 5f;
         [SerializeField] private int experienceReward = 5;
         [SerializeField] private float healthGrowthPerWave = 0.15f;
         [SerializeField] private float moveSpeedGrowthPerWave = 0.02f;

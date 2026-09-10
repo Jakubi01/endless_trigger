@@ -15,9 +15,9 @@ MonoBehaviour:
   enemyType: 2
   prefab: {fileID: 6389508859907954327, guid: e10996d723a60e44f998b9f76761fac4, type: 3}
   health: 30
-  moveSpeed: 3.2
+  moveSpeed: 0.8
   contactDamage: 10
-  experienceReward: 5
+  experienceReward: 10
   healthGrowthPerWave: 0.15
   moveSpeedGrowthPerWave: 0.02
   damageGrowthPerWave: 0.15
