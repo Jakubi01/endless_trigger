@@ -11,7 +11,9 @@ namespace Character.Player.Upgrade.Effects
             // amount: 0.5
             // masStacks: 8
             // weight: 2
-            
+            if(!player) return;
+
+            player.AddMoveSpeed(amount);
         }
     }
 }

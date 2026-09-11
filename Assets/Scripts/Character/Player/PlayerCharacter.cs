@@ -20,7 +20,7 @@ namespace Character.Player
         [Header("Level Up")]
         [SerializeField] private List<PlayerUpgradeDefinition> upgradeDefinitions = new();
 
-        private readonly List<WeaponAttackBase> _equippedWeapons = new();
+        public readonly List<WeaponAttackBase> EquippedWeapons = new();
         private EnemyManager _enemyManager;
         private HealthComponent _healthComponent;
         private PlayerLevelComponent _levelComponent;
@@ -45,8 +45,8 @@ namespace Character.Player
                 return;
             }
             
-            _equippedWeapons.Add(swordAttack);
-            _equippedWeapons.Add(spearAttack);
+            EquippedWeapons.Add(swordAttack);
+            EquippedWeapons.Add(spearAttack);
             StartAllWeapons();
 
             _enemyManager = FindFirstObjectByType<EnemyManager>();
@@ -96,7 +96,7 @@ namespace Character.Player
 
         public void StartAllWeapons()
         {
-            foreach (var weapon in _equippedWeapons)
+            foreach (var weapon in EquippedWeapons)
             {
                 weapon.StartFiring();
             }
@@ -104,7 +104,7 @@ namespace Character.Player
 
         public void StopAllWeapons()
         {
-            foreach (var weapon in _equippedWeapons)
+            foreach (var weapon in EquippedWeapons)
             {
                 weapon.StopFiring();
             }
@@ -187,36 +187,12 @@ namespace Character.Player
             _upgradeStacks[definition] = GetUpgradeStackCount(definition) + 1;
         }
 
-        // public void AddMoveSpeed(float amount)
-        // {
-        //     if (amount <= 0f) return;
-        //     _currentMoveSpeed += amount;
-        //     SetMoveSpeed(_currentMoveSpeed);
-        // }
-        //
-        // public void AddMaxHealth(float amount) => _healthComponent?.AddMaxHealth(amount);
-        // public void Heal(float amount) => _healthComponent?.Heal(amount);
-        //
-        // public void UpgradeWeaponDamage(PlayerWeaponTarget target, float amount)
-        // {
-        //     foreach (WeaponAttackBase weapon in GetWeapons(target)) weapon.AddDamageBonus(amount);
-        // }
-        //
-        // public void UpgradeWeaponAttackSpeed(PlayerWeaponTarget target, float amount)
-        // {
-        //     foreach (WeaponAttackBase weapon in GetWeapons(target)) weapon.AddAttackSpeedBonus(amount);
-        // }
-        //
-        // private IEnumerable<WeaponAttackBase> GetWeapons(PlayerWeaponTarget target)
-        // {
-        //     foreach (WeaponAttackBase weapon in _equippedWeapons)
-        //     {
-        //         if (target == PlayerWeaponTarget.All ||
-        //             (target == PlayerWeaponTarget.Sword && weapon is SwordAttack) ||
-        //             (target == PlayerWeaponTarget.Spear && weapon is SpearAttack))
-        //             yield return weapon;
-        //     }
-        // }
+        public void AddMoveSpeed(float amount)
+        {
+            if (amount <= 0f) return;
+            _currentMoveSpeed += amount;
+            SetMoveSpeed(_currentMoveSpeed);
+        }
 
         private void ShowLevelUpSelection()
         {
@@ -247,7 +223,7 @@ namespace Character.Player
 
         private void SpawnLevelUpVfx(GameObject levelUpVFXPrefab)
         {
-            if (_equippedWeapons.Count == 0) return;
+            if (EquippedWeapons.Count == 0) return;
 
             // TODO : 이 랜덤 무기 강화를 덱으로 넣어버리고 여기에 덱 카드 선택 추가
             // enhance weapon status

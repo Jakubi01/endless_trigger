@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Items.Weapon;
+using UnityEngine;
 
 namespace Character.Player.Upgrade.Effects
 {
@@ -11,6 +12,11 @@ namespace Character.Player.Upgrade.Effects
             // amount: n
             // maxStacks: 10
             // weight: 3
+            
+            if(!player) return;
+            
+            foreach (var weapon in player.EquippedWeapons)
+                weapon.AddDamageBonus(amount);
         }
     }
 }
