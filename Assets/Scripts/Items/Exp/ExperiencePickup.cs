@@ -33,11 +33,6 @@ namespace Items.Exp
                 _player.transform.position,
                 attractSpeed * Time.deltaTime
             );
-
-            if (distance <= 0.2f)
-            {
-                Collect(_player);
-            }
         }
 
         private void OnTriggerEnter2D(Collider2D other)

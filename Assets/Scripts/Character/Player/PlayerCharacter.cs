@@ -94,7 +94,7 @@ namespace Character.Player
             return result;
         }
 
-        public void StartAllWeapons()
+        private void StartAllWeapons()
         {
             foreach (var weapon in EquippedWeapons)
             {
@@ -102,7 +102,7 @@ namespace Character.Player
             }
         }
 
-        public void StopAllWeapons()
+        private void StopAllWeapons()
         {
             foreach (var weapon in EquippedWeapons)
             {
@@ -179,7 +179,7 @@ namespace Character.Player
             return definition && _upgradeStacks.TryGetValue(definition, out int stackCount) ? stackCount : 0;
         }
 
-        public void ApplyUpgrade(PlayerUpgradeDefinition definition)
+        private void ApplyUpgrade(PlayerUpgradeDefinition definition)
         {
             if (!definition || !definition.CanApply(this)) return;
 
@@ -205,7 +205,7 @@ namespace Character.Player
             }
 
             if (UIManager.Instance)
-            {
+            { 
                 UIManager.Instance.ShowLevelUpSelection(choices, SelectUpgrade);
             }
             else
