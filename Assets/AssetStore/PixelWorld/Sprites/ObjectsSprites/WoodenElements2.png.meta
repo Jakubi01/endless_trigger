@@ -1,5 +1,12 @@
 fileFormatVersion: 2
 guid: 95dc76284892131409b75accd3e0c3e7
+AssetOrigin:
+  serializedVersion: 1
+  productId: 370476
+  packageName: Pixel World - Ultimate Bundle
+  packageVersion: 1.0
+  assetPath: Assets/PixelWorld/Sprites/ObjectsSprites/WoodenElements2.png
+  uploadId: 891686
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -351,10 +358,3 @@ TextureImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
-AssetOrigin:
-  serializedVersion: 1
-  productId: 370476
-  packageName: Pixel World - Ultimate Bundle
-  packageVersion: 1.0
-  assetPath: Assets/PixelWorld/Sprites/ObjectsSprites/WoodenElements2.png
-  uploadId: 891686

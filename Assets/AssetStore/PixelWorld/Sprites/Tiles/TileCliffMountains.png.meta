@@ -1,5 +1,12 @@
 fileFormatVersion: 2
 guid: 67fcee62b1590ba468750f91a9da6c2d
+AssetOrigin:
+  serializedVersion: 1
+  productId: 370476
+  packageName: Pixel World - Ultimate Bundle
+  packageVersion: 1.0
+  assetPath: Assets/PixelWorld/Sprites/Tiles/TileCliffMountains.png
+  uploadId: 891686
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -1357,10 +1364,3 @@ TextureImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
-AssetOrigin:
-  serializedVersion: 1
-  productId: 370476
-  packageName: Pixel World - Ultimate Bundle
-  packageVersion: 1.0
-  assetPath: Assets/PixelWorld/Sprites/Tiles/TileCliffMountains.png
-  uploadId: 891686

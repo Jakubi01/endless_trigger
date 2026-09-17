@@ -1,5 +1,12 @@
 fileFormatVersion: 2
 guid: ede68be6d40c49548a061b05157c14ad
+AssetOrigin:
+  serializedVersion: 1
+  productId: 370476
+  packageName: Pixel World - Ultimate Bundle
+  packageVersion: 1.0
+  assetPath: Assets/PixelWorld/Sprites/UnitsSprites/Monsters/OrcSkeleton_84.png
+  uploadId: 891686
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -509,10 +516,3 @@ TextureImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
-AssetOrigin:
-  serializedVersion: 1
-  productId: 370476
-  packageName: Pixel World - Ultimate Bundle
-  packageVersion: 1.0
-  assetPath: Assets/PixelWorld/Sprites/UnitsSprites/Monsters/OrcSkeleton_84.png
-  uploadId: 891686

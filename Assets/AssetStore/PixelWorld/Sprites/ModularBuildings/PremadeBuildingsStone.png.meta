@@ -1,5 +1,12 @@
 fileFormatVersion: 2
 guid: d3b4d7034ae359a469b90e9d72ffb743
+AssetOrigin:
+  serializedVersion: 1
+  productId: 370476
+  packageName: Pixel World - Ultimate Bundle
+  packageVersion: 1.0
+  assetPath: Assets/PixelWorld/Sprites/ModularBuildings/PremadeBuildingsStone.png
+  uploadId: 891686
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -367,10 +374,3 @@ TextureImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
-AssetOrigin:
-  serializedVersion: 1
-  productId: 370476
-  packageName: Pixel World - Ultimate Bundle
-  packageVersion: 1.0
-  assetPath: Assets/PixelWorld/Sprites/ModularBuildings/PremadeBuildingsStone.png
-  uploadId: 891686

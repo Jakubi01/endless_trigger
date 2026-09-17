@@ -13,6 +13,7 @@ namespace UserInterface
         private const int InvalidTenths = int.MinValue;
 
         [SerializeField] private Slider hpBarSlider;
+        [SerializeField] private TMP_Text hpBarText;
         [SerializeField] private Slider expBarSlider;
         [SerializeField] private TMP_Text timerText;
         [SerializeField] private TMP_Text levelText;
@@ -117,11 +118,15 @@ namespace UserInterface
 
         private void RefreshHealth()
         {
-            if (!hpBarSlider || !_healthComponent) return;
+            if (!hpBarSlider || !hpBarText || !_healthComponent) return;
 
+            float maxHealth = _healthComponent.MaxHealth;
+            float currentHealth = _healthComponent.CurrentHealth;
+            
             hpBarSlider.minValue = 0f;
-            hpBarSlider.maxValue = _healthComponent.MaxHealth;
-            hpBarSlider.value = _healthComponent.CurrentHealth;
+            hpBarSlider.maxValue = maxHealth;
+            hpBarSlider.value = currentHealth;
+            hpBarText.text = currentHealth + " / " + maxHealth;
         }
 
         private void RefreshExperience()

@@ -1,5 +1,12 @@
 fileFormatVersion: 2
 guid: 39d8427d549440642a56053bb5e1b640
+AssetOrigin:
+  serializedVersion: 1
+  productId: 370476
+  packageName: Pixel World - Ultimate Bundle
+  packageVersion: 1.0
+  assetPath: Assets/PixelWorld/Sprites/ObjectsSprites/MageTowerSpriteSheet.png
+  uploadId: 891686
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -1636,10 +1643,3 @@ TextureImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
-AssetOrigin:
-  serializedVersion: 1
-  productId: 370476
-  packageName: Pixel World - Ultimate Bundle
-  packageVersion: 1.0
-  assetPath: Assets/PixelWorld/Sprites/ObjectsSprites/MageTowerSpriteSheet.png
-  uploadId: 891686

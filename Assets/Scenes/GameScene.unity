@@ -1878,7 +1878,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.7802938e-15, y: 5.821509e-16, z: -10}
+  m_LocalPosition: {x: 2459.5657, y: 86.65323, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -405488,7 +405488,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Managers.SceneSpawnManager
   playerPrefab: {fileID: 2056072352070308880, guid: 4a715c867967d6a45a5379f982609ad2, type: 3}
-  cinemachineCameraPrefab: {fileID: 4639213535453530687, guid: 48ee590e94ea8364d8cd7b810f07bd20, type: 3}
+  cineMachineCameraPrefab: {fileID: 4639213535453530687, guid: 48ee590e94ea8364d8cd7b810f07bd20, type: 3}
   damageTextManagerPrefab: {fileID: -6754930296553276788, guid: ebd0503a1e109af429d0786ac2a38b10, type: 3}
   playerSpawnPoint: {fileID: 635242748}
   cameraBoundingShape: {fileID: 574660354}

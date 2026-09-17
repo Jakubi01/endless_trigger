@@ -1,5 +1,12 @@
 fileFormatVersion: 2
 guid: 6fc0edc3c0b2da54591047b8753aa39c
+AssetOrigin:
+  serializedVersion: 1
+  productId: 197211
+  packageName: 2D Monster ORC - SPUM Premium Addon Pack
+  packageVersion: 
+  assetPath: Assets/SPUM/Resources/Addons/MS_Orc/0_Unit/0_Sprite/3_Pant/Orc_Pant_01.png
+  uploadId: 884160
 TextureImporter:
   internalIDToNameTable:
   - first:
@@ -206,10 +213,3 @@ TextureImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
-AssetOrigin:
-  serializedVersion: 1
-  productId: 197211
-  packageName: 2D Monster ORC - SPUM Premium Addon Pack
-  packageVersion: "3.1.1\uC5C5\uB85C\uB4DC\uC644"
-  assetPath: Assets/SPUM/Resources/Addons/MS_Orc/0_Unit/0_Sprite/3_Pant/Orc_Pant_01.png
-  uploadId: 884160

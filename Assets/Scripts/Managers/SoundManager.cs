@@ -2,7 +2,7 @@
 
 namespace Managers
 {
-    [CreateAssetMenu(fileName = "SoundData", menuName = "Audio/SoundData")]
+    [CreateAssetMenu(fileName = "SoundData", menuName = "Endless Trigger/SoundData")]
     public class SoundData : ScriptableObject
     {
         [Header("UI Sounds (Common)")]
@@ -13,6 +13,10 @@ namespace Managers
         [Header("Common SFX")]
         public AudioClip playerHit;
         public AudioClip itemGet;
+
+        [Header("Background SFX")] 
+        public AudioClip lobbyBGM;
+        public AudioClip inGameBGM;
     }
     
     public class SoundManager : MonoBehaviour
