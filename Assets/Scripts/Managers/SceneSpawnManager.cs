@@ -9,7 +9,7 @@ namespace Managers
     public class SceneSpawnManager : MonoBehaviour
     {
         [SerializeField] private PlayerCharacter playerPrefab;
-        [SerializeField] private CinemachineCamera cinemachineCameraPrefab;
+        [SerializeField] private CinemachineCamera cineMachineCameraPrefab;
         [SerializeField] private DamageTextManager damageTextManagerPrefab;
         
         [SerializeField] private Transform playerSpawnPoint;
@@ -18,7 +18,7 @@ namespace Managers
         [SerializeField] private GameHUD gameHudPrefab;
 
         private PlayerCharacter _player;
-        private CinemachineCamera _cinemachineCamera;
+        private CinemachineCamera _cineMachineCamera;
         private GameHUD _gameHUD;
         private DamageTextManager _damageTextManager;
         private Canvas _mainCanvas;
@@ -49,17 +49,17 @@ namespace Managers
 
         private void SpawnCamera()
         {
-            if (!cinemachineCameraPrefab)
+            if (!cineMachineCameraPrefab)
             {
                 Debug.LogError($"{nameof(SceneSpawnManager)}: Cinemachine camera prefab is not assigned.", this);
                 return;
             }
 
-            _cinemachineCamera = Instantiate(cinemachineCameraPrefab, Vector3.zero, Quaternion.identity);
+            _cineMachineCamera = Instantiate(cineMachineCameraPrefab, Vector3.zero, Quaternion.identity);
 
-            if (disableSceneCameraTemplate && cinemachineCameraPrefab.gameObject.scene.IsValid())
+            if (disableSceneCameraTemplate && cineMachineCameraPrefab.gameObject.scene.IsValid())
             {
-                cinemachineCameraPrefab.gameObject.SetActive(false);
+                cineMachineCameraPrefab.gameObject.SetActive(false);
             }
         }
 
@@ -76,16 +76,16 @@ namespace Managers
 
         private void ConfigureCamera()
         {
-            if (!_player || !_cinemachineCamera) return;
+            if (!_player || !_cineMachineCamera) return;
 
             if (Camera.main != null && Camera.main.TryGetComponent(out CinemachineBrain cinemachineBrain))
             {
                 cinemachineBrain.UpdateMethod = CinemachineBrain.UpdateMethods.FixedUpdate;
             }
 
-            _cinemachineCamera.Target.TrackingTarget = _player.transform;
+            _cineMachineCamera.Target.TrackingTarget = _player.transform;
 
-            if (_cinemachineCamera.TryGetComponent(out CinemachineConfiner2D confiner))
+            if (_cineMachineCamera.TryGetComponent(out CinemachineConfiner2D confiner))
             {
                 confiner.BoundingShape2D = cameraBoundingShape;
                 confiner.InvalidateBoundingShapeCache();

@@ -335,7 +335,6 @@ namespace Managers
         {
             if (!_pools.TryGetValue(type, out EnemyPool enemyPool))
             {
-                Debug.LogError($"{nameof(EnemySpawner)}: EnemyData for {type} is not assigned.", this);
                 return;
             }
 

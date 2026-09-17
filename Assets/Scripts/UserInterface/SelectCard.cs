@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace UserInterface
 {
-    public class SelectCard : MonoBehaviour
+    public class SelectCard : UserInterface
     {
         [SerializeField] private Button clickButton;       // 클릭을 감지할 버튼 컴포넌트
         [SerializeField] private Image iconImage;          // 아이콘 이미지

@@ -1,14 +1,12 @@
 using System;
 using System.Collections.Generic;
 using Character.Player;
-using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace UserInterface
 {
     /// <summary>프리팹 연결 없이 생성되는 기본 레벨업 카드 창입니다.</summary>
-    public class LevelUpSelectionWindow : MonoBehaviour
+    public class LevelUpSelectionWindow : UserInterface
     {
         private Action<PlayerUpgradeDefinition> _onSelected;
         private bool _selected;

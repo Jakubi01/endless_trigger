@@ -1,4 +1,5 @@
-﻿using Items.Weapon;
+﻿using System.Linq;
+using Items.Weapon;
 using UnityEngine;
 
 namespace Character.Player.Upgrade.Effects
@@ -32,20 +33,16 @@ namespace Character.Player.Upgrade.Effects
                 return;
             }
             
-            
-            WeaponAttackBase targetWeapon = null;
-            foreach (var weapon in player.EquippedWeapons)
-            {
-                if ((target == PlayerWeaponTarget.Sword && weapon is SwordAttack) ||
-                    (target == PlayerWeaponTarget.Spear && weapon is SpearAttack))
-                {
-                    targetWeapon = weapon;
-                    break;
-                }
-            }
+            WeaponAttackBase targetWeapon = 
+                player.EquippedWeapons.FirstOrDefault(
+                    weapon => 
+                        (target == PlayerWeaponTarget.Sword && weapon is SwordAttack) || 
+                        (target == PlayerWeaponTarget.Spear && weapon is SpearAttack));
 
-            if (targetWeapon) 
-                targetWeapon.AddAttackSpeedBonus(amount);
+            if (!targetWeapon)
+                return;
+            
+            targetWeapon.AddAttackSpeedBonus(amount);
         }
     }
 }

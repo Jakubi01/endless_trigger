@@ -6,12 +6,12 @@ namespace Managers
     {
         public static GameManager Instance { get; private set; }
 
-        private int _killCount;
-        private int _waveClearedCount;
         private int _unsavedKillCount;
 
-        public int KillCount => _killCount;
-        public int WaveClearedCount => _waveClearedCount;
+        public int KillCount { get; private set; }
+
+        public int WaveClearedCount { get; private set; }
+
         public int TotalKillCount => SettingManager.Instance ? SettingManager.Instance.TotalKillCount : 0;
 
         private void Awake()
@@ -37,21 +37,21 @@ namespace Managers
 
         public void BeginRun()
         {
-            _killCount = 0;
-            _waveClearedCount = 0;
+            KillCount = 0;
+            WaveClearedCount = 0;
             _unsavedKillCount = 0;
         }
 
         public void RegisterKill()
         {
-            _killCount++;
+            KillCount++;
             _unsavedKillCount++;
             SettingManager.Instance?.AddTotalKillCount(1);
         }
 
         public void RegisterWaveCleared()
         {
-            _waveClearedCount++;
+            WaveClearedCount++;
         }
 
         public void SaveRunProgress()

@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 namespace UserInterface
 {
-    public class SettingWindow : MonoBehaviour
+    public class SettingWindow : UserInterface
     {
         [Header("Audio UI")]
         [SerializeField] private Slider masterVolumeSlider;

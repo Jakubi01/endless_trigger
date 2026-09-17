@@ -11,13 +11,8 @@ namespace Managers
         [SerializeField] private GameObject experiencePickupPrefab;
 
         private readonly List<EnemyCharacterBase> _enemies = new();
-        private PlayerCharacter _player;
         public static EnemyManager Instance { get; private set; }
-        public PlayerCharacter Player
-        {
-            get => _player;
-            set => _player = value;
-        }
+        public PlayerCharacter Player { get; set; }
 
         private void Awake()
         {
@@ -31,9 +26,9 @@ namespace Managers
 
         private void FixedUpdate()
         {
-            Vector2 targetPosition = _player.CharacterRigidbody
-                ? _player.CharacterRigidbody.position
-                : _player.transform.position;
+            Vector2 targetPosition = Player.CharacterRigidbody
+                ? Player.CharacterRigidbody.position
+                : Player.transform.position;
 
             for (int i = _enemies.Count - 1; i >= 0; i--)
             {
@@ -70,8 +65,6 @@ namespace Managers
         {
             _enemies.Remove(enemy);
         }
-
-        public IReadOnlyList<EnemyCharacterBase> Enemies => _enemies;
 
         public GameObject FindNearestEnemy(Transform callerTransform, float range)
         {
