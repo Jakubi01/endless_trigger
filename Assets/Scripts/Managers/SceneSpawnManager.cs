@@ -107,7 +107,7 @@ namespace Managers
                 return;
             }
 
-            _gameHUD = Instantiate(gameHudPrefab, canvas.transform);
+            _gameHUD = Instantiate(gameHudPrefab, canvas.transform, false);
             _gameHUD.transform.SetAsFirstSibling();
 
             if (_gameHUD.TryGetComponent(out RectTransform rectTransform))

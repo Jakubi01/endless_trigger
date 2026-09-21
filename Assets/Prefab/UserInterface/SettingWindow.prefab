@@ -4785,12 +4785,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 30
+  m_fontSize: 70
   m_fontSizeBase: 60
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 10
-  m_fontSizeMax: 30
+  m_fontSizeMax: 70
   m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
@@ -4824,7 +4824,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: -113.65558, y: -69.941895, z: -194.52612, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -7311,10 +7311,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 7480400954910262431}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 1.5}
-  m_SizeDelta: {x: 0, y: 2.9999878}
+  m_SizeDelta: {x: 180, y: 72.999985}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1816834579772799615
 CanvasRenderer:
@@ -7388,9 +7388,9 @@ MonoBehaviour:
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_TextWrappingMode: 1
+  m_TextWrappingMode: 0
   m_wordWrappingRatios: 0.4
-  m_overflowMode: 0
+  m_overflowMode: 1
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 0
@@ -8265,6 +8265,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d7b580d51d34f76b837f18da3c41bf7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UserInterface.SettingWindow
+  owner: {fileID: 0}
   masterVolumeSlider: {fileID: 6193282904187454675}
   bgmVolumeSlider: {fileID: 7801333554578362294}
   sfxVolumeSlider: {fileID: 7347951035557896172}
@@ -8633,10 +8634,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 7305302220223007117}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 1.5}
-  m_SizeDelta: {x: 0, y: 2.9999878}
+  m_SizeDelta: {x: 180, y: 72.999985}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &129538539286982404
 CanvasRenderer:
@@ -8710,9 +8711,9 @@ MonoBehaviour:
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_TextWrappingMode: 1
+  m_TextWrappingMode: 0
   m_wordWrappingRatios: 0.4
-  m_overflowMode: 0
+  m_overflowMode: 1
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 0

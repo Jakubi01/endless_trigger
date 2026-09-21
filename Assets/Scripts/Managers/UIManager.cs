@@ -34,6 +34,8 @@ namespace Managers
         [SerializeField] private LevelUpSelectionWindow levelUpSelectionWindowPrefab;
         private LevelUpSelectionWindow _currentLevelUpSelectionWindow;
 
+        private GameHUD _gameHUD;
+
         private void Awake()
         {
             if (Instance == null)
@@ -61,7 +63,7 @@ namespace Managers
         /// </summary>
         private Canvas GetActiveCanvas()
         {
-            if (_mainCanvas != null) return _mainCanvas;
+            if (_mainCanvas) return _mainCanvas;
             
             _mainCanvas = FindFirstObjectByType<Canvas>();
             return _mainCanvas;
@@ -82,11 +84,16 @@ namespace Managers
                 return null;
             }
 
-            currentWindowReference = Instantiate(prefab, activeCanvas.transform);
+            currentWindowReference = Instantiate(prefab, activeCanvas.transform, false);
             currentWindowReference.transform.SetAsLastSibling();
             
             var rectTransform = currentWindowReference.GetComponent<RectTransform>();
-            if (rectTransform) rectTransform.anchoredPosition = Vector2.zero;
+            if (rectTransform)
+            {
+                rectTransform.localScale = Vector3.one;
+                rectTransform.anchoredPosition = Vector2.zero;
+                rectTransform.localPosition = new Vector3(rectTransform.localPosition.x, rectTransform.localPosition.y, 0f);
+            }
 
             var canvasGroup = currentWindowReference.GetComponent<CanvasGroup>();
             if (canvasGroup == null) canvasGroup = currentWindowReference.gameObject.AddComponent<CanvasGroup>();
@@ -123,6 +130,8 @@ namespace Managers
 
             var parentGroup = GetActiveCanvas().GetComponent<CanvasGroup>();
             if (parentGroup) parentGroup.interactable = false;
+
+            ToggleHUDVisible(false);
         }
 
         public void OnExitAccept()
@@ -145,6 +154,8 @@ namespace Managers
             
             Destroy(_currentExitWindow.gameObject);
             _currentExitWindow = null;
+            
+            ToggleHUDVisible(true);
             
             RefreshPauseState();
         }
@@ -216,7 +227,13 @@ namespace Managers
 #endregion
 
 #region GoToTitle
-        public void ShowGoToTitleWindow() => OpenWindow(goToTitleWindowPrefab, ref _currentGoToTitleWindow);
+
+        public void ShowGoToTitleWindow()
+        {
+            ToggleHUDVisible(false);
+            
+            OpenWindow(goToTitleWindowPrefab, ref _currentGoToTitleWindow);
+        }
         
         public void OnGoToTitleButtonClicked()
         {
@@ -237,6 +254,8 @@ namespace Managers
             {
                 Destroy(goToTitleWindow.gameObject);
             }
+            
+            ToggleHUDVisible(true);
             
             RefreshPauseState();
         }
@@ -279,6 +298,35 @@ namespace Managers
         {
             _mainCanvas = mainCanvas;
         }
+
+        private void ToggleHUDVisible(bool bVisible)
+        {
+            if (_currentSettingWindow)
+            {
+                _currentSettingWindow.gameObject.SetActive(bVisible);
+            }
+
+            if (_currentPauseWindow)
+            {
+                _currentPauseWindow.gameObject.SetActive(bVisible);
+            }
+
+            if (_currentGameOverWindow)
+            {
+                _currentGameOverWindow.gameObject.SetActive(bVisible);
+            }
+
+            if (_currentLevelUpSelectionWindow)
+            {
+                _currentLevelUpSelectionWindow.gameObject.SetActive(bVisible);
+            }
+
+            if(!_gameHUD) _gameHUD = _mainCanvas.GetComponentInChildren<GameHUD>();
+            if (!_gameHUD) return;
+            
+            _gameHUD.gameObject.SetActive(bVisible);
+        }
+        
 #endregion
     }
 }

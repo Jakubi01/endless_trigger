@@ -64,17 +64,26 @@ namespace UserInterface
             _systemResolutions.AddRange(Screen.resolutions);
 
             List<string> options = new List<string>();
-            int currentResIndex = 0;
+            int maxResIndex = 0;
+            long maxPixelCount = 0;
+            double maxRefreshRate = 0;
 
-            for (int i = 0; i < _systemResolutions.Count; i++)
+             for (int i = 0; i < _systemResolutions.Count; i++)
             {
-                string option = $"{_systemResolutions[i].width} x {_systemResolutions[i].height} @ {_systemResolutions[i].refreshRateRatio.value:F0}Hz";
+                var res = _systemResolutions[i];
+                string option = $"{res.width} x {res.height} @ {res.refreshRateRatio.value:F0}Hz";
                 options.Add(option);
 
-                if (_systemResolutions[i].width == Screen.currentResolution.width &&
-                    _systemResolutions[i].height == Screen.currentResolution.height)
+                // 최대 해상도 및 주사율 탐색 (너비x높이가 크거나, 같으면 주사율이 더 높은 항목 선택)
+                long currentPixelCount = (long)res.width * res.height;
+                double currentRefreshRate = res.refreshRateRatio.value;
+
+                if (currentPixelCount > maxPixelCount || 
+                    (currentPixelCount == maxPixelCount && currentRefreshRate > maxRefreshRate))
                 {
-                    currentResIndex = i;
+                    maxPixelCount = currentPixelCount;
+                    maxRefreshRate = currentRefreshRate;
+                    maxResIndex = i;
                 }
             }
 
@@ -87,8 +96,9 @@ namespace UserInterface
             }
             else
             {
-                resolutionDropdown.SetValueWithoutNotify(currentResIndex);
-                SettingManager.Instance.SetResolution(currentResIndex);
+                // 저장된 설정이 없을 때 최대 해상도로 지정
+                resolutionDropdown.SetValueWithoutNotify(maxResIndex);
+                SettingManager.Instance.SetResolution(maxResIndex);
             }
 
             resolutionDropdown.RefreshShownValue();
@@ -226,35 +236,52 @@ namespace UserInterface
             text.text = toggle.isOn ? "ON" : "OFF";
         }
 
-        public void OnMasterVolumeChanged(float val) => SettingManager.Instance.SetMasterVolume(val);
+        private void OnMasterVolumeChanged(float val) => SettingManager.Instance.SetMasterVolume(val);
 
-        public void OnBgmToggleChanged(bool val)
+        private void OnBgmToggleChanged(bool val)
         {
             SettingManager.Instance.SetBgmOn(val);
             SetToggleText(bgmToggle, bgmToggleText);
             bgmVolumeSlider.interactable = val;
         }
 
-        public void OnBgmVolumeChanged(float val) => SettingManager.Instance.SetBgmVolume(val);
-        public void OnSfxVolumeChanged(float val) => SettingManager.Instance.SetSfxVolume(val);
+        private void OnBgmVolumeChanged(float val) => SettingManager.Instance.SetBgmVolume(val);
+        private void OnSfxVolumeChanged(float val) => SettingManager.Instance.SetSfxVolume(val);
 
-        public void OnMuteToggleChanged(bool val)
+        private void OnMuteToggleChanged(bool val)
         {
             SettingManager.Instance.SetMute(val);
             SetToggleText(muteToggle, muteToggleText);
         }
 
-        public void OnWindowModeToggleChanged(bool val)
+        private void OnWindowModeToggleChanged(bool val)
         {
-            SettingManager.Instance.SetScreenMode(val ? ScreenMode.Windowed : ScreenMode.FullScreen);
+            var manager = SettingManager.Instance;
+    
+            manager.SetScreenMode(val ? ScreenMode.Windowed : ScreenMode.FullScreen);
             SetToggleText(windowModeToggle, windowModeToggleText);
-        }
-        public void OnResolutionChanged(int index) => SettingManager.Instance.SetResolution(index);
-        public void OnQualityChanged(int index) => SettingManager.Instance.SetQuality(index);
-        public void OnFrameRateChanged(int index) => SettingManager.Instance.SetFrameRate((FrameRateMode)index);
 
-        public void OnSensitivityChanged(float val) => SettingManager.Instance.SetMouseSensitivity(val);
-        public void OnScreenShakeToggleChanged(bool val)
+            if (val)
+            { 
+                resolutionDropdown.interactable = true; 
+                return;
+            }
+            
+            var maxIndex = manager.GetMaxResolutionIndex();
+            manager.SetResolution(maxIndex);
+
+            resolutionDropdown.SetValueWithoutNotify(maxIndex);
+            resolutionDropdown.RefreshShownValue();
+            resolutionDropdown.interactable = false; 
+        }
+
+        private void OnResolutionChanged(int index) => SettingManager.Instance.SetResolution(index);
+        private void OnQualityChanged(int index) => SettingManager.Instance.SetQuality(index);
+        private void OnFrameRateChanged(int index) => SettingManager.Instance.SetFrameRate((FrameRateMode)index);
+
+        private void OnSensitivityChanged(float val) => SettingManager.Instance.SetMouseSensitivity(val);
+
+        private void OnScreenShakeToggleChanged(bool val)
         { 
             SettingManager.Instance.SetScreenShake(val);
             SetToggleText(screenShakeToggle, screenShakeToggleText);

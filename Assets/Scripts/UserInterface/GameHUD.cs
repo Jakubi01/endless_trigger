@@ -32,18 +32,13 @@ namespace UserInterface
         private int _lastShotgunCooldownTenths = InvalidTenths;
         private int _lastSniperCooldownTenths = InvalidTenths;
 
-        private void Awake()
+        protected override void Awake()
         {
-            var cs = GetComponentInParent<CanvasScaler>();
-            cs.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
-            cs.referenceResolution = new Vector2(1920, 1080);
-            cs.screenMatchMode = CanvasScaler.ScreenMatchMode.MatchWidthOrHeight;
-            cs.matchWidthOrHeight = 0.5f;
-            cs.referencePixelsPerUnit = 100f;
+            base.Awake();
             
             Canvas.ForceUpdateCanvases();
         }
-        // TODO : 모든 UI 앵커 조절하기
+        
         public void Initialize(PlayerCharacter player, EnemySpawner enemySpawner)
         {
             UnsubscribeStatEvents();

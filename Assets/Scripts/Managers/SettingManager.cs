@@ -259,26 +259,38 @@ namespace Managers
 
         public void ApplyGraphicsSettings()
         {
-            FullScreenMode mode = _currentSettings.screenMode == ScreenMode.FullScreen
-                ? FullScreenMode.FullScreenWindow
-                : FullScreenMode.Windowed;
+            var isFullScreen = _currentSettings.screenMode == ScreenMode.FullScreen;
+            FullScreenMode mode = isFullScreen ? FullScreenMode.FullScreenWindow : FullScreenMode.Windowed;
 
-            if (Screen.resolutions.Length > _currentSettings.resolutionIndex && _currentSettings.resolutionIndex >= 0)
+            int resIndex;
+            if (isFullScreen)
             {
-                Resolution res = Screen.resolutions[_currentSettings.resolutionIndex];
+                resIndex = GetMaxResolutionIndex();
+                _currentSettings.resolutionIndex = resIndex;
+            }
+            else
+            {
+                resIndex = _currentSettings.resolutionIndex;
+            }
+
+            if (Screen.resolutions != null && Screen.resolutions.Length > resIndex && resIndex >= 0)
+            {
+                Resolution res = Screen.resolutions[resIndex];
+        
                 Screen.SetResolution(res.width, res.height, mode, res.refreshRateRatio);
                 ApplyFrameRateLimit(res.refreshRateRatio.value);
             }
             else
             {
-                Screen.SetResolution(1920, 1080, mode);
+                Screen.SetResolution(Screen.currentResolution.width, Screen.currentResolution.height, mode);
                 ApplyFrameRateLimit(60);
             }
 
-            _currentSettings.qualityIndex = Mathf.Clamp(_currentSettings.qualityIndex, 0, Mathf.Max(0, QualitySettings.names.Length - 1));
+            _currentSettings.qualityIndex = 
+                Mathf.Clamp(_currentSettings.qualityIndex, 0, Mathf.Max(0, QualitySettings.names.Length - 1));
             QualitySettings.SetQualityLevel(_currentSettings.qualityIndex, true);
             QualitySettings.vSyncCount = 0;
-            
+    
             Canvas.ForceUpdateCanvases();
         }
 
@@ -299,6 +311,38 @@ namespace Managers
         public void ApplyGameplaySettings()
         {
             // 마우스 감도 인게임 카메라에 전달 및 화면 진동 켜고 끄기 분기점 제어
+        }
+        
+        public int GetMaxResolutionIndex()
+        {
+            // 지원하는 해상도 목록이 없으면 0 반환
+            if (Screen.resolutions == null || Screen.resolutions.Length == 0)
+                return 0;
+
+            int maxIndex = 0;
+            long maxPixels = 0;
+            double maxHz = 0;
+
+            for (int i = 0; i < Screen.resolutions.Length; i++)
+            {
+                var res = Screen.resolutions[i];
+        
+                // 가로 x 세로 총 픽셀 수 계산
+                long pixels = (long)res.width * res.height;
+        
+                // RefreshRateRatio (유니티 최신 버전 주사율 구조체)
+                double hz = res.refreshRateRatio.value;
+
+                // 더 큰 픽셀 수(해상도)이거나, 해상도가 같으면 주사율(Hz)이 더 높은 것을 선택
+                if (pixels > maxPixels || (pixels == maxPixels && hz > maxHz))
+                {
+                    maxPixels = pixels;
+                    maxHz = hz;
+                    maxIndex = i;
+                }
+            }
+
+            return maxIndex;
         }
     }
 }
