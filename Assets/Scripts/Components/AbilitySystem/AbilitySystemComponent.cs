@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using Components.AbilitySystem.Abilities;
-using Components.AbilitySystem.Effect;
 using UnityEngine;
 
 /*
@@ -9,11 +8,14 @@ using UnityEngine;
  * - 능력은 1회 실행하는 능력과, 매 프레임마다 타이머에 따라 실행되는 능력으로 구분됨
  * -- 1회 실행 -> effect
  * -- 타이머에 따라 실행 -> ability
- *
- *  TODO
+ */
+
+/*  TODO
  * - Upgrade 카드가 만약 ability 카드라면
  * -- Abilities에 없음 : register new ability to Abilities 
  * -- Abilities에 있음 : ability upgrade execute
+ * -> Select 카드는 캐릭터가 Ability를 가지고 있다면, Ability를 부여하는 카드를, 가지고 있지 않다면 Ability Upgrade 카드를 제시
+ * ?? Select 카드는 캐릭터가 어떤 Ability를 가지고 있는지, 업그레이드 카드의 정보는 어디에 보관할것인지
  */
 
 namespace Components.AbilitySystem
@@ -48,7 +50,5 @@ namespace Components.AbilitySystem
             newAbility.Initialize(owner);
             Abilities.Add(newAbility);
         }
-        
-        public void ApplyEffect(EffectBase effect) => effect.Apply(this);
     }
 }

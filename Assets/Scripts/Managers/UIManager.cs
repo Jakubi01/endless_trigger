@@ -12,9 +12,9 @@ namespace Managers
         public static UIManager Instance { get; private set; }
 
         private Canvas _mainCanvas;
-        
-        public const string TitleScene = "TitleScene";
-        public const string GameScene = "GameScene";
+
+        private const string TitleScene = "TitleScene";
+        private const string GameScene = "GameScene";
 
         [SerializeField] private ExitWindow exitWindowPrefab;
         private ExitWindow _currentExitWindow;
@@ -74,11 +74,11 @@ namespace Managers
         /// </summary>
         private T OpenWindow<T>(T prefab, ref T currentWindowReference) where T : MonoBehaviour
         {
-            if (currentWindowReference != null) return currentWindowReference;
-            if (prefab == null) return null;
+            if (currentWindowReference) return currentWindowReference;
+            if (!prefab) return null;
 
-            Canvas activeCanvas = GetActiveCanvas();
-            if (activeCanvas == null)
+            var activeCanvas = GetActiveCanvas();
+            if (!activeCanvas)
             {
                 Debug.LogError("씬에 사용 가능한 Canvas가 없습니다.");
                 return null;
@@ -96,7 +96,7 @@ namespace Managers
             }
 
             var canvasGroup = currentWindowReference.GetComponent<CanvasGroup>();
-            if (canvasGroup == null) canvasGroup = currentWindowReference.gameObject.AddComponent<CanvasGroup>();
+            if (!canvasGroup) canvasGroup = currentWindowReference.gameObject.AddComponent<CanvasGroup>();
             canvasGroup.ignoreParentGroups = true;
             canvasGroup.interactable = true;
 
