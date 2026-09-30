@@ -13,13 +13,14 @@ namespace Components.AbilitySystem.Abilities
     public abstract class AbilityBase : ScriptableObject
     {
         protected GameObject Owner;
-        private float _cooldown;
-        private float _baseExecuteInterval;
+        [SerializeField, Min(0.1f)] private float baseExecuteInterval = 3f;
         private float _executeSpeedMultiplier = 1f;
         private float _timer;
+        public int Level { get; private set; } = 1;
         
-        public float CurrentExecuteInterval => Mathf.Max(0.1f, (_baseExecuteInterval + _cooldown) / _executeSpeedMultiplier);
-        public AbilityType AbilityType { get; protected set; }
+        public float CurrentExecuteInterval => Mathf.Max(0.1f, baseExecuteInterval / _executeSpeedMultiplier);
+        [SerializeField] private AbilityType abilityType;
+        public AbilityType AbilityType => abilityType;
         
         public virtual void Initialize(GameObject owner)
         {
@@ -29,10 +30,7 @@ namespace Components.AbilitySystem.Abilities
         
         public void UpdateTimer(float deltaTime)
         {
-            if (_timer < CurrentExecuteInterval)
-            {
-                _timer += deltaTime;
-            }
+            _timer = Mathf.Min(_timer + Mathf.Max(0f, deltaTime), CurrentExecuteInterval);
         }
         
         public bool CanExecute()
@@ -61,6 +59,12 @@ namespace Components.AbilitySystem.Abilities
             _executeSpeedMultiplier = Mathf.Max(0.01f, _executeSpeedMultiplier + multiplierBonus);
         }
 
-        public virtual void Upgrade() { /* 여기에 업그레이드 로직 */}
+        public virtual void Upgrade(float amount)
+        {
+            if (amount <= 0f) return;
+
+            Level++;
+            AddExecuteSpeedBonus(amount);
+        }
     }
 }

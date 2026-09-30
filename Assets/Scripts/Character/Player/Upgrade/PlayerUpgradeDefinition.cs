@@ -4,13 +4,13 @@ using UnityEngine;
 
 namespace Character.Player
 {
-    /// <summary>
-    /// 레벨업 카드 하나의 데이터입니다.
-    /// 실제 효과 구현은 PlayerUpgradeEffect에게 위임합니다.
-    /// </summary>
-    [CreateAssetMenu(
-        fileName = "PlayerUpgrade",
-        menuName = "Endless Trigger/Player Upgrade")]
+    public enum DefinitionType
+    {
+        Native,
+        Ability
+    }
+    
+    [CreateAssetMenu(fileName = "PlayerUpgrade", menuName = "Endless Trigger/Player Upgrade")]
     public class PlayerUpgradeDefinition : ScriptableObject
     {
         [Header("Display")]
@@ -48,8 +48,16 @@ namespace Character.Player
 
             if (!effect)
                 return false;
+            
+            if (!effect.CanApply(player))
+                return false;
 
             return player.GetUpgradeStackCount(this) < maxStacks;
+        }
+
+        public PlayerUpgradeDefinition ResolveForPlayer(PlayerCharacter player)
+        {
+            return effect ? effect.ResolveDefinition(player, this) : this;
         }
 
         /// <summary>
@@ -89,13 +97,17 @@ namespace Character.Player
                 if (!definition)
                     continue;
 
-                if (!definition.CanApply(player))
+                PlayerUpgradeDefinition choice = definition.ResolveForPlayer(player);
+                if (!choice)
                     continue;
 
-                if (candidates.Contains(definition))
+                if (!choice.CanApply(player))
                     continue;
 
-                candidates.Add(definition);
+                if (candidates.Contains(choice))
+                    continue;
+
+                candidates.Add(choice);
             }
 
             List<PlayerUpgradeDefinition> choices = new();
@@ -122,7 +134,7 @@ namespace Character.Player
                     if (roll < 0)
                         break;
                 }
-
+                
                 choices.Add(candidates[selectedIndex]);
                 candidates.RemoveAt(selectedIndex);
             }

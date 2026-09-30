@@ -10,8 +10,10 @@ namespace UserInterface
         [SerializeField] private Button settingButton;
         [SerializeField] private Button exitButton;
 
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
+            
             var cs = GetComponent<CanvasScaler>();
             if (!cs)
             {

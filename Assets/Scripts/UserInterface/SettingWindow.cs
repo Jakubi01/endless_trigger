@@ -36,8 +36,10 @@ namespace UserInterface
 
         private readonly List<Resolution> _systemResolutions = new();
 
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
+            
             InitResolutionDropdown();
             InitQualityDropdown();
             InitFrameRateDropdown();

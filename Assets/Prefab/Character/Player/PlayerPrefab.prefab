@@ -48,6 +48,7 @@ GameObject:
   - component: {fileID: 5082065188802312462}
   - component: {fileID: 7869963449761756118}
   - component: {fileID: 8284455876908917826}
+  - component: {fileID: 702156230923412395}
   - component: {fileID: 7388993825907985339}
   - component: {fileID: 4696663738907507238}
   m_Layer: 6
@@ -340,10 +341,8 @@ MonoBehaviour:
   deathSound: {fileID: 0}
   baseMoveSpeed: 5
   upgradeDefinitions:
-  - {fileID: 11400000, guid: c93e0565b524f6b409656ebb3fc31f24, type: 2}
-  - {fileID: 11400000, guid: 222a85f8bfa4f6b44b6eb1a48fa827a7, type: 2}
-  - {fileID: 11400000, guid: 1972f4c6acc38f348a9a617177255717, type: 2}
   - {fileID: 11400000, guid: dc4cb9944dbedd3419fe0045a8dbb9f9, type: 2}
+  - {fileID: 11400000, guid: 83aa24f270268b5469833ed075a3b91d, type: 2}
   - {fileID: 11400000, guid: 60729c22ea4eb9442b427c9e04ca5850, type: 2}
 --- !u!114 &5082065188802312462
 MonoBehaviour:
@@ -386,7 +385,19 @@ MonoBehaviour:
   owner: {fileID: 0}
   levelUpVFXPrefab: {fileID: 217846322293083766, guid: ae40f1f028ac5e14cb8b32618f67c7c5, type: 3}
   requiredExperiencePerLevel: 100
-  experiencePickupRange: 2.5
+--- !u!114 &702156230923412395
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3916445856850801725}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ef606aa8460402ebc626615909df0eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Components.AbilitySystem.AbilitySystem
+  owner: {fileID: 0}
 --- !u!95 &7388993825907985339
 Animator:
   serializedVersion: 7

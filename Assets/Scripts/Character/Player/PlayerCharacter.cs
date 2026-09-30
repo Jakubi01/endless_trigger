@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using Components;
+using Components.AbilitySystem;
 using Effects.DamageText;
 using Items.Weapon;
 using Managers;
@@ -12,6 +13,7 @@ namespace Character.Player
 {
     [RequireComponent(typeof(HealthComponent))]
     [RequireComponent(typeof(PlayerLevelComponent))]
+    [RequireComponent(typeof(AbilitySystem))]
     public class PlayerCharacter : CharacterBase, IDamageable
     {
         [Header("Status")]
