@@ -54,7 +54,7 @@ namespace Components.AbilitySystem.Abilities
             _timer = 0f;
         }
         
-        public void AddExecuteSpeedBonus(float multiplierBonus)
+        protected void AddExecuteSpeedBonus(float multiplierBonus)
         {
             _executeSpeedMultiplier = Mathf.Max(0.01f, _executeSpeedMultiplier + multiplierBonus);
         }
@@ -64,7 +64,6 @@ namespace Components.AbilitySystem.Abilities
             if (amount <= 0f) return;
 
             Level++;
-            AddExecuteSpeedBonus(amount);
         }
     }
 }
