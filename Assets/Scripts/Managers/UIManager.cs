@@ -4,6 +4,7 @@ using UserInterface;
 using System;
 using System.Collections.Generic;
 using Character.Player;
+using UserInterface.Settings;
 
 namespace Managers
 {

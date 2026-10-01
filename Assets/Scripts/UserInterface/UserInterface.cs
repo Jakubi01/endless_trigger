@@ -24,5 +24,15 @@ namespace UserInterface
             cs.matchWidthOrHeight = 0.5f;
             cs.referencePixelsPerUnit = 100f;
         }
+        
+        protected void SetToggleValue(Toggle toggle, bool value)
+        {
+            toggle.isOn = value;
+        }
+        
+        protected void SetToggleText(in Toggle toggle, Text text)
+        {
+            text.text = toggle.isOn ? "ON" : "OFF";
+        }
     }
 }
