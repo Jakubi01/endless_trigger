@@ -31,6 +31,53 @@ Transform:
   m_Children: []
   m_Father: {fileID: 9075981322178636701}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3056726641990356429
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7328268756520938690}
+  - component: {fileID: 5349184968445426017}
+  m_Layer: 6
+  m_Name: BoomerangAttack
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7328268756520938690
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3056726641990356429}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 9075981322178636701}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5349184968445426017
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3056726641990356429}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3626e16084404bb5ba507ac96eaeeb24, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Items.Projectile.ProjectilePoolManager
+  projectilePrefab: {fileID: 1121324263220199912, guid: 544685593e0d4074d948cece5708846b, type: 3}
+  defaultCapacity: 20
+  maxPoolSize: 50
 --- !u!1 &3916445856850801725
 GameObject:
   m_ObjectHideFlags: 0
@@ -74,6 +121,7 @@ Transform:
   - {fileID: 8304685084881510702}
   - {fileID: 3741260977980762123}
   - {fileID: 3131273836581289883}
+  - {fileID: 7328268756520938690}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &5064362422577700260
@@ -342,8 +390,9 @@ MonoBehaviour:
   baseMoveSpeed: 5
   upgradeDefinitions:
   - {fileID: 11400000, guid: dc4cb9944dbedd3419fe0045a8dbb9f9, type: 2}
-  - {fileID: 11400000, guid: 83aa24f270268b5469833ed075a3b91d, type: 2}
   - {fileID: 11400000, guid: 60729c22ea4eb9442b427c9e04ca5850, type: 2}
+  - {fileID: 11400000, guid: cb8d1cd3213343048aa779c978645591, type: 2}
+  - {fileID: 11400000, guid: 7ebfe9d3ae212024c810557a10327fa2, type: 2}
 --- !u!114 &5082065188802312462
 MonoBehaviour:
   m_ObjectHideFlags: 0

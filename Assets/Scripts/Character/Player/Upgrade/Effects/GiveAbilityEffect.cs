@@ -1,6 +1,5 @@
 ﻿using Components.AbilitySystem;
 using Components.AbilitySystem.Abilities;
-using Character.Player.Upgrade;
 using UnityEngine;
 
 namespace Character.Player.Upgrade.Effects
@@ -10,7 +9,7 @@ namespace Character.Player.Upgrade.Effects
     {
         [SerializeField] private AbilityBase ability;
         [SerializeField] private PlayerUpgradeDefinition ownedAbilityUpgrade;
-
+ 
         public override PlayerUpgradeDefinition ResolveDefinition(
             PlayerCharacter player,
             PlayerUpgradeDefinition definition)

@@ -1,30 +1,45 @@
-﻿using System;
+﻿using Character;
 using Items.Projectile;
+using Items.Weapon;
 using UnityEngine;
 
 namespace Components.AbilitySystem.Abilities
 {
-    [CreateAssetMenu(fileName = "BoomerangAbility", menuName = "Abilities")]
+    [CreateAssetMenu(fileName = "Boomerang Ability", menuName = "Endless Trigger/Abilities/Boomerang Ability")]
     public class BoomerangAbility : AbilityBase
     {
-        [SerializeField] private float damage = 10f;
+        /**
+         * Execute: 부메랑 투척 후 캐릭터에게 돌아옴, 사거리 10m, 돌아오면 다시 투척 -> 쿨타임 x?
+         * Upgrade: 발사 횟수 +1, 데미지 +20, 속도 증가 +10
+         */
+        
+        private float _damage = 20f;
 
         private ProjectilePoolManager _projectilePoolManager;
+        private CharacterBase _ownerChar;
 
         public override void Initialize(GameObject owner)
         {
             base.Initialize(owner);
+
+            var boomerangAttack = Owner.transform.Find("BoomerangAttack");
+            if (boomerangAttack)
+            {
+                _projectilePoolManager = boomerangAttack.GetComponent<ProjectilePoolManager>();
+            }
             
-            _projectilePoolManager = Owner.GetComponent<ProjectilePoolManager>();
+            _ownerChar = Owner.GetComponent<CharacterBase>();
         }
 
         public override bool Execute()
         {
             if (!base.Execute()) return false;
 
-            Vector2 aimDir = Owner.transform.right;
-            GameObject go = _projectilePoolManager.Spawn(Owner.transform.position, Quaternion.identity, aimDir, damage, pierceCount: 999);
-           //  go.GetComponent<BoomerangProjectile>().Throw(Owner, aimDir);
+            var nearestObject = _ownerChar.FindNearestFromCharacter(5f);
+            var temp = (nearestObject.transform.position - Owner.transform.position).normalized;
+            Vector2 aimDir = nearestObject ? temp.normalized : Owner.transform.forward; 
+            GameObject go = _projectilePoolManager.Spawn(Owner.transform.position, Quaternion.identity, aimDir, _damage, pierceCount: 999);
+            go.GetComponent<Boomerang>().Throw(Owner.transform, aimDir);
             
             return true;
         }
@@ -32,8 +47,9 @@ namespace Components.AbilitySystem.Abilities
         public override void Upgrade(float amount)
         {
             base.Upgrade(amount);
-            
-            
+
+            _damage += 20f;
+            Debug.Log("Boomerang Ability Upgraded");
         }
     }
 }

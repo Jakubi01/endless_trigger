@@ -5,9 +5,7 @@ using Components.AbilitySystem;
 using Effects.DamageText;
 using Items.Weapon;
 using Managers;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Splines.ExtrusionShapes;
 
 namespace Character.Player
 {

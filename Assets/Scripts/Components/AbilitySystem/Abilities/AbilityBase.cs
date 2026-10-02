@@ -4,7 +4,9 @@ namespace Components.AbilitySystem
 {
     public enum AbilityType
     {
-        Test
+        Boomerang,
+        Shield,
+        Bomb
     }
 }
 

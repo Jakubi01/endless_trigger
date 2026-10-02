@@ -5,35 +5,35 @@ namespace Items.Weapon
     public class Boomerang : MonoBehaviour
     {
         public float speed = 12f;
-        public float maxDistance = 6f;
+        public float maxDistance = 3f;
         public float spinSpeed = 720f;
 
-        Transform owner;
-        Vector2 dir;
-        Vector2 startPos;
-        bool returning;
+        private Transform _owner;
+        private Vector2 _dir;
+        private Vector2 _startPos;
+        private bool _returning;
 
         public void Throw(Transform owner, Vector2 direction)
         {
-            this.owner = owner;
-            dir = direction.normalized;
-            startPos = transform.position;
+            _owner = owner;
+            _dir = direction.normalized;
+            _startPos = transform.position;
         }
 
         void Update()
         {
             transform.Rotate(0, 0, spinSpeed * Time.deltaTime);
 
-            if (!returning)
+            if (!_returning)
             {
-                transform.position += (Vector3)(dir * (speed * Time.deltaTime));
-                if (Vector2.Distance(startPos, transform.position) >= maxDistance)
-                    returning = true;
+                transform.position += (Vector3)(_dir * (speed * Time.deltaTime));
+                if (Vector2.Distance(_startPos, transform.position) >= maxDistance)
+                    _returning = true;
             }
             else
             {
-                transform.position = Vector2.MoveTowards(transform.position, owner.position, speed * Time.deltaTime);
-                if (Vector2.Distance(transform.position, owner.position) < 0.1f)
+                transform.position = Vector2.MoveTowards(transform.position, _owner.position, speed * Time.deltaTime);
+                if (Vector2.Distance(transform.position, _owner.position) < 0.1f)
                     Destroy(gameObject);
             }
         }

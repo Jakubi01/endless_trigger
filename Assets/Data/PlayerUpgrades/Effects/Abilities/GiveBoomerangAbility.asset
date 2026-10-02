@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f420635972c942beb37e3c9c983185f4, type: 3}
-  m_Name: GiveAbilityEffect
+  m_Name: GiveBoomerangAbility
   m_EditorClassIdentifier: Assembly-CSharp::Character.Player.Upgrade.Effects.GiveAbilityEffect
-  ability: {fileID: 11400000, guid: 16974f0ea8b3be248bbb43d621a691eb, type: 2}
-  ownedAbilityUpgrade: {fileID: 11400000, guid: 2c1d05efd60d05848bb444dbedcbe31f, type: 2}
+  ability: {fileID: 11400000, guid: e9145b9df1821014893c53c39d2818ba, type: 2}
+  ownedAbilityUpgrade: {fileID: 11400000, guid: cb8d1cd3213343048aa779c978645591, type: 2}
