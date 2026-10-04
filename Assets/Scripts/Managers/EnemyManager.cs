@@ -66,7 +66,7 @@ namespace Managers
             _enemies.Remove(enemy);
         }
 
-        public GameObject FindNearestEnemy(Transform callerTransform, float range)
+        public GameObject FindNearestEnemy(Transform callerTransform, float range, HashSet<GameObject> exclude = null)
         {
             if (_enemies.Count <= 0) return null;
             
@@ -81,6 +81,9 @@ namespace Managers
                     _enemies.RemoveAt(i);
                     continue;
                 }
+                
+                if (exclude != null && exclude.Contains(enemy.gameObject)) 
+                    continue;
 
                 float sqrDistance = (enemy.transform.position - callerTransform.position).sqrMagnitude;
                 if (sqrDistance <= nearestSqrDistance)

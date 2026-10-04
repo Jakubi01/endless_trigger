@@ -1,6 +1,8 @@
-﻿using Character;
+﻿using System.Collections.Generic;
+using Character;
 using Items.ProjectileManager;
 using Items.Weapon;
+using Managers;
 using UnityEngine;
 
 namespace Components.AbilitySystem.Abilities
@@ -16,7 +18,8 @@ namespace Components.AbilitySystem.Abilities
         private float _damage = 20f;
 
         private ProjectilePoolManager _projectilePoolManager;
-        private CharacterBase _ownerChar;
+        private int _throwCount;
+        private readonly HashSet<GameObject> _targets = new();
 
         public override void Initialize(GameObject owner)
         {
@@ -27,23 +30,36 @@ namespace Components.AbilitySystem.Abilities
             {
                 _projectilePoolManager = boomerangAttack.GetComponent<ProjectilePoolManager>();
             }
-            
-            _ownerChar = Owner.GetComponent<CharacterBase>();
+
+            _damage = 20f;
+            _throwCount = 1;
         }
 
         public override bool Execute()
         {
             if (!base.Execute()) return false;
 
-            var nearestObject = _ownerChar.FindNearestFromCharacter(5f);
-            Vector2 aimDir = nearestObject
-                ? (nearestObject.transform.position - Owner.transform.position).normalized
-                : Vector2.right;
-            
-            GameObject go = _projectilePoolManager.Spawn(Owner.transform.position, Quaternion.identity, aimDir, _damage, pierceCount: 999);
-            if (go.TryGetComponent(out Boomerang boomerang))
+            _targets.Clear();
+            for (int i = 0; i < _throwCount; i++)
             {
-                boomerang.Throw(Owner.transform, aimDir);
+                var target = EnemyManager.Instance.FindNearestEnemy(Owner.transform, 5f, _targets);
+
+                Vector2 aimDir;
+                if (target)
+                {
+                    _targets.Add(target);
+                    aimDir = (target.transform.position - Owner.transform.position).normalized;
+                }
+                else
+                {
+                    aimDir = Random.insideUnitCircle.normalized;
+                }
+
+                GameObject go = _projectilePoolManager.Spawn(Owner.transform.position, Quaternion.identity, aimDir, _damage, pierceCount: 999);
+                if (go.TryGetComponent(out Boomerang boomerang))
+                {
+                    boomerang.Throw(Owner.transform, aimDir);
+                }
             }
             return true;
         }
@@ -53,7 +69,7 @@ namespace Components.AbilitySystem.Abilities
             base.Upgrade(amount);
 
             _damage += 20f;
-            Debug.Log("Boomerang Ability Upgraded");
+            _throwCount++;
         }
     }
 }
