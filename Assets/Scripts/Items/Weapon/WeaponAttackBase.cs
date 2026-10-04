@@ -1,7 +1,7 @@
 using System.Linq.Expressions;
 using Character;
 using Character.Enemy;
-using Items.Projectile;
+using Items.ProjectileManager;
 using UnityEngine;
 
 namespace Items.Weapon

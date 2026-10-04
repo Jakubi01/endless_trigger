@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 6389508859907954327}
   - component: {fileID: -2880152546609908833}
   - component: {fileID: 5535607555779551821}
+  - component: {fileID: 3597970885005840332}
   m_Layer: 7
   m_Name: Tanker
   m_TagString: Untagged
@@ -272,3 +273,18 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 1.45}
   m_Radius: 1
+--- !u!114 &3597970885005840332
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7085437813263961426}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 873e0a6e00fa406b9d0a242fad4d6e35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Components.HitEffect
+  owner: {fileID: 0}
+  hitColor: {r: 1, g: 0, b: 0, a: 1}
+  duration: 0.2

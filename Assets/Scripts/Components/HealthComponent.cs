@@ -11,6 +11,7 @@ namespace Components
 
         public event Action Died;
         public event Action HealthChanged;
+        public event Action<float> Damaged;
         public bool IsAlive => _currentHealth > 0f;
         public float CurrentHealth => _currentHealth;
         public float MaxHealth => maxHealth;
@@ -63,6 +64,7 @@ namespace Components
 
             _currentHealth = Mathf.Max(0f, _currentHealth - amount);
             HealthChanged?.Invoke();
+            Damaged?.Invoke(amount);
 
             if (_currentHealth <= 0f)
             {

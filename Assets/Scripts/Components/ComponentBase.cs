@@ -1,14 +1,15 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Components
 {
     public class ComponentBase : MonoBehaviour
     {
-        public GameObject owner;
+        [NonSerialized] protected GameObject Owner;
 
         protected virtual void Awake()
         {
-            owner = gameObject;
+            Owner = gameObject;
         }
     }
 }

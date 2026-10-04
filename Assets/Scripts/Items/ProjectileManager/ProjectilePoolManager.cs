@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
 
-namespace Items.Projectile
+namespace Items.ProjectileManager
 {
     public class ProjectilePoolManager : MonoBehaviour
     {
@@ -59,7 +59,7 @@ namespace Items.Projectile
                 rb.angularVelocity = 0f;
             }
 
-            if (projectile.TryGetComponent(out Projectile projectileInstance))
+            if (projectile.TryGetComponent(out ProjectileManager.Projectile projectileInstance))
             {
                 projectileInstance.Initialize(direction, ReleaseProjectile, damage, pierceCount, bSnapToParent, snapTarget);
             }

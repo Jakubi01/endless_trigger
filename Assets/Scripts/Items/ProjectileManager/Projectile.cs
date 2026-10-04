@@ -1,11 +1,10 @@
 using System;
 using System.Collections.Generic;
-using System.Timers;
 using Character;
 using Character.Enemy;
 using UnityEngine;
 
-namespace Items.Projectile
+namespace Items.ProjectileManager
 {
     [RequireComponent(typeof(CircleCollider2D))]
     [RequireComponent(typeof(Rigidbody2D))]
@@ -26,6 +25,7 @@ namespace Items.Projectile
         private Transform _parentTarget;
         private readonly List<GameObject> _overlappedObjects = new();
         [SerializeField] private bool shouldPlayerAnimation;
+        [SerializeField] private float liefTime;
         
         private readonly int _animHash = Animator.StringToHash("Play");
 
@@ -71,7 +71,7 @@ namespace Items.Projectile
 
             if (!_animator || !shouldPlayerAnimation)
             {
-                _lifeTimer = 3f;
+                _lifeTimer = liefTime;
                 return;
             }
 
@@ -124,5 +124,9 @@ namespace Items.Projectile
             _overlappedObjects.Clear();
             _returnToPool?.Invoke(gameObject);
         }
+        
+        public void SetLifeTime(float time) => _lifeTimer = time;
+        public void ResetHits() => _overlappedObjects.Clear();
+        public void Release() => ReleaseToPool();
     }
 }

@@ -36,16 +36,15 @@ namespace Components.AbilitySystem
             }
         }
 
-        public bool AddAbility(AbilityBase ability)
+        public void AddAbility(AbilityBase ability)
         {
-            if (!ability || Abilities == null || HasAbility(ability.AbilityType)) return false;
+            if (!ability || Abilities == null || HasAbility(ability.AbilityType)) return;
 
             var newAbility = Instantiate(ability);
             newAbility.name = ability.name;
             newAbility.hideFlags = HideFlags.DontSave;
-            newAbility.Initialize(owner);
+            newAbility.Initialize(Owner);
             Abilities.Add(newAbility);
-            return true;
         }
         
         public bool TryGetAbility(AbilityType type, out AbilityBase ability)

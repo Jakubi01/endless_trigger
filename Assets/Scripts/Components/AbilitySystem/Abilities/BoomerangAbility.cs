@@ -1,5 +1,5 @@
 ﻿using Character;
-using Items.Projectile;
+using Items.ProjectileManager;
 using Items.Weapon;
 using UnityEngine;
 
@@ -20,7 +20,7 @@ namespace Components.AbilitySystem.Abilities
 
         public override void Initialize(GameObject owner)
         {
-            base.Initialize(owner);
+            base.Initialize(owner); 
 
             var boomerangAttack = Owner.transform.Find("BoomerangAttack");
             if (boomerangAttack)
@@ -36,11 +36,15 @@ namespace Components.AbilitySystem.Abilities
             if (!base.Execute()) return false;
 
             var nearestObject = _ownerChar.FindNearestFromCharacter(5f);
-            var temp = (nearestObject.transform.position - Owner.transform.position).normalized;
-            Vector2 aimDir = nearestObject ? temp.normalized : Owner.transform.forward; 
-            GameObject go = _projectilePoolManager.Spawn(Owner.transform.position, Quaternion.identity, aimDir, _damage, pierceCount: 999);
-            go.GetComponent<Boomerang>().Throw(Owner.transform, aimDir);
+            Vector2 aimDir = nearestObject
+                ? (nearestObject.transform.position - Owner.transform.position).normalized
+                : Vector2.right;
             
+            GameObject go = _projectilePoolManager.Spawn(Owner.transform.position, Quaternion.identity, aimDir, _damage, pierceCount: 999);
+            if (go.TryGetComponent(out Boomerang boomerang))
+            {
+                boomerang.Throw(Owner.transform, aimDir);
+            }
             return true;
         }
 

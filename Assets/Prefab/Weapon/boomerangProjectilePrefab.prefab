@@ -186,5 +186,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Items.Weapon.Boomerang
   speed: 12
-  maxDistance: 6
   spinSpeed: 720

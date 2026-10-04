@@ -98,6 +98,7 @@ GameObject:
   - component: {fileID: 702156230923412395}
   - component: {fileID: 7388993825907985339}
   - component: {fileID: 4696663738907507238}
+  - component: {fileID: 4009226983604993383}
   m_Layer: 6
   m_Name: PlayerPrefab
   m_TagString: Untagged
@@ -417,7 +418,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f0af22386c940079995ed9ddc0eedb5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Components.HealthComponent
-  owner: {fileID: 0}
   maxHealth: 500
 --- !u!114 &8284455876908917826
 MonoBehaviour:
@@ -431,7 +431,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6488b555901491e83af33ad9ee2ec7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Components.PlayerLevelComponent
-  owner: {fileID: 0}
   levelUpVFXPrefab: {fileID: 217846322293083766, guid: ae40f1f028ac5e14cb8b32618f67c7c5, type: 3}
   requiredExperiencePerLevel: 100
 --- !u!114 &702156230923412395
@@ -446,7 +445,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ef606aa8460402ebc626615909df0eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Components.AbilitySystem.AbilitySystem
-  owner: {fileID: 0}
 --- !u!95 &7388993825907985339
 Animator:
   serializedVersion: 7
@@ -505,6 +503,19 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0.000000029802322, y: 0.5999999}
   m_Radius: 1
+--- !u!114 &4009226983604993383
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3916445856850801725}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 873e0a6e00fa406b9d0a242fad4d6e35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Components.HitEffect
+  hitColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!1 &5667776659969451183
 GameObject:
   m_ObjectHideFlags: 0
