@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8d3f9ec7b0f14241bde5db52955f0e77, type: 3}
-  m_Name: BoomerangUpgrade
+  m_Name: Shield
   m_EditorClassIdentifier: Assembly-CSharp::Character.Player.PlayerUpgradeDefinition
-  displayName: Upgrade Boomenrag
-  description: Boomenrag +1
-  icon: {fileID: 21300000, guid: b654a18b119453b46a5198a845cda52b, type: 3}
-  effect: {fileID: 11400000, guid: 1794aae76c8a98245be1a98e3d9730fa, type: 2}
+  displayName: Shield
+  description: Orbit Shield
+  icon: {fileID: 21300000, guid: 8daddeb323196244fa8bcfd27b62c19d, type: 3}
+  effect: {fileID: 11400000, guid: a9ebe78c9451379488518b84f45933bd, type: 2}
   amount: 1
-  maxStacks: 5
+  maxStacks: 1
   weight: 1

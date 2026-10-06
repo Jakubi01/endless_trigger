@@ -172,4 +172,4 @@ MonoBehaviour:
   speed: 15
   animationName: 
   shouldPlayerAnimation: 0
-  liefTime: 3
+  lifeTime: 3

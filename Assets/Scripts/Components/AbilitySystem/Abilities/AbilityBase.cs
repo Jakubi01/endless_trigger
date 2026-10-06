@@ -14,15 +14,17 @@ namespace Components.AbilitySystem.Abilities
 {
     public abstract class AbilityBase : ScriptableObject
     {
-        protected GameObject Owner;
         [SerializeField, Min(0.1f)] private float baseExecuteInterval = 3f;
-        private float _executeSpeedMultiplier = 1f;
-        private float _timer;
-        public int Level { get; private set; } = 1;
+        [SerializeField] private AbilityType abilityType;
         
         public float CurrentExecuteInterval => Mathf.Max(0.1f, baseExecuteInterval / _executeSpeedMultiplier);
-        [SerializeField] private AbilityType abilityType;
+        public int Level { get; private set; } = 1;
         public AbilityType AbilityType => abilityType;
+        
+        protected GameObject Owner;
+        
+        private float _executeSpeedMultiplier = 1f;
+        private float _timer;
         
         public virtual void Initialize(GameObject owner)
         {

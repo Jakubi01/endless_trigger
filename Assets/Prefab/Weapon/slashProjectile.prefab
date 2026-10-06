@@ -173,6 +173,7 @@ MonoBehaviour:
   speed: 15
   animationName: Slash
   shouldPlayerAnimation: 1
+  lifeTime: 1
 --- !u!95 &4097843188031260570
 Animator:
   serializedVersion: 7

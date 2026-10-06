@@ -12,6 +12,8 @@ namespace Items.ProjectileManager
     {
         [SerializeField] private float speed = 15f;
         [SerializeField] private string animationName;
+        [SerializeField] private bool shouldPlayerAnimation;
+        [SerializeField] private float lifeTime;
 
         private Rigidbody2D _rb;
         private Collider2D _col;
@@ -24,9 +26,6 @@ namespace Items.ProjectileManager
         private bool _snapToParent;
         private Transform _parentTarget;
         private readonly List<GameObject> _overlappedObjects = new();
-        [SerializeField] private bool shouldPlayerAnimation;
-        [SerializeField] private float liefTime;
-        
         private readonly int _animHash = Animator.StringToHash("Play");
 
         private void Awake()
@@ -71,7 +70,7 @@ namespace Items.ProjectileManager
 
             if (!_animator || !shouldPlayerAnimation)
             {
-                _lifeTimer = liefTime;
+                _lifeTimer = lifeTime;
                 return;
             }
 
