@@ -496,11 +496,15 @@ MonoBehaviour:
   deathSound: {fileID: 0}
   baseMoveSpeed: 5
   upgradeDefinitions:
-  - {fileID: 11400000, guid: dc4cb9944dbedd3419fe0045a8dbb9f9, type: 2}
   - {fileID: 11400000, guid: 60729c22ea4eb9442b427c9e04ca5850, type: 2}
+  - {fileID: 11400000, guid: dc4cb9944dbedd3419fe0045a8dbb9f9, type: 2}
+  - {fileID: 11400000, guid: 222a85f8bfa4f6b44b6eb1a48fa827a7, type: 2}
+  - {fileID: 11400000, guid: 40838356799a4cdeae4d89ef053e486c, type: 2}
+  - {fileID: 11400000, guid: 237825baf1ab45b2a0cecb637a7a65a1, type: 2}
+  - {fileID: 11400000, guid: cb8d1cd3213343048aa779c978645591, type: 2}
+  - {fileID: 11400000, guid: 7ebfe9d3ae212024c810557a10327fa2, type: 2}
   - {fileID: 11400000, guid: 1e0dff6d4f304ff428db98c933a9758a, type: 2}
   - {fileID: 11400000, guid: 5f48962217a027840af7f2834212bfb2, type: 2}
-  - {fileID: 11400000, guid: 222a85f8bfa4f6b44b6eb1a48fa827a7, type: 2}
 --- !u!114 &5082065188802312462
 MonoBehaviour:
   m_ObjectHideFlags: 0

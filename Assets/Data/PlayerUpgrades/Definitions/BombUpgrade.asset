@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d3f9ec7b0f14241bde5db52955f0e77, type: 3}
+  m_Name: BombUpgrade
+  m_EditorClassIdentifier: Assembly-CSharp::Character.Player.PlayerUpgradeDefinition
+  displayName: Clay bomb enhancement
+  description: Throw count +1, AoE damage per second +10, AoE range +20%
+  icon: {fileID: 21300000, guid: 1bfcd6a0a0516184383781b7123f3f1b, type: 3}
+  effect: {fileID: 11400000, guid: b77b4b7d61b6435d941972c71514908c, type: 2}
+  amount: 1
+  maxStacks: 5
+  weight: 1

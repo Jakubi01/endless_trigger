@@ -9,8 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3113599d26534e558c405dfc010c0b4a, type: 3}
-  m_Name: Shield Ability
-  m_EditorClassIdentifier: Assembly-CSharp::Components.AbilitySystem.Abilities.ShieldAbility
-  baseExecuteInterval: 5
-  abilityType: 1
+  m_Script: {fileID: 11500000, guid: ec2d5e27752d453a99784c27a2c4a5b5, type: 3}
+  m_Name: UpgradeBombAbility
+  m_EditorClassIdentifier: Assembly-CSharp::Character.Player.Upgrade.Effects.UpgradeAbilityEffect
+  targetType: 2

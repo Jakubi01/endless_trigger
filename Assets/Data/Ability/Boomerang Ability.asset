@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77d0a445644f4fbb905f0e653319e286, type: 3}
   m_Name: Boomerang Ability
   m_EditorClassIdentifier: Assembly-CSharp::Components.AbilitySystem.Abilities.BoomerangAbility
-  baseExecuteInterval: 3
+  baseExecuteInterval: 5
   abilityType: 0

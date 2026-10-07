@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c902fd7913dd44f5928ad0a305fb07a6, type: 3}
   m_Name: Bomb Ability
   m_EditorClassIdentifier: Assembly-CSharp::Components.AbilitySystem.Abilities.BombAbility
-  baseExecuteInterval: 3
+  baseExecuteInterval: 0.1
   abilityType: 2
