@@ -1,0 +1,690 @@
+fileFormatVersion: 2
+guid: 70bdba6af5df9f241be826cdfa06b385
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 5274200740858127534
+    second: BombArea_0
+  - first:
+      213: -5673639061050463651
+    second: BombArea_1
+  - first:
+      213: 1564260284878383492
+    second: BombArea_2
+  - first:
+      213: -8246375179371524906
+    second: BombArea_3
+  - first:
+      213: 625681429337228922
+    second: BombArea_4
+  - first:
+      213: -4031874210351264376
+    second: BombArea_5
+  - first:
+      213: 1616183882491805172
+    second: BombArea_6
+  - first:
+      213: -622697577154459599
+    second: BombArea_7
+  - first:
+      213: 8589762765837324914
+    second: BombArea_8
+  - first:
+      213: 9122774872073151711
+    second: BombArea_9
+  - first:
+      213: 6726685220748227492
+    second: BombArea_10
+  - first:
+      213: -6409519523099109814
+    second: BombArea_11
+  - first:
+      213: 3643044743859351711
+    second: BombArea_12
+  - first:
+      213: 2420751434625949334
+    second: BombArea_13
+  - first:
+      213: -8877217327464002545
+    second: BombArea_14
+  - first:
+      213: -5718799193870665383
+    second: BombArea_15
+  - first:
+      213: 4887970667994680715
+    second: BombArea_16
+  - first:
+      213: 6597976860729776721
+    second: BombArea_17
+  - first:
+      213: -9045912042851682922
+    second: BombArea_18
+  - first:
+      213: -1691910407824119264
+    second: BombArea_19
+  - first:
+      213: -2665405790446668271
+    second: BombArea_20
+  - first:
+      213: 7463479008631751332
+    second: BombArea_21
+  - first:
+      213: 802822357343487224
+    second: BombArea_22
+  - first:
+      213: 4760778792468754485
+    second: BombArea_23
+  - first:
+      213: -2868696221494944426
+    second: BombArea_24
+  - first:
+      213: 4343778674288143390
+    second: BombArea_25
+  - first:
+      213: 8031176417477292912
+    second: BombArea_26
+  - first:
+      213: 6918653292267145846
+    second: BombArea_27
+  - first:
+      213: -3246280625355911975
+    second: BombArea_28
+  - first:
+      213: -6419994154214221517
+    second: BombArea_29
+  - first:
+      213: 7266817285072389564
+    second: BombArea_30
+  - first:
+      213: 4987127672620408923
+    second: BombArea_31
+  - first:
+      213: -297793852806154295
+    second: BombArea_32
+  - first:
+      213: -5834361830691726227
+    second: BombArea_33
+  - first:
+      213: -1909718131321037348
+    second: BombArea_34
+  - first:
+      213: 3807843162369907492
+    second: BombArea_35
+  - first:
+      213: -2415940677234930492
+    second: BombArea_36
+  - first:
+      213: -7099956983577505677
+    second: BombArea_37
+  - first:
+      213: 2416543650206158924
+    second: BombArea_38
+  - first:
+      213: 3317503949589393028
+    second: BombArea_39
+  - first:
+      213: 599187684769549112
+    second: BombArea_40
+  - first:
+      213: 8971251978240020619
+    second: BombArea_41
+  - first:
+      213: 2408917651542101646
+    second: BombArea_42
+  - first:
+      213: 8965692470543108748
+    second: BombArea_43
+  - first:
+      213: 4946735193912863730
+    second: BombArea_44
+  - first:
+      213: 2777978389781313909
+    second: BombArea_45
+  - first:
+      213: -5913887219719207197
+    second: BombArea_46
+  - first:
+      213: -4859540758835127867
+    second: BombArea_47
+  - first:
+      213: -1705436594948513861
+    second: BombArea_48
+  - first:
+      213: -3978512268088895096
+    second: BombArea_49
+  - first:
+      213: -1327220232508757387
+    second: BombArea_50
+  - first:
+      213: -1130811966222133005
+    second: BombArea_51
+  - first:
+      213: 8086320810944511022
+    second: BombArea_52
+  - first:
+      213: -5573556872545081560
+    second: BombArea_53
+  - first:
+      213: -7656057736730327767
+    second: BombArea_54
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: BombArea_5
+      rect:
+        serializedVersion: 2
+        x: 193
+        y: 275
+        width: 115
+        height: 74
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 88d44f874c7eb08c0800000000000000
+      internalID: -4031874210351264376
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BombArea_6
+      rect:
+        serializedVersion: 2
+        x: 354
+        y: 274
+        width: 112
+        height: 76
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4fdb2af9da6dd6610800000000000000
+      internalID: 1616183882491805172
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BombArea_7
+      rect:
+        serializedVersion: 2
+        x: 515
+        y: 274
+        width: 116
+        height: 75
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 138463f4adbbb57f0800000000000000
+      internalID: -622697577154459599
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BombArea_8
+      rect:
+        serializedVersion: 2
+        x: 36
+        y: 276
+        width: 109
+        height: 60
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2725c9a99b7f43770800000000000000
+      internalID: 8589762765837324914
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BombArea_20
+      rect:
+        serializedVersion: 2
+        x: 29
+        y: 193
+        width: 122
+        height: 65
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 11638263e83920bd0800000000000000
+      internalID: -2665405790446668271
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BombArea_22
+      rect:
+        serializedVersion: 2
+        x: 197
+        y: 192
+        width: 112
+        height: 67
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8f443333ea2342b00800000000000000
+      internalID: 802822357343487224
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BombArea_23
+      rect:
+        serializedVersion: 2
+        x: 358
+        y: 193
+        width: 107
+        height: 62
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 530305b861fa11240800000000000000
+      internalID: 4760778792468754485
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BombArea_24
+      rect:
+        serializedVersion: 2
+        x: 515
+        y: 193
+        width: 107
+        height: 63
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 65dd94d4cf75038d0800000000000000
+      internalID: -2868696221494944426
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BombArea_31
+      rect:
+        serializedVersion: 2
+        x: 38
+        y: 109
+        width: 106
+        height: 66
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b506f000236d53540800000000000000
+      internalID: 4987127672620408923
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BombArea_32
+      rect:
+        serializedVersion: 2
+        x: 196
+        y: 108
+        width: 108
+        height: 71
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9c7b13391160edbf0800000000000000
+      internalID: -297793852806154295
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BombArea_33
+      rect:
+        serializedVersion: 2
+        x: 353
+        y: 108
+        width: 122
+        height: 71
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d6c9586a3de280fa0800000000000000
+      internalID: -5834361830691726227
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BombArea_35
+      rect:
+        serializedVersion: 2
+        x: 515
+        y: 106
+        width: 113
+        height: 71
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 42b557d6e2d28d430800000000000000
+      internalID: 3807843162369907492
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BombArea_47
+      rect:
+        serializedVersion: 2
+        x: 37
+        y: 22
+        width: 113
+        height: 69
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5c999124d617f8cb0800000000000000
+      internalID: -4859540758835127867
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BombArea_48
+      rect:
+        serializedVersion: 2
+        x: 195
+        y: 24
+        width: 111
+        height: 62
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bbf5423e3721558e0800000000000000
+      internalID: -1705436594948513861
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BombArea_49
+      rect:
+        serializedVersion: 2
+        x: 358
+        y: 24
+        width: 107
+        height: 60
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8891706db2c79c8c0800000000000000
+      internalID: -3978512268088895096
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BombArea_50
+      rect:
+        serializedVersion: 2
+        x: 521
+        y: 24
+        width: 101
+        height: 62
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 57aaa9efa34c49de0800000000000000
+      internalID: -1327220232508757387
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 4a2f8717aca871c4283abcfac3e4ecd3
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      BombArea_0: 5274200740858127534
+      BombArea_1: -5673639061050463651
+      BombArea_10: 6726685220748227492
+      BombArea_11: -6409519523099109814
+      BombArea_12: 3643044743859351711
+      BombArea_13: 2420751434625949334
+      BombArea_14: -8877217327464002545
+      BombArea_15: -5718799193870665383
+      BombArea_16: 4887970667994680715
+      BombArea_17: 6597976860729776721
+      BombArea_18: -9045912042851682922
+      BombArea_19: -1691910407824119264
+      BombArea_2: 1564260284878383492
+      BombArea_20: -2665405790446668271
+      BombArea_21: 7463479008631751332
+      BombArea_22: 802822357343487224
+      BombArea_23: 4760778792468754485
+      BombArea_24: -2868696221494944426
+      BombArea_25: 4343778674288143390
+      BombArea_26: 8031176417477292912
+      BombArea_27: 6918653292267145846
+      BombArea_28: -3246280625355911975
+      BombArea_29: -6419994154214221517
+      BombArea_3: -8246375179371524906
+      BombArea_30: 7266817285072389564
+      BombArea_31: 4987127672620408923
+      BombArea_32: -297793852806154295
+      BombArea_33: -5834361830691726227
+      BombArea_34: -1909718131321037348
+      BombArea_35: 3807843162369907492
+      BombArea_36: -2415940677234930492
+      BombArea_37: -7099956983577505677
+      BombArea_38: 2416543650206158924
+      BombArea_39: 3317503949589393028
+      BombArea_4: 625681429337228922
+      BombArea_40: 599187684769549112
+      BombArea_41: 8971251978240020619
+      BombArea_42: 2408917651542101646
+      BombArea_43: 8965692470543108748
+      BombArea_44: 4946735193912863730
+      BombArea_45: 2777978389781313909
+      BombArea_46: -5913887219719207197
+      BombArea_47: -4859540758835127867
+      BombArea_48: -1705436594948513861
+      BombArea_49: -3978512268088895096
+      BombArea_5: -4031874210351264376
+      BombArea_50: -1327220232508757387
+      BombArea_51: -1130811966222133005
+      BombArea_52: 8086320810944511022
+      BombArea_53: -5573556872545081560
+      BombArea_54: -7656057736730327767
+      BombArea_55: -728683458
+      BombArea_6: 1616183882491805172
+      BombArea_7: -622697577154459599
+      BombArea_8: 8589762765837324914
+      BombArea_9: 9122774872073151711
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

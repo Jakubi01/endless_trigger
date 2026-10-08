@@ -81,7 +81,6 @@ namespace Managers
             var activeCanvas = GetActiveCanvas();
             if (!activeCanvas)
             {
-                Debug.LogError("씬에 사용 가능한 Canvas가 없습니다.");
                 return null;
             }
 

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Character;
 using Character.Enemy;
 using UnityEngine;
 
@@ -8,52 +9,8 @@ namespace Items.Weapon
     [RequireComponent(typeof(CircleCollider2D))]
     public class BombArea : MonoBehaviour
     {
+        private Animator _animator;
         private const float DamageTickInterval = 1f;
-        private const int SpriteSize = 64;
-        private static Sprite _visualSprite;
-
-        public static Sprite VisualSprite
-        {
-            get
-            {
-                if (_visualSprite) return _visualSprite;
-
-                Texture2D texture = new Texture2D(SpriteSize, SpriteSize, TextureFormat.RGBA32, false)
-                {
-                    filterMode = FilterMode.Bilinear,
-                    wrapMode = TextureWrapMode.Clamp
-                };
-
-                Color[] pixels = new Color[SpriteSize * SpriteSize];
-                Vector2 center = new Vector2((SpriteSize - 1) * 0.5f, (SpriteSize - 1) * 0.5f);
-                float outerRadius = SpriteSize * 0.48f;
-                float innerRadius = SpriteSize * 0.34f;
-
-                for (int y = 0; y < SpriteSize; y++)
-                {
-                    for (int x = 0; x < SpriteSize; x++)
-                    {
-                        float distance = Vector2.Distance(new Vector2(x, y), center);
-                        float alpha = Mathf.Clamp01(outerRadius - distance);
-                        if (distance < innerRadius)
-                            alpha *= 0.35f;
-
-                        pixels[y * SpriteSize + x] = new Color(1f, 1f, 1f, alpha);
-                    }
-                }
-
-                texture.SetPixels(pixels);
-                texture.Apply();
-                _visualSprite = Sprite.Create(
-                    texture,
-                    new Rect(0f, 0f, SpriteSize, SpriteSize),
-                    new Vector2(0.5f, 0.5f),
-                    SpriteSize);
-                _visualSprite.name = "ClayBombVisual";
-                return _visualSprite;
-            }
-        }
-
         private float _damagePerSecond;
         private float _duration;
         private float _radius;
@@ -62,6 +19,15 @@ namespace Items.Weapon
         private Action _onFinished;
         private readonly HashSet<EnemyCharacterBase> _damagedEnemies = new();
 
+        private void Awake()
+        {
+            var circleCollider = GetComponent<CircleCollider2D>();
+            circleCollider.isTrigger = true;
+            circleCollider.radius = 0.5f;
+            
+            _animator = GetComponent<Animator>();
+        }
+        
         public void Initialize(float damagePerSecond, float duration, float radius, Action onFinished)
         {
             _damagePerSecond = Mathf.Max(0f, damagePerSecond);
@@ -72,9 +38,9 @@ namespace Items.Weapon
             _nextDamageTime = 0f;
 
             transform.localScale = Vector3.one * (_radius * 2f);
-            CircleCollider2D circleCollider = GetComponent<CircleCollider2D>();
-            circleCollider.isTrigger = true;
-            circleCollider.radius = 0.5f;
+            
+            if (_animator)
+                _animator.SetTrigger(AnimatorParamToHash.Execute);
         }
 
         private void Update()
@@ -86,7 +52,7 @@ namespace Items.Weapon
                 return;
             }
 
-            while (_nextDamageTime <= _elapsed && _nextDamageTime < _duration)
+            if (_elapsed >= _nextDamageTime && _nextDamageTime < _duration)
             {
                 ApplyDamage();
                 _nextDamageTime += DamageTickInterval;
@@ -113,6 +79,10 @@ namespace Items.Weapon
             Action callback = _onFinished;
             _onFinished = null;
             callback?.Invoke();
+
+            if (_animator)
+                _animator.enabled = false;
+                
             Destroy(gameObject);
         }
     }

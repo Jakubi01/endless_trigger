@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Components.AbilitySystem.Abilities.BombAbility
   baseExecuteInterval: 0.1
   abilityType: 2
+  bombPrefab: {fileID: 844529928055432975, guid: c831afa6ca07c2e4f9200f69b062c014, type: 3}

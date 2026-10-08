@@ -1,5 +1,4 @@
-﻿using Unity.VisualScripting;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Character
 {
@@ -32,6 +31,9 @@ namespace Character
         public static readonly int Move;
         public static readonly int EnemyAttack;
 
+        // Item
+        public static readonly int Execute;
+        
         static AnimatorParamToHash()
         {
             IsRunning = Animator.StringToHash("IsRunning");
@@ -39,6 +41,8 @@ namespace Character
             
             Move = Animator.StringToHash("Move");
             EnemyAttack = Animator.StringToHash("EnemyAttack");
+            
+            Execute = Animator.StringToHash("Execute");
         }
     }
 }

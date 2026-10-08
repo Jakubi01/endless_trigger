@@ -8,8 +8,10 @@ namespace Components.AbilitySystem.Abilities
     [CreateAssetMenu(fileName = "Bomb Ability", menuName = "Endless Trigger/Abilities/Bomb Ability")]
     public class BombAbility : AbilityBase
     {
+        [SerializeField] private GameObject bombPrefab;
+        
         private const float TargetRange = 10f;
-        private const float BombSpeed = 20f;
+        private const float BombSpeed = 5f;
         private const float AreaDuration = 5f;
         private const float ShotInterval = 0.1f;
 
@@ -83,20 +85,19 @@ namespace Components.AbilitySystem.Abilities
                     targets.Add(enemy);
             }
 
-            if (targets.Count == 0) return;
+            if (targets.Count == 0 || !bombPrefab) return;
 
             EnemyCharacterBase target = targets[Random.Range(0, targets.Count)];
-            GameObject bombObject = new GameObject("ClayBomb");
-            bombObject.transform.position = Owner.transform.position;
-            SpriteRenderer spriteRenderer = bombObject.AddComponent<SpriteRenderer>();
-            spriteRenderer.sprite = BombArea.VisualSprite;
-            spriteRenderer.color = new Color(0.63f, 0.42f, 0.25f);
-            spriteRenderer.sortingOrder = 1;
-            bombObject.AddComponent<CircleCollider2D>().radius = 0.18f;
-
-            Bomb bomb = bombObject.AddComponent<Bomb>();
-            _activeAreas++;
+            
+            var bombObject = Instantiate(bombPrefab, Owner.transform.position, Quaternion.identity);
+            if (!bombObject.TryGetComponent(out Bomb bomb))
+            {
+                Destroy(bombObject);
+                return;
+            }
+            
             bomb.Initialize(target, BombSpeed, _damagePerSecond, AreaDuration, _areaRadius, OnAreaFinished);
+            _activeAreas++;
         }
 
         private void OnAreaFinished()
