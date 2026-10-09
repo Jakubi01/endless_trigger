@@ -10,7 +10,8 @@ namespace Items.Weapon
     public class Bomb : MonoBehaviour
     {
         [SerializeField] private GameObject bombAreaPrefab;
-        
+        [SerializeField] private AnimationCurve moveCurve = AnimationCurve.Linear(0, 0, 1, 1);
+
         private EnemyCharacterBase _target;
         private Animator _animator;
         private float _speed;
@@ -19,6 +20,9 @@ namespace Items.Weapon
         private float _areaRadius;
         private Action _onAreaFinished;
         private bool _detonated;
+        private Vector3 _startPosition;
+        private float _lerpTime;
+        private bool _isTrackingStarted;
         
         private void Awake()
         {
@@ -27,6 +31,8 @@ namespace Items.Weapon
             circleCollider.radius = 0.5f;
             
             _animator = GetComponent<Animator>();
+            
+            _startPosition = transform.position;
         }
         
         public void Initialize(EnemyCharacterBase target, float speed, float damagePerSecond, float areaDuration,
@@ -50,10 +56,16 @@ namespace Items.Weapon
                 StartCoroutine(Detonate());
                 return;
             }
-
-            Vector3 targetPosition = _target.transform.position;
-            transform.position = Vector3.MoveTowards(transform.position, targetPosition, _speed * Time.deltaTime);
             
+            _lerpTime += Time.deltaTime * (_speed / 10f);
+
+            float normalizedTime = Mathf.Clamp01(_lerpTime);
+            float curveValue = moveCurve.Evaluate(normalizedTime);
+            Vector3 targetPosition = _target.transform.position;
+        
+            _startPosition = Vector3.MoveTowards(_startPosition, targetPosition, Time.deltaTime * _speed * 0.5f);
+            transform.position = Vector3.Lerp(_startPosition, targetPosition, curveValue);
+        
             if ((transform.position - targetPosition).sqrMagnitude <= 0.04f)
             {
                 StartCoroutine(Detonate());
@@ -63,12 +75,13 @@ namespace Items.Weapon
         private IEnumerator Detonate()
         {
             _detonated = true;
-
+            
             if (_animator)
             {
                 _animator.SetTrigger(AnimatorParamToHash.Execute);
-                const string clipName = "BombAnim";
+                const string clipName = "BombExecuteAnim";
                 var clipLength = AnimationExtension.GetAnimClipLength(_animator, clipName);
+                clipLength += 0.3f; // wait for explosion animation finish.
                 yield return new WaitForSeconds(clipLength);
             }
 
