@@ -301,16 +301,16 @@ namespace Managers
 
         private void ApplyFrameRateLimit(double monitorHz)
         {
-            switch (_currentSettings.frameRateMode)
+            Application.targetFrameRate = _currentSettings.frameRateMode switch
             {
-                case FrameRateMode.FPS30:    Application.targetFrameRate = 30;   break;
-                case FrameRateMode.FPS60:    Application.targetFrameRate = 60;   break;
-                case FrameRateMode.FPS120:   Application.targetFrameRate = 120;  break;
-                case FrameRateMode.FPS240:   Application.targetFrameRate = 240;  break;
-                case FrameRateMode.FPS300:   Application.targetFrameRate = 300;  break;
-                case FrameRateMode.Uncapped: Application.targetFrameRate = -1;   break;
-                default:                      Application.targetFrameRate = (int)Math.Round(monitorHz);   break;
-            }
+                FrameRateMode.FPS30 => 30,
+                FrameRateMode.FPS60 => 60,
+                FrameRateMode.FPS120 => 120,
+                FrameRateMode.FPS240 => 240,
+                FrameRateMode.FPS300 => 300,
+                FrameRateMode.Uncapped => -1,
+                _ => (int)Math.Round(monitorHz)
+            };
         }
 
         public void ApplyGameplaySettings()
@@ -336,7 +336,7 @@ namespace Managers
                 // 가로 x 세로 총 픽셀 수 계산
                 long pixels = (long)res.width * res.height;
         
-                // RefreshRateRatio (유니티 최신 버전 주사율 구조체)
+                // RefreshRateRatio
                 double hz = res.refreshRateRatio.value;
 
                 // 더 큰 픽셀 수(해상도)이거나, 해상도가 같으면 주사율(Hz)이 더 높은 것을 선택

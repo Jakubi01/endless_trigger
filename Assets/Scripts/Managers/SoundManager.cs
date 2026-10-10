@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Managers
 {
@@ -31,7 +32,7 @@ namespace Managers
         [SerializeField] private AudioSource sfxSource;
         [SerializeField] private AudioSource uiSource;
 
-        public SoundData data;
+        private SoundData _data;
 
         private void Awake()
         {
@@ -40,7 +41,7 @@ namespace Managers
                 Instance = this;
                 DontDestroyOnLoad(gameObject);
                 SetupAudioSources();
-                data = Instantiate(soundData);
+                _data = Instantiate(soundData);
             }
             else
             {
@@ -65,12 +66,25 @@ namespace Managers
             uiSource.volume = sfxVolume;
         }
 
-        public void PlayBGM(AudioClip clip)
+        public void PlayLobbyBGM()
         {
-            if (clip == null || bgmSource.clip == clip) return;
+            if (!_data || !_data.lobbyBGM) return;
             
-            bgmSource.Stop();
-            bgmSource.clip = clip;
+            if(bgmSource.isPlaying)
+                bgmSource.Stop();
+
+            bgmSource.clip = _data.lobbyBGM;
+            bgmSource.Play();
+        }
+
+        public void PlayInGameBGM()
+        {
+            if (!_data || !_data.gameStart) return;
+            
+            if(bgmSource.isPlaying)
+                bgmSource.Stop();
+            
+            bgmSource.clip = _data.gameStart;
             bgmSource.Play();
         }
         
@@ -85,8 +99,8 @@ namespace Managers
         
         public void PlayUIPopupOpen()
         {
-            if (soundData.popupOpen != null)
-                uiSource.PlayOneShot(soundData.popupOpen);
+            if (_data.popupOpen != null)
+                uiSource.PlayOneShot(_data.popupOpen);
         }
     }
 }
