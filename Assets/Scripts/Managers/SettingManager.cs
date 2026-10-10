@@ -1,7 +1,7 @@
 ﻿using System;
 using Types;
 using UnityEngine;
-using SaveSystem; // JSON 세이브 시스템 네임스페이스 참조
+using SaveSystem;
 
 namespace Managers
 {
@@ -10,8 +10,8 @@ namespace Managers
         public static SettingManager Instance { get; private set; }
         
         // 고정된 독립 파일 이름 정의
-        private const string SETTINGS_FILE_NAME = "Settings.json";
-        private const string INGAME_SAVE_FILE_NAME = "SaveGame.json";
+        private const string SettingsFileName = "Settings.json";
+        private const string IngameSaveFileName = "SaveGame.json";
 
         // 런타임 메모리 데이터 홀더
         private SettingData _currentSettings;
@@ -30,6 +30,8 @@ namespace Managers
         public FrameRateMode CurrentFrameRateMode => _currentSettings.frameRateMode;
         public float MouseSensitivity => _currentSettings.mouseSensitivity;
         public bool UseScreenShake => _currentSettings.useScreenShake;
+        
+        public event Action OnGameplaySettingsChanged;
 
         // 인게임 플레이 진행 데이터 접근용
         public InGameSaveData InGameSave => _inGameSaveData;
@@ -68,8 +70,8 @@ namespace Managers
         /// </summary>
         private void LoadAllDataPool()
         {
-            _currentSettings = SaveSystem.SaveSystem.Load<SettingData>(SETTINGS_FILE_NAME);
-            _inGameSaveData = SaveSystem.SaveSystem.Load<InGameSaveData>(INGAME_SAVE_FILE_NAME);
+            _currentSettings = SaveSystem.SaveSystem.Load<SettingData>(SettingsFileName);
+            _inGameSaveData = SaveSystem.SaveSystem.Load<InGameSaveData>(IngameSaveFileName);
 
             if (_currentSettings == null)
             {
@@ -83,13 +85,13 @@ namespace Managers
         /// </summary>
         private void SetDefaultInitSettings()
         {
-            // 1. 최초 실행은 무조건 전체 화면
+            // 최초 실행은 무조건 전체 화면
             _currentSettings.screenMode = ScreenMode.FullScreen;
 
             int targetIndex = -1;
             double maxRefreshRate = 0;
 
-            // 2. 로컬 모니터가 지원하는 해상도 중 1920x1080 이면서 주사율이 가장 높은 항목 탐색
+            // 로컬 모니터가 지원하는 해상도 중 1920x1080 이면서 주사율이 가장 높은 항목 탐색
             for (int i = 0; i < Screen.resolutions.Length; i++)
             {
                 var res = Screen.resolutions[i];
@@ -104,7 +106,7 @@ namespace Managers
                 }
             }
 
-            // 예외 방어 코드: 만약 모니터가 1920x1080 자체를 지원하지 않는 기괴한 디스플레이 환경일 때
+            // 만약 모니터가 1920x1080 자체를 지원하지 않는 기괴한 디스플레이 환경일 때
             if (targetIndex == -1)
             {
                 double maxHz = 0;
@@ -125,7 +127,7 @@ namespace Managers
 
             _currentSettings.resolutionIndex = targetIndex >= 0 ? targetIndex : 0;
 
-            // 3. 주사율에 맞게 프레임 레이트 모드도 매칭 (240hz 모니터면 FPS240, 144hz면 FPS120이나 Uncapped 등 원하는 방식으로 분기 가능)
+            // 주사율에 맞게 프레임 레이트 모드도 매칭 (240hz 모니터면 FPS240, 144hz면 FPS120이나 Uncapped 등 원하는 방식으로 분기 가능)
             if (maxRefreshRate >= 240) _currentSettings.frameRateMode = FrameRateMode.FPS240;
             else if (maxRefreshRate >= 120) _currentSettings.frameRateMode = FrameRateMode.FPS120;
             else _currentSettings.frameRateMode = FrameRateMode.FPS60;
@@ -153,7 +155,7 @@ namespace Managers
         /// </summary>
         public void SaveSettings()
         {
-            SaveSystem.SaveSystem.Save(SETTINGS_FILE_NAME, _currentSettings);
+            SaveSystem.SaveSystem.Save(SettingsFileName, _currentSettings);
             
             // 디스플레이 갱신은 최종 확정 시에만 수행
             ApplyGraphicsSettings();
@@ -165,7 +167,7 @@ namespace Managers
         /// </summary>
         public void SaveInGameProgress()
         {
-            SaveSystem.SaveSystem.Save(INGAME_SAVE_FILE_NAME, _inGameSaveData);
+            SaveSystem.SaveSystem.Save(IngameSaveFileName, _inGameSaveData);
         }
 
         public void AddTotalKillCount(int amount)
@@ -251,10 +253,13 @@ namespace Managers
 
         public void ApplyAudioSettings()
         {
-            float finalMaster = _currentSettings.isMute ? 0 : _currentSettings.masterVolume;
-            AudioListener.volume = finalMaster;
+            AudioListener.volume = _currentSettings.isMute ? 0f : _currentSettings.masterVolume;
 
-            // TODO: 사운드 매니저 연동 시 finalBgm(_currentSettings.isBgmOn 반영) 및 sfxVolume 전달
+            if (SoundManager.Instance != null)
+                SoundManager.Instance.ApplyVolume(
+                    _currentSettings.isBgmOn,
+                    _currentSettings.bgmVolume,
+                    _currentSettings.sfxVolume);
         }
 
         public void ApplyGraphicsSettings()
@@ -311,6 +316,7 @@ namespace Managers
         public void ApplyGameplaySettings()
         {
             // 마우스 감도 인게임 카메라에 전달 및 화면 진동 켜고 끄기 분기점 제어
+            OnGameplaySettingsChanged?.Invoke();
         }
         
         public int GetMaxResolutionIndex()

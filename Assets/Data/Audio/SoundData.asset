@@ -17,5 +17,5 @@ MonoBehaviour:
   gameStart: {fileID: 0}
   playerHit: {fileID: 0}
   itemGet: {fileID: 0}
-  lobbyBGM: {fileID: 0}
+  lobbyBGM: {fileID: 8300000, guid: dad6afdba3a9b9e4792eb6e77a90ce55, type: 3}
   inGameBGM: {fileID: 0}

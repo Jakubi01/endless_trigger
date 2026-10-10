@@ -31,6 +31,8 @@ namespace Managers
         [SerializeField] private AudioSource sfxSource;
         [SerializeField] private AudioSource uiSource;
 
+        public SoundData data;
+
         private void Awake()
         {
             if (Instance == null)
@@ -38,6 +40,7 @@ namespace Managers
                 Instance = this;
                 DontDestroyOnLoad(gameObject);
                 SetupAudioSources();
+                data = Instantiate(soundData);
             }
             else
             {
@@ -53,10 +56,18 @@ namespace Managers
             if (uiSource != null) 
                 uiSource.ignoreListenerPause = true;
         }
+        
+        public void ApplyVolume(bool isBgmOn, float bgmVolume, float sfxVolume)
+        {
+            bgmSource.mute = !isBgmOn;
+            bgmSource.volume = bgmVolume;
+            sfxSource.volume = sfxVolume;
+            uiSource.volume = sfxVolume;
+        }
 
         public void PlayBGM(AudioClip clip)
         {
-            if (bgmSource.clip == clip) return;
+            if (clip == null || bgmSource.clip == clip) return;
             
             bgmSource.Stop();
             bgmSource.clip = clip;
@@ -70,12 +81,6 @@ namespace Managers
             if (!clip) return;
             
             sfxSource.PlayOneShot(clip);
-        }
-        
-        public void PlayPlayerHitSFX()
-        {
-            if (soundData.playerHit != null)
-                sfxSource.PlayOneShot(soundData.playerHit);
         }
         
         public void PlayUIPopupOpen()
