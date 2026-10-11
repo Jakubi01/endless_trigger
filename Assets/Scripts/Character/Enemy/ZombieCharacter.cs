@@ -2,11 +2,6 @@
 {
     public class ZombieCharacter : EnemyCharacterBase
     {
-        protected override void Awake()
-        {
-            base.Awake();
-
-            SetProximityLimitRadius(.4f);
-        }
+        // proximityLimitRadius = .4f;
     }
 }

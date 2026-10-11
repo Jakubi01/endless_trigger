@@ -128,34 +128,12 @@ namespace Managers
         {
             if (amount <= 0) return;
 
-            if (experiencePickupPrefab)
+            if (!experiencePickupPrefab) return;
+            GameObject pickup = Instantiate(experiencePickupPrefab, position, Quaternion.identity);
+            if (pickup.TryGetComponent(out ExperiencePickup experiencePickup))
             {
-                GameObject pickup = Instantiate(experiencePickupPrefab, position, Quaternion.identity);
-                if (pickup.TryGetComponent(out ExperiencePickup experiencePickup))
-                {
-                    experiencePickup.Initialize(amount);
-                }
-
-                return;
+                experiencePickup.Initialize(amount);
             }
-
-            // fallback object
-            GameObject fallback = new GameObject("ExperiencePickup")
-            {
-                transform =
-                {
-                    position = position
-                }
-            };
-
-            CircleCollider2D circleCollider2D = fallback.AddComponent<CircleCollider2D>();
-            circleCollider2D.isTrigger = true;
-            circleCollider2D.radius = 0.2f;
-
-            SpriteRenderer spriteRenderer = fallback.AddComponent<SpriteRenderer>();
-            spriteRenderer.color = Color.cyan;
-
-            fallback.AddComponent<ExperiencePickup>().Initialize(amount);
         }
     }
 }

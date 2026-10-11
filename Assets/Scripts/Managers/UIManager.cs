@@ -87,18 +87,18 @@ namespace Managers
             currentWindowReference = Instantiate(prefab, activeCanvas.transform, false);
             currentWindowReference.transform.SetAsLastSibling();
             
-            var rectTransform = currentWindowReference.GetComponent<RectTransform>();
-            if (rectTransform)
+            if (currentWindowReference.TryGetComponent(out RectTransform rectTransform))
             {
                 rectTransform.localScale = Vector3.one;
                 rectTransform.anchoredPosition = Vector2.zero;
                 rectTransform.localPosition = new Vector3(rectTransform.localPosition.x, rectTransform.localPosition.y, 0f);
             }
 
-            var canvasGroup = currentWindowReference.GetComponent<CanvasGroup>();
-            if (!canvasGroup) canvasGroup = currentWindowReference.gameObject.AddComponent<CanvasGroup>();
-            canvasGroup.ignoreParentGroups = true;
-            canvasGroup.interactable = true;
+            if (currentWindowReference.TryGetComponent(out CanvasGroup canvasGroup))
+            {
+                canvasGroup.ignoreParentGroups = true;
+                canvasGroup.interactable = true;
+            }
 
             RefreshPauseState();
             return currentWindowReference;

@@ -111,7 +111,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f0af22386c940079995ed9ddc0eedb5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Components.HealthComponent
-  owner: {fileID: 0}
   maxHealth: 100
 --- !u!61 &1438945070651687160
 BoxCollider2D:
@@ -222,9 +221,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Character.Enemy.RusherCharacter
   deathSound: {fileID: 0}
   enemyType: 1
+  attackRadius: 1
   contactDamage: 10
   experienceReward: 5
   contactDamageInterval: 0.5
+  proximityLimitRadius: 0.3
 --- !u!114 &3218862400052233461
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -285,6 +286,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 873e0a6e00fa406b9d0a242fad4d6e35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Components.HitEffect
-  owner: {fileID: 0}
   hitColor: {r: 1, g: 0, b: 0, a: 1}
-  duration: 0.2

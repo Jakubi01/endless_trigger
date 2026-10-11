@@ -21,27 +21,38 @@ namespace Character.Enemy
     {
         [Header("Enemy Status")]
         [SerializeField] private EnemyType enemyType;
+        [SerializeField] private float attackRadius = 1f;
         [SerializeField] private float contactDamage = 10f;
         [SerializeField] private int experienceReward = 5;
-        [SerializeField] private float contactDamageInterval = 0.5f;
+        [SerializeField] private float contactDamageInterval = 1f;
+        [SerializeField] private float proximityLimitRadius = 1f;
 
         private EnemyManager _enemyManager;
         private float _nextContactDamageTime;
         private HealthComponent _healthComponent;
         private Action<EnemyCharacterBase> _releaseToPool;
+        private BoxCollider2D _hitAreaBoxCollider2D;
         private CircleCollider2D _proximityLimitCircleCollider2D;
 
-        public EnemyType EnemyType => enemyType;
+        // Register attack motions and logic for all enemy units in this event
+        public event Action AttackAction; 
+        
         public bool IsAlive => _healthComponent && _healthComponent.IsAlive;
 
         protected override void Awake()
         {
             base.Awake();
+            
             InitializeHealthComponent();
+            
             _enemyManager = EnemyManager.Instance;
+            
             GetComponent<SpriteRenderer>().sortingLayerName = "Enemy";
+            
+            _hitAreaBoxCollider2D = GetComponent<BoxCollider2D>();
+            
             _proximityLimitCircleCollider2D = GetComponent<CircleCollider2D>();
-            SetProximityLimitRadius(1f);
+            SetProximityLimitRadius(proximityLimitRadius);
         }
 
         private void OnEnable()
@@ -125,12 +136,10 @@ namespace Character.Enemy
         private void TryDamagePlayer(Collider2D other)
         {
             if (Time.time < _nextContactDamageTime) return;
-
-            if (other.TryGetComponent(out PlayerCharacter player))
-            {
-                player.TakeDamage(contactDamage);
-                _nextContactDamageTime = Time.time + contactDamageInterval;
-            }
+            
+            if (!other.TryGetComponent(out PlayerCharacter player)) return;
+            player.TakeDamage(contactDamage);
+            _nextContactDamageTime = Time.time + contactDamageInterval;
         }
 
         protected override void OnDeath()
