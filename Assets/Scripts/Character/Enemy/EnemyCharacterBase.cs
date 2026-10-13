@@ -1,6 +1,7 @@
 using Character.Player;
 using Components;
 using System;
+using System.Collections;
 using System.Globalization;
 using Effects.DamageText;
 using Managers;
@@ -34,9 +35,22 @@ namespace Character.Enemy
         private BoxCollider2D _hitAreaBoxCollider2D;
         private CircleCollider2D _proximityLimitCircleCollider2D;
 
-        // Register attack motions and logic for all enemy units in this event
-        public event Action AttackAction; 
+        // 현재 구조는 AttackAction에 event를 구독시켜 Animation을 재생하는 방식인데,
+        // 더 나은 방법은 Animation Event에 public void Foo()를 등록해서 
+        // TryDamagePlayer => PlayAttackAnim() 실행
+        // Foo => 데미지 처리
+        // 이 구조가 훨씬 깔끔함
+        // 대신 이 프로젝트에는 각 유닛마다 고유의 공격 애니메이션이 없음..
+        // -> 공격 애니메이션을 기획이나 아트에서 만들어줘야 하는데 . . .
         
+        // Register attack motions and logic for all enemy units in this event
+        public event Action OnAttackAction;
+
+        // It called when character death
+        public event Action OnDeathAction;
+        
+        protected PlayerCharacter Target { get; private set; }
+
         public bool IsAlive => _healthComponent && _healthComponent.IsAlive;
 
         protected override void Awake()
@@ -78,7 +92,9 @@ namespace Character.Enemy
 
         private void OnTriggerStay2D(Collider2D other)
         {
-            TryDamagePlayer(other);
+            if (!other.TryGetComponent(out PlayerCharacter player)) return;
+            
+            TryDamagePlayer(player);
         }
 
         public void Initialize(EnemyType type, float hp, float moveSpeed, float damage, int expReward)
@@ -133,18 +149,31 @@ namespace Character.Enemy
             _healthComponent.Died += OnDeath;
         }
 
-        private void TryDamagePlayer(Collider2D other)
+        protected void TryDamagePlayer(PlayerCharacter playerCharacter)
         {
             if (Time.time < _nextContactDamageTime) return;
             
-            if (!other.TryGetComponent(out PlayerCharacter player)) return;
-            player.TakeDamage(contactDamage);
+            Target = playerCharacter;
+            
+            OnAttackAction?.Invoke();
+            
+            // Animation Event를 사용하면 아래의 로직은 삭제
+            playerCharacter.TakeDamage(contactDamage);
+            _nextContactDamageTime = Time.time + contactDamageInterval;
+        }
+
+        // Animation Event 구독용
+        public void DamageToTarget()
+        {
+            Target.TakeDamage(contactDamage);
             _nextContactDamageTime = Time.time + contactDamageInterval;
         }
 
         protected override void OnDeath()
         {
             base.OnDeath();
+            
+            OnDeathAction?.Invoke();
             
             GameManager.Instance?.RegisterKill();
             _enemyManager?.SpawnExperience(transform.position, experienceReward);
@@ -160,6 +189,11 @@ namespace Character.Enemy
         protected void SetProximityLimitRadius(float radius)
         {
             _proximityLimitCircleCollider2D.radius = radius;
+        }
+
+        public void StartBuffCoroutine(IEnumerator applySpeedBuff)
+        {
+            StartCoroutine(applySpeedBuff);
         }
     }
 }

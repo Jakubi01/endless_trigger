@@ -9,20 +9,22 @@ namespace Character
     [RequireComponent(typeof(Animator))]
     public class CharacterBase : MonoBehaviour
     {
-        protected Rigidbody2D Rb;
-        protected BoxCollider2D Col;
-
-        private const float BaseMoveSpeed = 5f;
-        protected Vector2 MoveInput;
-        [NonSerialized] protected float MoveSpeed;
-        public Rigidbody2D CharacterRigidbody => Rb;
-        public Collider2D CharacterCollider => Col;
-        protected Animator animator;
-        protected SpriteRenderer characterSprite;
-        
         [Header("Events")]
         [SerializeField] private AudioClip deathSound;
         private static float _lastDeathSoundTime;
+        private const float BaseMoveSpeed = 5f;
+        
+        protected Rigidbody2D Rb;
+        protected BoxCollider2D Col;
+
+        [NonSerialized] protected float MoveSpeed;
+        protected Vector2 MoveInput;
+        protected Animator animator;
+        protected SpriteRenderer characterSprite;
+
+        [NonSerialized] public float moveSpeedMultiplier = 1f;
+        public Rigidbody2D CharacterRigidbody => Rb;
+        public Collider2D CharacterCollider => Col;
 
         protected virtual void Awake()
         {
@@ -41,8 +43,6 @@ namespace Character
             
             animator = GetComponent<Animator>();
         }
-
-        public virtual void DoAttack() { }
         
         public virtual void SetMoveSpeed(float value) { MoveSpeed = value; }
 
@@ -60,7 +60,7 @@ namespace Character
                 characterSprite.flipX = direction.x < 0;
             }
 
-            Rb.MovePosition(Rb.position + direction * (MoveSpeed * Time.fixedDeltaTime));
+            Rb.MovePosition(Rb.position + direction * (MoveSpeed * moveSpeedMultiplier * Time.fixedDeltaTime));
         }
 
         public virtual void MoveToward(Vector2 worldPosition)
@@ -79,7 +79,7 @@ namespace Character
         
         protected void PlayDeathSound()
         {
-            if (Time.time - _lastDeathSoundTime < 0.05f) 
+            if (Time.time - _lastDeathSoundTime < 0.05f || !deathSound) 
                 return; 
 
             _lastDeathSoundTime = Time.time;

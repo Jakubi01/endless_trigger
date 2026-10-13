@@ -115,10 +115,6 @@ namespace Character.Player
             MoveInput = moveInput;
         }
 
-        public override void DoAttack()
-        {
-        }
-
         public override GameObject FindNearestFromCharacter(float range)
         {
             ResolveEnemyManager();

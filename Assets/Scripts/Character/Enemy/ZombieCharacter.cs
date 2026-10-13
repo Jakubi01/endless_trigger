@@ -2,6 +2,5 @@
 {
     public class ZombieCharacter : EnemyCharacterBase
     {
-        // proximityLimitRadius = .4f;
     }
 }
