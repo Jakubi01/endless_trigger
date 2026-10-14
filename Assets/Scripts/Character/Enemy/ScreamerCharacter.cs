@@ -1,4 +1,6 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
+using NUnit.Framework;
 using UnityEngine;
 
 namespace Character.Enemy
@@ -9,9 +11,9 @@ namespace Character.Enemy
         [Header("Buff Settings")]
         [SerializeField] private float buffRadius = 4f;       // 반경 4m (요청사항 반영)
         [SerializeField] private float buffDuration = 3f;
-        
-        private readonly Collider2D[] _colliderBuffer = new Collider2D[99];
-        private float _moveSpeedMultiplier = 1.6f;
+
+        private readonly List<Collider2D> _colliderBuffer = new();
+        private const float MoveSpeedMultiplier = 1.6f;
 
         private void OnEnable()
         {
@@ -30,7 +32,7 @@ namespace Character.Enemy
             ApplyBuffToAllies();
         }
 
-        private void OnDeath()
+        protected override void OnDeath()
         {
             
         }
@@ -39,9 +41,9 @@ namespace Character.Enemy
         {
             if (!IsAlive) return;
 
-            var count = Physics2D.OverlapCircleNonAlloc(transform.position, buffRadius, _colliderBuffer);
+            var count = Physics2D.OverlapCircle(transform.position, buffRadius, ContactFilter2D.noFilter, _colliderBuffer);
             if (count <= 0) return;
-
+            
             for (var i = 0; i < count; i++)
             {
                 var col = _colliderBuffer[i];
@@ -50,7 +52,7 @@ namespace Character.Enemy
                 if (!col.TryGetComponent(out EnemyCharacterBase enemy))
                     continue;
                 
-                enemy.StartBuffCoroutine(ApplySpeedBuff(enemy, _moveSpeedMultiplier, buffDuration));
+                enemy.StartBuffCoroutine(ApplySpeedBuff(enemy, MoveSpeedMultiplier, buffDuration));
             }
         }
 

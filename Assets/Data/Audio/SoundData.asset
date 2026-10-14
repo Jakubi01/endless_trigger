@@ -9,13 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: 0bca075ae8f34b109606a5cba3944c51, type: 3}
   m_Name: SoundData
-  m_EditorClassIdentifier: Assembly-CSharp:Managers:SoundData
+  m_EditorClassIdentifier: Assembly-CSharp::Managers.SoundData
   buttonClick: {fileID: 0}
   popupOpen: {fileID: 0}
   gameStart: {fileID: 0}
-  playerHit: {fileID: 0}
   itemGet: {fileID: 0}
+  levelUp: {fileID: 8300000, guid: cd8013fb899c0c440a4ddbc9172e0405, type: 3}
+  stageClear: {fileID: 8300000, guid: 22d1923ac29c41447a6a8b7ba185813a, type: 3}
   lobbyBGM: {fileID: 8300000, guid: dad6afdba3a9b9e4792eb6e77a90ce55, type: 3}
-  inGameBGM: {fileID: 0}
+  inGameBGM: {fileID: 8300000, guid: 4a5de2e7ea5de4d4b962d87dc0ee1c48, type: 3}

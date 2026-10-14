@@ -50,7 +50,7 @@ namespace Character.Enemy
                 
                 var fireDirection = new Vector2(Mathf.Cos(currentAngle * Mathf.Deg2Rad), Mathf.Sin(currentAngle * Mathf.Deg2Rad));
 
-                _projectilePoolManager.Spawn(
+                var projectile = _projectilePoolManager.Spawn(
                     position: transform.position,
                     rotation: rotation,
                     direction: fireDirection,
@@ -59,7 +59,7 @@ namespace Character.Enemy
             }
         }
 
-        private void OnDeath()
+        protected override void OnDeath()
         {
             
         }

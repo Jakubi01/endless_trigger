@@ -18,6 +18,7 @@ namespace Items.Weapon
         private float _nextDamageTime;
         private Action _onFinished;
         private readonly HashSet<EnemyCharacterBase> _damagedEnemies = new();
+        private readonly List<Collider2D> _colliderBuffer = new();
 
         private void Awake()
         {
@@ -62,9 +63,10 @@ namespace Items.Weapon
         private void ApplyDamage()
         {
             _damagedEnemies.Clear();
-            Collider2D[] overlaps = Physics2D.OverlapCircleAll(transform.position, _radius);
+            var result = Physics2D.OverlapCircle(transform.position, _radius, ContactFilter2D.noFilter, _colliderBuffer);
+            if (result <= 0) return;
 
-            foreach (Collider2D overlap in overlaps)
+            foreach (var overlap in _colliderBuffer)
             {
                 if (!overlap || !overlap.TryGetComponent(out EnemyCharacterBase enemy) || !enemy.IsAlive)
                     continue;

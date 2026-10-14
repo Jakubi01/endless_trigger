@@ -83,7 +83,7 @@ namespace Character
                 return; 
 
             _lastDeathSoundTime = Time.time;
-            SoundManager.Instance.PlaySFX(deathSound);
+            SoundManager.Instance.PlaySfx(deathSound);
         }
         
         protected virtual bool UpdateAnimation()

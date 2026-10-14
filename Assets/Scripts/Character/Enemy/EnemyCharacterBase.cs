@@ -64,11 +64,14 @@ namespace Character.Enemy
             GetComponent<SpriteRenderer>().sortingLayerName = "Enemy";
             
             _hitAreaBoxCollider2D = GetComponent<BoxCollider2D>();
+            _hitAreaBoxCollider2D.size = new Vector2(attackRadius, attackRadius);
             
             _proximityLimitCircleCollider2D = GetComponent<CircleCollider2D>();
             SetProximityLimitRadius(proximityLimitRadius);
         }
 
+        // TODO: OnEnable, OnDestroy, OnDisable protected | virtual로 만들기
+        
         private void OnEnable()
         {
             _healthComponent?.ResetHealth();

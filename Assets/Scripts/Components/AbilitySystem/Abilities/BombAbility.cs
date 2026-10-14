@@ -22,6 +22,8 @@ namespace Components.AbilitySystem.Abilities
         private int _activeAreas;
         private float _nextShotTime;
         private bool _burstActive;
+        
+        private readonly List<Collider2D> _colliderBuffer = new();
 
         public override void Initialize(GameObject owner)
         {
@@ -70,10 +72,12 @@ namespace Components.AbilitySystem.Abilities
 
         private void LaunchBomb()
         {
-            Collider2D[] nearbyColliders = Physics2D.OverlapCircleAll(Owner.transform.position, TargetRange);
+            var result = Physics2D.OverlapCircle(Owner.transform.position, TargetRange, ContactFilter2D.noFilter, _colliderBuffer);
+            if (result <= 0) return;
+            
             List<EnemyCharacterBase> targets = new();
 
-            foreach (Collider2D nearbyCollider in nearbyColliders)
+            foreach (var nearbyCollider in _colliderBuffer)
             {
                 if (!nearbyCollider || !nearbyCollider.TryGetComponent(out EnemyCharacterBase enemy) || !enemy.IsAlive)
                     continue;

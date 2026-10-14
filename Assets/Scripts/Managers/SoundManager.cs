@@ -1,23 +1,21 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Managers
 {
-    [CreateAssetMenu(fileName = "SoundData", menuName = "Endless Trigger/SoundData")]
-    public class SoundData : ScriptableObject
+    public enum BgmType
     {
-        [Header("UI Sounds (Common)")]
-        public AudioClip buttonClick;
-        public AudioClip popupOpen;
-        public AudioClip gameStart;
-
-        [Header("Common SFX")]
-        public AudioClip playerHit;
-        public AudioClip itemGet;
-
-        [Header("Background SFX")] 
-        public AudioClip lobbyBGM;
-        public AudioClip inGameBGM;
+        Lobby,
+        InGame
+    }
+    
+    public enum SfxType
+    {
+        ItemGet,
+        LevelUp,
+        StageClear,
+        PopupOpen
     }
     
     public class SoundManager : MonoBehaviour
@@ -32,11 +30,16 @@ namespace Managers
         [SerializeField] private AudioSource sfxSource;
         [SerializeField] private AudioSource uiSource;
 
+        [Header("SFX Throttle")]
+        [SerializeField] private float sfxMinInterval = 0.05f;
+
+        private readonly Dictionary<AudioClip, float> _lastSfxTime = new();
+        
         private SoundData _data;
 
         private void Awake()
         {
-            if (Instance == null)
+            if (!Instance)
             {
                 Instance = this;
                 DontDestroyOnLoad(gameObject);
@@ -51,10 +54,10 @@ namespace Managers
 
         private void SetupAudioSources()
         {
-            if (bgmSource != null) 
+            if (bgmSource) 
                 bgmSource.loop = true;
 
-            if (uiSource != null) 
+            if (uiSource) 
                 uiSource.ignoreListenerPause = true;
         }
         
@@ -66,41 +69,52 @@ namespace Managers
             uiSource.volume = sfxVolume;
         }
 
-        public void PlayLobbyBGM()
+        public void PlayBGM(BgmType bgmType)
         {
-            if (!_data || !_data.lobbyBGM) return;
+            if (!_data || !_data.IsBGMValid()) return;
             
             if(bgmSource.isPlaying)
                 bgmSource.Stop();
 
-            bgmSource.clip = _data.lobbyBGM;
-            bgmSource.Play();
-        }
+            bgmSource.clip = bgmType switch
+            {
+                BgmType.Lobby => _data.lobbyBGM,
+                BgmType.InGame => _data.inGameBGM,
+                _ => throw new ArgumentOutOfRangeException(nameof(bgmType), bgmType, null)
+            };
 
-        public void PlayInGameBGM()
-        {
-            if (!_data || !_data.gameStart) return;
-            
-            if(bgmSource.isPlaying)
-                bgmSource.Stop();
-            
-            bgmSource.clip = _data.gameStart;
             bgmSource.Play();
         }
         
         public void StopBGM() => bgmSource.Stop();
 
-        public void PlaySFX(AudioClip clip)
+        public void PlaySfx(AudioClip clip) => PlayThrottled(sfxSource, clip);
+
+        public void Play(SfxType type)
+        {
+            if (!_data) return;
+            
+            switch (type)
+            {
+                case SfxType.ItemGet:    PlayThrottled(sfxSource, _data.itemGet); break;
+                case SfxType.LevelUp:    PlayThrottled(sfxSource, _data.levelUp); break;
+                case SfxType.StageClear: PlayThrottled(sfxSource, _data.stageClear); break;
+                case SfxType.PopupOpen:  PlayThrottled(uiSource, _data.popupOpen); break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(type), type, null);
+            }
+        }
+
+        private void PlayThrottled(AudioSource source, AudioClip clip)
         {
             if (!clip) return;
-            
-            sfxSource.PlayOneShot(clip);
-        }
-        
-        public void PlayUIPopupOpen()
-        {
-            if (_data.popupOpen != null)
-                uiSource.PlayOneShot(_data.popupOpen);
+
+            var now = Time.unscaledTime;
+            if (_lastSfxTime.TryGetValue(clip, out var last) && now - last < sfxMinInterval)
+                return;
+
+            _lastSfxTime[clip] = now;
+            source.PlayOneShot(clip);
         }
     }
 }

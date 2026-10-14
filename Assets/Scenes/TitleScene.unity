@@ -410,6 +410,7 @@ MonoBehaviour:
   bgmSource: {fileID: 1085107789}
   sfxSource: {fileID: 1441469857}
   uiSource: {fileID: 1652001117}
+  sfxMinInterval: 0.05
 --- !u!4 &246718086
 Transform:
   m_ObjectHideFlags: 0

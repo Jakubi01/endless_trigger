@@ -1,15 +1,8 @@
-﻿using System;
-using Managers;
+﻿using Managers;
 using UnityEngine;
 
 namespace Audio
 {
-    public enum BgmType
-    {
-        Lobby,
-        InGame
-    }
-    
     public class BackgroundMusic : MonoBehaviour
     {
         [SerializeField] private BgmType bgmType = BgmType.Lobby;
@@ -22,10 +15,10 @@ namespace Audio
             switch (bgmType)
             {
                 case BgmType.Lobby:
-                    manager.PlayLobbyBGM();
+                    manager.PlayBGM(BgmType.Lobby);
                     break;
                 case BgmType.InGame:
-                    manager.PlayInGameBGM();
+                    manager.PlayBGM(BgmType.InGame);
                     break;
             }
         }

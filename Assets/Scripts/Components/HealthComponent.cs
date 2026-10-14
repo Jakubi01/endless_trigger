@@ -1,4 +1,5 @@
 using System;
+using Managers;
 using UnityEngine;
 
 namespace Components
@@ -9,6 +10,13 @@ namespace Components
         [SerializeField] private float maxHealth = 100f;
         private float _currentHealth;
 
+        [Header("Audio")] 
+        [SerializeField] private AudioClip hitClip;
+        [SerializeField] private AudioClip healClip;
+        [SerializeField] private AudioClip deathClip;
+
+        private SoundManager _soundManager;
+        
         public event Action Died;
         public event Action HealthChanged;
         public event Action<float> Damaged;
@@ -20,6 +28,7 @@ namespace Components
         {
             base.Awake();
             ResetHealth();
+            _soundManager = SoundManager.Instance;
         }
 
         public void Initialize(float newMaxHealth, bool fillHealth = true)
@@ -54,6 +63,11 @@ namespace Components
         {
             if (amount <= 0f || _currentHealth <= 0f) return;
 
+            if (healClip)
+            {
+                _soundManager.PlaySfx(healClip);
+            }
+            
             _currentHealth = Mathf.Min(maxHealth, _currentHealth + amount);
             HealthChanged?.Invoke();
         }
@@ -66,10 +80,15 @@ namespace Components
             HealthChanged?.Invoke();
             Damaged?.Invoke(amount);
 
-            if (_currentHealth <= 0f)
-            {
-                Died?.Invoke();
-            }
+            if (hitClip)
+                _soundManager.PlaySfx(hitClip);
+
+            if (!(_currentHealth <= 0f)) return;
+            
+            if(deathClip)
+                _soundManager.PlaySfx(deathClip);
+                    
+            Died?.Invoke();
         }
     }
 }

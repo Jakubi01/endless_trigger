@@ -1,4 +1,5 @@
 using System;
+using Managers;
 using UnityEngine;
 
 namespace Components
@@ -50,6 +51,7 @@ namespace Components
             Level++;
             _awaitingUpgradeSelection = true;
             LeveledUp?.Invoke();
+            SoundManager.Instance.Play(SfxType.LevelUp);
         }
     }
 }

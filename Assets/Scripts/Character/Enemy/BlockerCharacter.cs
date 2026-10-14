@@ -1,4 +1,6 @@
-﻿using Character.Player;
+﻿using System.Collections.Generic;
+using Character.Player;
+using NUnit.Framework.Internal.Filters;
 using UnityEngine;
 
 namespace Character.Enemy
@@ -6,7 +8,7 @@ namespace Character.Enemy
     public class BlockerCharacter : EnemyCharacterBase
     {
         // 사망 시 반경 2.5m 폭발, 플레이어에게 35 데미지
-        private readonly Collider2D[] _colliderBuffer = new Collider2D[10];
+        private readonly List<Collider2D> _colliderBuffer = new();
         private float _damage;
         
         protected override void Awake()
@@ -33,12 +35,14 @@ namespace Character.Enemy
              // Attack Animation or Attack Logic
         }
 
-        private void OnDeath()
+        protected override void OnDeath()
         {
+            base.OnDeath();
+            
             // 폭발 이펙트
             
             // find player 
-            var count = Physics2D.OverlapCircleNonAlloc(transform.position, 1f, _colliderBuffer);
+            var count = Physics2D.OverlapCircle(transform.position, 1f, ContactFilter2D.noFilter , _colliderBuffer);
             if (count <= 0) return;
 
             for (var i = 0; i < count; i++)
@@ -49,7 +53,7 @@ namespace Character.Enemy
                 if (!col.TryGetComponent(out PlayerCharacter playerCharacter))
                     continue;
     
-                TryDamagePlayer(playerCharacter); 
+                playerCharacter.TakeDamage(_damage); 
                 break;
             }
         }
