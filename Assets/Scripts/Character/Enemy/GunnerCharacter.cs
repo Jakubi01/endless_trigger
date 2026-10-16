@@ -8,8 +8,7 @@ namespace Character.Enemy
     {
         // 플레이어 방향으로 3초마다 60° 범위 투사체 3발 동시 발사, 사거리 8m
         // contactDamageInterval = 3f;
-        [Header("Attack Settings")]
-        [SerializeField] private float fireRange = 8f; 
+        [Header("Attack Settings")] 
         [SerializeField] private float spreadAngle = 60f;
         [SerializeField] private int projectileCount = 3;
         [SerializeField] private float projectileDamage = 10f;
@@ -56,6 +55,10 @@ namespace Character.Enemy
                     direction: fireDirection,
                     damage: projectileDamage
                 );
+
+                if (!projectile.TryGetComponent(out Projectile projectileInstance)) continue;
+
+                projectileInstance.SetLifeTime(3f);
             }
         }
 

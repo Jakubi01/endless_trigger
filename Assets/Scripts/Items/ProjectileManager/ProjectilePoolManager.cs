@@ -59,7 +59,7 @@ namespace Items.ProjectileManager
                 rb.angularVelocity = 0f;
             }
 
-            if (projectile.TryGetComponent(out ProjectileManager.Projectile projectileInstance))
+            if (projectile.TryGetComponent(out Projectile projectileInstance))
             {
                 projectileInstance.Initialize(direction, ReleaseProjectile, damage, pierceCount, bSnapToParent, snapTarget);
             }

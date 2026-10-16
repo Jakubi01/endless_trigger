@@ -21,19 +21,19 @@ namespace Character.Enemy
     public class EnemyCharacterBase : CharacterBase, IDamageable
     {
         [Header("Enemy Status")]
-        [SerializeField] private EnemyType enemyType;
         [SerializeField] private float attackRadius = 1f;
-        [SerializeField] private float contactDamage = 10f;
-        [SerializeField] private int experienceReward = 5;
         [SerializeField] private float contactDamageInterval = 1f;
         [SerializeField] private float proximityLimitRadius = 1f;
 
+        private EnemyType _enemyType;
         private EnemyManager _enemyManager;
-        private float _nextContactDamageTime;
-        private HealthComponent _healthComponent;
         private Action<EnemyCharacterBase> _releaseToPool;
         private BoxCollider2D _hitAreaBoxCollider2D;
         private CircleCollider2D _proximityLimitCircleCollider2D;
+        private HealthComponent _healthComponent;
+        private int _experienceReward;
+        private float _contactDamage;
+        private float _nextContactDamageTime;
 
         // 현재 구조는 AttackAction에 event를 구독시켜 Animation을 재생하는 방식인데,
         // 더 나은 방법은 Animation Event에 public void Foo()를 등록해서 
@@ -102,9 +102,9 @@ namespace Character.Enemy
 
         public void Initialize(EnemyType type, float hp, float moveSpeed, float damage, int expReward)
         {
-            enemyType = type;
-            contactDamage = damage;
-            experienceReward = expReward;
+            _enemyType = type;
+            _contactDamage = damage;
+            _experienceReward = expReward;
             SetMoveSpeed(moveSpeed);
             _healthComponent.Initialize(hp);
         }
@@ -161,14 +161,14 @@ namespace Character.Enemy
             OnAttackAction?.Invoke();
             
             // Animation Event를 사용하면 아래의 로직은 삭제
-            playerCharacter.TakeDamage(contactDamage);
+            playerCharacter.TakeDamage(_contactDamage);
             _nextContactDamageTime = Time.time + contactDamageInterval;
         }
 
         // Animation Event 구독용
         public void DamageToTarget()
         {
-            Target.TakeDamage(contactDamage);
+            Target.TakeDamage(_contactDamage);
             _nextContactDamageTime = Time.time + contactDamageInterval;
         }
 
@@ -179,7 +179,7 @@ namespace Character.Enemy
             OnDeathAction?.Invoke();
             
             GameManager.Instance?.RegisterKill();
-            _enemyManager?.SpawnExperience(transform.position, experienceReward);
+            _enemyManager?.SpawnExperience(transform.position, _experienceReward);
             if (_releaseToPool != null)
             {
                 _releaseToPool.Invoke(this);
