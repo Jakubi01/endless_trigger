@@ -185,11 +185,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Character.Enemy.ZombieCharacter
   deathSound: {fileID: 0}
-  enemyType: 0
-  attackRadius: 1
-  contactDamage: 10
-  experienceReward: 5
-  contactDamageInterval: 0.5
+  attackRadius: 1.6
+  contactDamageInterval: 2
   proximityLimitRadius: 0.4
 --- !u!114 &3214155010038559728
 MonoBehaviour:
@@ -216,6 +213,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Components.HealthComponent
   maxHealth: 100
+  hitClip: {fileID: 0}
+  healClip: {fileID: 0}
+  deathClip: {fileID: 0}
 --- !u!95 &1914593702332468275
 Animator:
   serializedVersion: 7

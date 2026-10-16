@@ -111,8 +111,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f0af22386c940079995ed9ddc0eedb5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Components.HealthComponent
-  owner: {fileID: 0}
   maxHealth: 100
+  hitClip: {fileID: 0}
+  healClip: {fileID: 0}
+  deathClip: {fileID: 0}
 --- !u!61 &2142703209737346573
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -221,10 +223,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Character.Enemy.TankerCharacter
   deathSound: {fileID: 0}
-  enemyType: 2
-  contactDamage: 10
-  experienceReward: 5
-  contactDamageInterval: 0.5
+  attackRadius: 3
+  contactDamageInterval: 3
+  proximityLimitRadius: 1
 --- !u!114 &-2880152546609908833
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -285,6 +286,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 873e0a6e00fa406b9d0a242fad4d6e35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Components.HitEffect
-  owner: {fileID: 0}
   hitColor: {r: 1, g: 0, b: 0, a: 1}
-  duration: 0.2

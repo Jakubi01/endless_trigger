@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
 using Character.Player;
-using NUnit.Framework.Internal.Filters;
 using UnityEngine;
 
-namespace Character.Enemy
+namespace Character.Enemy.Unused
 {
     public class BlockerCharacter : EnemyCharacterBase
     {
@@ -17,27 +16,10 @@ namespace Character.Enemy
 
             _damage = 35f;
         }
-
-        private void OnEnable()
+        
+        protected override void Death()
         {
-            OnAttackAction += OnAttack;
-            OnDeathAction += OnDeath;
-        }
-
-        private void OnDisable()
-        {
-            OnAttackAction -= OnAttack;
-            OnDeathAction -= OnDeath;
-        }
-
-        private void OnAttack()
-        {
-             // Attack Animation or Attack Logic
-        }
-
-        protected override void OnDeath()
-        {
-            base.OnDeath();
+            base.Death();
             
             // 폭발 이펙트
             

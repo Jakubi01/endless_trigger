@@ -1,9 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using NUnit.Framework;
 using UnityEngine;
 
-namespace Character.Enemy
+namespace Character.Enemy.Unused
 {
     public class ScreamerCharacter : EnemyCharacterBase
     {
@@ -13,28 +12,13 @@ namespace Character.Enemy
         [SerializeField] private float buffDuration = 3f;
 
         private readonly List<Collider2D> _colliderBuffer = new();
-        private const float MoveSpeedMultiplier = 1.6f;
+        private const float SpeedMultiplier = 1.6f;
 
-        private void OnEnable()
+        protected override void Attack()
         {
-            OnAttackAction += OnAttack;
-            OnDeathAction += OnDeath;
-        }
-
-        private void OnDisable()
-        {
-            OnAttackAction -= OnAttack;
-            OnDeathAction -= OnDeath;
-        }
-
-        private void OnAttack()
-        {
-            ApplyBuffToAllies();
-        }
-
-        protected override void OnDeath()
-        {
+            base.Attack();
             
+            ApplyBuffToAllies();
         }
         
         private void ApplyBuffToAllies()
@@ -52,19 +36,19 @@ namespace Character.Enemy
                 if (!col.TryGetComponent(out EnemyCharacterBase enemy))
                     continue;
                 
-                enemy.StartBuffCoroutine(ApplySpeedBuff(enemy, MoveSpeedMultiplier, buffDuration));
+                enemy.StartBuffCoroutine(ApplySpeedBuff(enemy, SpeedMultiplier, buffDuration));
             }
         }
 
         private IEnumerator ApplySpeedBuff(EnemyCharacterBase target, float multiplier, float duration)
         {
-            target.moveSpeedMultiplier = multiplier;
+            target.MoveSpeedMultiplier = multiplier;
 
             yield return new WaitForSeconds(duration);
 
             if (target && target.IsAlive)
             {
-                target.moveSpeedMultiplier = 1.0f;
+                target.MoveSpeedMultiplier = 1.0f;
             }
         }
     }

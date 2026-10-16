@@ -7,13 +7,6 @@ namespace UserInterface.Utilities
 {
     public class DropdownDeselector : MonoBehaviour, IPointerClickHandler
     {
-        private Dropdown _dropdown;
-
-        private void Awake()
-        {
-            _dropdown = GetComponent<Dropdown>();
-        }
-
         public void OnPointerClick(PointerEventData eventData)
         {
             StartCoroutine(TrackBlockerDestroy());

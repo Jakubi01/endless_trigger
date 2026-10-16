@@ -12,7 +12,7 @@ namespace SaveSystem
         public bool isBgmOn = true;
         public float bgmVolume = 1.0f;
         public float sfxVolume = 1.0f;
-        public bool isMute = false;
+        public bool isMute;
 
         public ScreenMode screenMode = ScreenMode.FullScreen;
         public int resolutionIndex = -1;
@@ -26,17 +26,17 @@ namespace SaveSystem
         {
             return new SettingData
             {
-                masterVolume = this.masterVolume,
-                isBgmOn = this.isBgmOn,
-                bgmVolume = this.bgmVolume,
-                sfxVolume = this.sfxVolume,
-                isMute = this.isMute,
-                screenMode = this.screenMode,
-                resolutionIndex = this.resolutionIndex,
-                qualityIndex = this.qualityIndex,
-                frameRateMode = this.frameRateMode,
-                mouseSensitivity = this.mouseSensitivity,
-                useScreenShake = this.useScreenShake
+                masterVolume = masterVolume,
+                isBgmOn = isBgmOn,
+                bgmVolume = bgmVolume,
+                sfxVolume = sfxVolume,
+                isMute = isMute,
+                screenMode = screenMode,
+                resolutionIndex = resolutionIndex,
+                qualityIndex = qualityIndex,
+                frameRateMode = frameRateMode,
+                mouseSensitivity = mouseSensitivity,
+                useScreenShake = useScreenShake
             };
         }
     }
@@ -46,10 +46,10 @@ namespace SaveSystem
     public class InGameSaveData
     {
         public string playerName = "HaHaHuHe";
-        public int currentStageIndex = 0;
-        public int totalPlayTimeSec = 0;
-        public int gold = 0;
-        public int totalKillCount = 0;
+        public int currentStageIndex;
+        public int totalPlayTimeSec;
+        public int gold;
+        public int totalKillCount;
     
         // 필요 시 인벤토리 목록 등 추가 확장 가능
     }

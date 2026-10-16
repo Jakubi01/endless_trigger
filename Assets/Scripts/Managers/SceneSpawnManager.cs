@@ -20,7 +20,6 @@ namespace Managers
         private PlayerCharacter _player;
         private CinemachineCamera _cineMachineCamera;
         private GameHUD _gameHUD;
-        private DamageTextManager _damageTextManager;
         private Canvas _mainCanvas;
 
         private void Start()
@@ -71,7 +70,7 @@ namespace Managers
                 return; 
             }
             
-            _damageTextManager = Instantiate(damageTextManagerPrefab, Vector3.zero, Quaternion.identity);
+            Instantiate(damageTextManagerPrefab, Vector3.zero, Quaternion.identity);
         }
 
         private void ConfigureCamera()

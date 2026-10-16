@@ -1,4 +1,4 @@
-﻿namespace Character.Enemy
+﻿namespace Character.Enemy.Unused
 {
     public class StalkerCharacter : EnemyCharacterBase
     {

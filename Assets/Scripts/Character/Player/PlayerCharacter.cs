@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using Components;
@@ -26,6 +27,7 @@ namespace Character.Player
         private PlayerLevelComponent _levelComponent;
         private float _currentMoveSpeed;
         private readonly Dictionary<PlayerUpgradeDefinition, int> _upgradeStacks = new();
+        private const string StateName = "Death";
 
         public float ExperiencePickupRange => _levelComponent ? _levelComponent.ExperiencePickupRange : 2.5f;
 
@@ -167,6 +169,16 @@ namespace Character.Player
             
             StopAllWeapons();
             gameObject.SetActive(false);
+            animator.SetTrigger(AnimatorParamToHash.PlayerDeath);
+            
+            var length = AnimationExtension.GetAnimClipLength(animator, StateName);
+            StartCoroutine(WaitForDiedAnimationEnd(length));
+        }
+
+        private IEnumerator WaitForDiedAnimationEnd(float seconds)
+        {
+            yield return new WaitForSeconds(seconds);
+            
             UIManager.Instance.ShowGameOverWindow();
         }
 

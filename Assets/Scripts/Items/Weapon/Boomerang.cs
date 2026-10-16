@@ -7,7 +7,7 @@ namespace Items.Weapon
     {
         public float speed = 12f;
         public float spinSpeed = 720f;
-        private float _maxDistance = 10f;
+        private const float MaxDistance = 10f;
 
         private Transform _owner;
         private Projectile _projectile;
@@ -39,7 +39,7 @@ namespace Items.Weapon
             if (!_returning)
             {
                 transform.position += (Vector3)(_dir * (speed * Time.deltaTime));
-                if (Vector2.Distance(_startPos, transform.position) >= _maxDistance)
+                if (Vector2.Distance(_startPos, transform.position) >= MaxDistance)
                 {
                     _returning = true;
                     _projectile.ResetHits();

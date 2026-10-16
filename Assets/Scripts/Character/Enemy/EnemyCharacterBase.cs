@@ -31,6 +31,7 @@ namespace Character.Enemy
         private BoxCollider2D _hitAreaBoxCollider2D;
         private CircleCollider2D _proximityLimitCircleCollider2D;
         private HealthComponent _healthComponent;
+        private WaitForSeconds _waitForDiedAnimationEnd;
         private int _experienceReward;
         private float _contactDamage;
         private float _nextContactDamageTime;
@@ -68,12 +69,16 @@ namespace Character.Enemy
             
             _proximityLimitCircleCollider2D = GetComponent<CircleCollider2D>();
             SetProximityLimitRadius(proximityLimitRadius);
+            
+            const string stateName = "Death";
+            var length = AnimationExtension.GetAnimClipLength(animator, stateName);
+            _waitForDiedAnimationEnd = new WaitForSeconds(length);
         }
-
-        // TODO: OnEnable, OnDestroy, OnDisable protected | virtual로 만들기
         
         private void OnEnable()
         {
+            OnAttackAction += Attack;
+            OnDeathAction += Death;
             _healthComponent?.ResetHealth();
             _nextContactDamageTime = 0f;
             _enemyManager ??= EnemyManager.Instance;
@@ -90,6 +95,8 @@ namespace Character.Enemy
 
         private void OnDisable()
         {
+            OnAttackAction -= Attack;
+            OnDeathAction -= Death;
             _enemyManager?.Unregister(this);
         }
 
@@ -138,6 +145,7 @@ namespace Character.Enemy
         public void TakeDamage(float amount)
         {
             _healthComponent?.TakeDamage(amount);
+            animator.SetTrigger(AnimatorParamToHash.TakeDamage);
             DamageTextManager.Instance?.ShowDamageText(transform.position, amount.ToString(CultureInfo.InvariantCulture));
         }
 
@@ -152,24 +160,35 @@ namespace Character.Enemy
             _healthComponent.Died += OnDeath;
         }
 
-        protected void TryDamagePlayer(PlayerCharacter playerCharacter)
+        private void TryDamagePlayer(PlayerCharacter playerCharacter)
         {
             if (Time.time < _nextContactDamageTime) return;
             
             Target = playerCharacter;
             
-            OnAttackAction?.Invoke();
+            var stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+            if (stateInfo.IsName("Attack")) return;
             
-            // Animation Event를 사용하면 아래의 로직은 삭제
-            playerCharacter.TakeDamage(_contactDamage);
-            _nextContactDamageTime = Time.time + contactDamageInterval;
+            // 애니메이션 클립에 Animation Event에 등록된 DamageToTarget이 실행되면서
+            // OnAttackAction에 등록된 함수들이 실행됨
+            OnAttackAction?.Invoke();
         }
-
+        
         // Animation Event 구독용
         public void DamageToTarget()
         {
-            Target.TakeDamage(_contactDamage);
+            Target?.TakeDamage(_contactDamage);
             _nextContactDamageTime = Time.time + contactDamageInterval;
+        }
+
+        protected virtual void Attack()
+        {
+            animator.SetTrigger(AnimatorParamToHash.EnemyAttack);
+        }
+
+        protected virtual void Death()
+        {
+            animator.SetTrigger(AnimatorParamToHash.Died);
         }
 
         protected override void OnDeath()
@@ -180,16 +199,24 @@ namespace Character.Enemy
             
             GameManager.Instance?.RegisterKill();
             _enemyManager?.SpawnExperience(transform.position, _experienceReward);
+
+            StartCoroutine(WaitForDiedAnimationEnd());
+        }
+
+        private IEnumerator WaitForDiedAnimationEnd()
+        {
+            yield return _waitForDiedAnimationEnd;
+            
             if (_releaseToPool != null)
             {
                 _releaseToPool.Invoke(this);
-                return;
+                yield break;
             }
 
             Destroy(gameObject);
         }
-        
-        protected void SetProximityLimitRadius(float radius)
+
+        private void SetProximityLimitRadius(float radius)
         {
             _proximityLimitCircleCollider2D.radius = radius;
         }

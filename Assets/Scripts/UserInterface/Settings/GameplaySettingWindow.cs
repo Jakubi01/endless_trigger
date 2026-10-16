@@ -1,6 +1,4 @@
-﻿using System;
-using Managers;
-using TMPro;
+﻿using Managers;
 using UnityEngine;
 using UnityEngine.UI;
 

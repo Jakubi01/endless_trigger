@@ -112,6 +112,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Components.HealthComponent
   maxHealth: 100
+  hitClip: {fileID: 0}
+  healClip: {fileID: 0}
+  deathClip: {fileID: 0}
 --- !u!61 &1438945070651687160
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -220,11 +223,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Character.Enemy.RusherCharacter
   deathSound: {fileID: 0}
-  enemyType: 1
   attackRadius: 1
-  contactDamage: 10
-  experienceReward: 5
-  contactDamageInterval: 0.5
+  contactDamageInterval: 1
   proximityLimitRadius: 0.3
 --- !u!114 &3218862400052233461
 MonoBehaviour:

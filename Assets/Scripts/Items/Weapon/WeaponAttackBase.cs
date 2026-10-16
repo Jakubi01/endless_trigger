@@ -1,4 +1,3 @@
-using System.Linq.Expressions;
 using Character;
 using Character.Enemy;
 using Items.ProjectileManager;
@@ -24,7 +23,7 @@ namespace Items.Weapon
         protected Animator OwnerAnimator;
 
         protected float Damage => damage;
-        public float CurrentFireInterval => Mathf.Max(0.1f, (baseFireInterval + cooldown) / _attackSpeedMultiplier);
+        private float CurrentFireInterval => Mathf.Max(0.1f, (baseFireInterval + cooldown) / _attackSpeedMultiplier);
         public float RemainingCooldown => _isFiringEnabled ? Mathf.Max(0f, CurrentFireInterval - _timer) : 0f;
         public float CooldownProgress => CurrentFireInterval <= 0f ? 0f : Mathf.Clamp01(RemainingCooldown / CurrentFireInterval);
 

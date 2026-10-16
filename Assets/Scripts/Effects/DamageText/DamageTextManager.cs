@@ -63,7 +63,7 @@ namespace Effects.DamageText
             spawnPos.z = 0f;
             textObj.transform.position = spawnPos;
 
-            FloatingText floatingText = textObj.GetComponent<FloatingText>();
+            if (!textObj.TryGetComponent(out FloatingText floatingText)) return;
             Color textColor = isPlayer ? Color.red : Color.yellow;
 
             floatingText.Setup(damageAmount, textColor, _pool);

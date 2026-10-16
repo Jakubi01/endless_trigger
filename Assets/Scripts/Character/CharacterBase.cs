@@ -1,4 +1,3 @@
-using System;
 using Managers;
 using UnityEngine;
 
@@ -13,40 +12,38 @@ namespace Character
         [SerializeField] private AudioClip deathSound;
         private static float _lastDeathSoundTime;
         private const float BaseMoveSpeed = 5f;
-        
-        protected Rigidbody2D Rb;
-        protected BoxCollider2D Col;
 
-        [NonSerialized] protected float MoveSpeed;
+        private BoxCollider2D _col;
+        private SpriteRenderer _characterSprite;
+        private float _moveSpeed;
+
         protected Vector2 MoveInput;
-        protected Animator animator;
-        protected SpriteRenderer characterSprite;
 
-        [NonSerialized] public float moveSpeedMultiplier = 1f;
-        public Rigidbody2D CharacterRigidbody => Rb;
-        public Collider2D CharacterCollider => Col;
+        public float MoveSpeedMultiplier { get; set; }
+        public Animator animator;
+        public Rigidbody2D CharacterRigidbody { get; private set; }
 
         protected virtual void Awake()
         {
-            Rb = GetComponent<Rigidbody2D>();
-            Rb.bodyType = RigidbodyType2D.Dynamic;
-            Rb.constraints = RigidbodyConstraints2D.FreezeRotation;
-            Rb.interpolation = RigidbodyInterpolation2D.Interpolate;
-            Rb.gravityScale = 0f;
+            CharacterRigidbody = GetComponent<Rigidbody2D>();
+            CharacterRigidbody.bodyType = RigidbodyType2D.Dynamic;
+            CharacterRigidbody.constraints = RigidbodyConstraints2D.FreezeRotation;
+            CharacterRigidbody.interpolation = RigidbodyInterpolation2D.Interpolate;
+            CharacterRigidbody.gravityScale = 0f;
             
-            Col = GetComponent<BoxCollider2D>();
-            Col.isTrigger = true;
+            _col = GetComponent<BoxCollider2D>();
+            _col.isTrigger = true;
             
-            MoveSpeed = BaseMoveSpeed;
+            _moveSpeed = BaseMoveSpeed;
             
-            characterSprite = GetComponent<SpriteRenderer>();
+            _characterSprite = GetComponent<SpriteRenderer>();
             
             animator = GetComponent<Animator>();
         }
-        
-        public virtual void SetMoveSpeed(float value) { MoveSpeed = value; }
 
-        public virtual void Move(Vector2 direction)
+        protected virtual void SetMoveSpeed(float value) { _moveSpeed = value; }
+
+        protected virtual void Move(Vector2 direction)
         {
             MoveInput = direction;
             
@@ -55,29 +52,29 @@ namespace Character
                 direction.Normalize();
             }
             
-            if (characterSprite && Mathf.Abs(direction.x) > 0.01f)
+            if (_characterSprite && Mathf.Abs(direction.x) > 0.01f)
             {
-                characterSprite.flipX = direction.x < 0;
+                _characterSprite.flipX = direction.x < 0;
             }
 
-            Rb.MovePosition(Rb.position + direction * (MoveSpeed * moveSpeedMultiplier * Time.fixedDeltaTime));
+            CharacterRigidbody.MovePosition(CharacterRigidbody.position + direction * (_moveSpeed * MoveSpeedMultiplier * Time.fixedDeltaTime));
         }
 
-        public virtual void MoveToward(Vector2 worldPosition)
+        protected void MoveToward(Vector2 worldPosition)
         {
-            Vector2 direction = (worldPosition - Rb.position).normalized;
+            Vector2 direction = (worldPosition - CharacterRigidbody.position).normalized;
             Move(direction);
         }
 
         protected virtual void OnDeath()
         {
-            Rb.linearVelocity = Vector2.zero;
+            CharacterRigidbody.linearVelocity = Vector2.zero;
             // _animator.SetBool(AnimatorParamToHash.Death, true);
             
             PlayDeathSound();
         }
-        
-        protected void PlayDeathSound()
+
+        private void PlayDeathSound()
         {
             if (Time.time - _lastDeathSoundTime < 0.05f || !deathSound) 
                 return; 

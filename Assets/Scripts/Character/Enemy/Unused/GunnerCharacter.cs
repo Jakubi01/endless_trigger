@@ -1,7 +1,7 @@
 ﻿using Items.ProjectileManager;
 using UnityEngine;
 
-namespace Character.Enemy
+namespace Character.Enemy.Unused
 {
     [RequireComponent(typeof(ProjectilePoolManager))]
     public class GunnerCharacter : EnemyCharacterBase
@@ -20,18 +20,6 @@ namespace Character.Enemy
             base.Awake();
             
             _projectilePoolManager = GetComponent<ProjectilePoolManager>();
-        }
-
-        private void OnEnable()
-        {
-            OnAttackAction += OnAttack;
-            OnDeathAction += OnDeath;
-        }
-
-        private void OnDisable()
-        {
-            OnAttackAction -= OnAttack;
-            OnDeathAction -= OnDeath;
         }
 
         private void OnAttack()
@@ -62,7 +50,7 @@ namespace Character.Enemy
             }
         }
 
-        protected override void OnDeath()
+        protected override void Death()
         {
             
         }
