@@ -41,13 +41,7 @@ namespace Items.Weapon
             if (!owner) return;
             
             GameObject nearest = owner.FindNearestFromCharacter(targetRange);
-            if (!nearest.TryGetComponent(out EnemyCharacterBase enemyCharacterBase))
-            {
-                CurrentTarget = null;
-                return;
-            }
-            
-            CurrentTarget = nearest ? enemyCharacterBase : null;
+            CurrentTarget = nearest ? nearest.GetComponent<EnemyCharacterBase>() : null;
         }
 
         public override void ApplyRandomUpgrade()

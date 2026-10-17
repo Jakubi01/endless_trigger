@@ -35,6 +35,7 @@ namespace Character
             _col.isTrigger = true;
             
             _moveSpeed = BaseMoveSpeed;
+            MoveSpeedMultiplier = 1f;
             
             _characterSprite = GetComponent<SpriteRenderer>();
             
