@@ -1,3 +1,4 @@
+using System;
 using Managers;
 using UnityEngine;
 
@@ -8,8 +9,10 @@ namespace Character
     [RequireComponent(typeof(Animator))]
     public class CharacterBase : MonoBehaviour
     {
-        [Header("Events")]
-        [SerializeField] private AudioClip deathSound;
+        [Header("Audio")] 
+        [SerializeField] protected AudioClip hitSound;
+        [SerializeField] protected AudioClip damageSound;
+        [SerializeField] protected AudioClip deathSound;
         private static float _lastDeathSoundTime;
         private const float BaseMoveSpeed = 5f;
 
@@ -18,9 +21,10 @@ namespace Character
         private float _moveSpeed;
 
         protected Vector2 MoveInput;
+        protected SoundManager soundManager;
 
         public float MoveSpeedMultiplier { get; set; }
-        public Animator animator;
+        protected Animator animator;
         public Rigidbody2D CharacterRigidbody { get; private set; }
 
         protected virtual void Awake()
@@ -40,6 +44,8 @@ namespace Character
             _characterSprite = GetComponent<SpriteRenderer>();
             
             animator = GetComponent<Animator>();
+            
+            soundManager = SoundManager.Instance;
         }
 
         protected virtual void SetMoveSpeed(float value) { _moveSpeed = value; }

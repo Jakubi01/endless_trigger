@@ -493,7 +493,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ca34a9f0c5e4c2b93dd03c95d53212c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Character.Player.PlayerCharacter
-  deathSound: {fileID: 0}
+  hitSound: {fileID: 0}
+  damageSound: {fileID: 8300000, guid: c189713ccdd60ec4fbfd4038ff399f5a, type: 3}
+  deathSound: {fileID: 8300000, guid: 3fe87470dd423c94289a4e70c37f60e3, type: 3}
   baseMoveSpeed: 5
   upgradeDefinitions:
   - {fileID: 11400000, guid: dc4cb9944dbedd3419fe0045a8dbb9f9, type: 2}
@@ -525,6 +527,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Components.HealthComponent
   maxHealth: 500
+  hitClip: {fileID: 0}
+  healClip: {fileID: 0}
+  deathClip: {fileID: 0}
 --- !u!114 &8284455876908917826
 MonoBehaviour:
   m_ObjectHideFlags: 0

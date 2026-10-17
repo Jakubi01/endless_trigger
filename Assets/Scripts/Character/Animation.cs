@@ -6,6 +6,11 @@ namespace Character
     {
         public static float GetAnimClipLength(Animator animator, string animationName)
         {
+            if (!animator || !animator.runtimeAnimatorController) 
+            {
+                return 0f;
+            }
+            
             foreach (var clip in animator.runtimeAnimatorController.animationClips)
             {
                 if (clip.name == animationName)

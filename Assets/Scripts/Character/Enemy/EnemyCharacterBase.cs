@@ -35,14 +35,6 @@ namespace Character.Enemy
         private int _experienceReward;
         private float _contactDamage;
         private float _nextContactDamageTime;
-
-        // 현재 구조는 AttackAction에 event를 구독시켜 Animation을 재생하는 방식인데,
-        // 더 나은 방법은 Animation Event에 public void Foo()를 등록해서 
-        // TryDamagePlayer => PlayAttackAnim() 실행
-        // Foo => 데미지 처리
-        // 이 구조가 훨씬 깔끔함
-        // 대신 이 프로젝트에는 각 유닛마다 고유의 공격 애니메이션이 없음..
-        // -> 공격 애니메이션을 기획이나 아트에서 만들어줘야 하는데 . . .
         
         // Register attack motions and logic for all enemy units in this event
         public event Action OnAttackAction;
@@ -70,8 +62,15 @@ namespace Character.Enemy
             _proximityLimitCircleCollider2D = GetComponent<CircleCollider2D>();
             SetProximityLimitRadius(proximityLimitRadius);
             
-            const string stateName = "Death";
-            var length = AnimationExtension.GetAnimClipLength(animator, stateName);
+            const string clipName = "Death";
+            var length = AnimationExtension.GetAnimClipLength(animator, clipName);
+
+            if (length <= 0f)
+            {
+                Debug.LogWarning($"{gameObject.name}: {clipName} 애니메이션 클립을 찾지 못해 기본값(1초)을 할당합니다.");
+                length = 1.5f;
+            }
+
             _waitForDiedAnimationEnd = new WaitForSeconds(length);
         }
         
@@ -144,6 +143,9 @@ namespace Character.Enemy
 
         public void TakeDamage(float amount)
         {
+            if(damageSound)
+                soundManager.PlaySfx(damageSound);
+            
             _healthComponent?.TakeDamage(amount);
             animator.SetTrigger(AnimatorParamToHash.TakeDamage);
             DamageTextManager.Instance?.ShowDamageText(transform.position, amount.ToString(CultureInfo.InvariantCulture));
@@ -175,8 +177,11 @@ namespace Character.Enemy
         }
         
         // Animation Event 구독용
-        public void DamageToTarget()
+        protected void DamageToTarget()
         {
+            if(damageSound)
+                soundManager.PlaySfx(damageSound);
+            
             Target?.TakeDamage(_contactDamage);
             _nextContactDamageTime = Time.time + contactDamageInterval;
         }
@@ -188,6 +193,9 @@ namespace Character.Enemy
 
         protected virtual void Death()
         {
+            if(deathSound)
+                soundManager.PlaySfx(deathSound);
+                
             animator.SetTrigger(AnimatorParamToHash.Died);
         }
 

@@ -222,7 +222,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9582b0bb499c49eabe77be503ac9c0d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Character.Enemy.TankerCharacter
-  deathSound: {fileID: 0}
+  hitSound: {fileID: 8300000, guid: be6cc099806229d4495d35d26646cf99, type: 3}
+  damageSound: {fileID: 8300000, guid: 27f9c5c697e641f448f697eacbb8df3f, type: 3}
+  deathSound: {fileID: 8300000, guid: 95f0e596d55f86c48a47bee82897e359, type: 3}
   attackRadius: 3
   contactDamageInterval: 3
   proximityLimitRadius: 1

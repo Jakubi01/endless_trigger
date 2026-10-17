@@ -184,7 +184,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd79282aceb34fceae88fcbb734a23b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Character.Enemy.ZombieCharacter
-  deathSound: {fileID: 0}
+  hitSound: {fileID: 8300000, guid: a00092f9cdf6182479a214066963030d, type: 3}
+  damageSound: {fileID: 8300000, guid: 2537c260d00ad104a9fdb4bcd4e2feae, type: 3}
+  deathSound: {fileID: 8300000, guid: d1873e6c7e4f31841a76a451d3163e96, type: 3}
   attackRadius: 1.6
   contactDamageInterval: 2
   proximityLimitRadius: 0.4

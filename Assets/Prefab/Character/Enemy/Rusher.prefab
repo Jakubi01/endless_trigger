@@ -222,7 +222,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47cea054f9244da99d7095b900d93083, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Character.Enemy.RusherCharacter
-  deathSound: {fileID: 0}
+  hitSound: {fileID: 8300000, guid: 1a8b611ee039dce40b0e1349d8465121, type: 3}
+  damageSound: {fileID: 8300000, guid: 72d75c4339be6be41a980fa9548b3012, type: 3}
+  deathSound: {fileID: 8300000, guid: 0f22a0ef6c8f1d741b1c3ed312ca6e85, type: 3}
   attackRadius: 1
   contactDamageInterval: 1
   proximityLimitRadius: 0.3

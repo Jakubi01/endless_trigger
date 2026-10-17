@@ -10,11 +10,6 @@ namespace Components
         [SerializeField] private float maxHealth = 100f;
         private float _currentHealth;
 
-        [Header("Audio")] 
-        [SerializeField] private AudioClip hitClip;
-        [SerializeField] private AudioClip healClip;
-        [SerializeField] private AudioClip deathClip;
-
         private SoundManager _soundManager;
         
         public event Action Died;
@@ -62,11 +57,6 @@ namespace Components
         public void Heal(float amount)
         {
             if (amount <= 0f || _currentHealth <= 0f) return;
-
-            if (healClip)
-            {
-                _soundManager.PlaySfx(healClip);
-            }
             
             _currentHealth = Mathf.Min(maxHealth, _currentHealth + amount);
             HealthChanged?.Invoke();
@@ -80,13 +70,7 @@ namespace Components
             HealthChanged?.Invoke();
             Damaged?.Invoke(amount);
 
-            if (hitClip)
-                _soundManager.PlaySfx(hitClip);
-
             if (!(_currentHealth <= 0f)) return;
-            
-            if(deathClip)
-                _soundManager.PlaySfx(deathClip);
                     
             Died?.Invoke();
         }
