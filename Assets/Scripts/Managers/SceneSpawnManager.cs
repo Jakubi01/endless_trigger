@@ -20,7 +20,6 @@ namespace Managers
         private PlayerCharacter _player;
         private CinemachineCamera _cineMachineCamera;
         private GameHUD _gameHUD;
-        private Canvas _mainCanvas;
 
         private void Start()
         {
@@ -30,8 +29,8 @@ namespace Managers
             ConfigureCamera();
             SpawnGameHUD();
             SpawnDamageTextManager();
-            _mainCanvas = FindFirstObjectByType<Canvas>();
-            UIManager.Instance.SetMainCanvas(_mainCanvas);
+            var mainCanvas = FindFirstObjectByType<Canvas>();
+            UIManager.Instance.SetMainCanvas(mainCanvas);
         }
 
         private void SpawnPlayer()
@@ -77,7 +76,7 @@ namespace Managers
         {
             if (!_player || !_cineMachineCamera) return;
 
-            if (Camera.main != null && Camera.main.TryGetComponent(out CinemachineBrain cinemachineBrain))
+            if (Camera.main && Camera.main.TryGetComponent(out CinemachineBrain cinemachineBrain))
             {
                 cinemachineBrain.UpdateMethod = CinemachineBrain.UpdateMethods.FixedUpdate;
             }

@@ -9,22 +9,31 @@ namespace UserInterface.Utilities
     {
         public void OnPointerClick(PointerEventData eventData)
         {
+            StopAllCoroutines();
             StartCoroutine(TrackBlockerDestroy());
         }
 
         private IEnumerator TrackBlockerDestroy()
         {
             yield return null;
-            
-            var blocker = transform.root.Find("Blocker");
-            if (!blocker)
+
+            Transform blocker = null;
+            const float timeout = 2.0f;
+            var timer = 0f;
+
+            while (!blocker && timer < timeout)
             {
-                Debug.LogWarning("Blocker not found");
-                yield break;
+                blocker = transform.root.Find("Blocker");
+                timer += Time.unscaledDeltaTime;
+                yield return null;
             }
 
-            while (blocker)
+            if (!blocker) yield break;
+            
+            timer = 0f;
+            while (blocker && timer < timeout)
             {
+                timer += Time.unscaledDeltaTime;
                 yield return null;
             }
 
@@ -33,10 +42,10 @@ namespace UserInterface.Utilities
         
         private void OnDropdownClose()
         {
-            StartCoroutine(ClearFocusNextFrame());
+            StartCoroutine(ClearFocusNextField());
         }
 
-        private IEnumerator ClearFocusNextFrame()
+        private IEnumerator ClearFocusNextField()
         {
             yield return null;
         

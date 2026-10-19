@@ -1,10 +1,7 @@
 ﻿TODO List
 
 Audio
-- (완) Title, Game Scene Background music 삽입
-- 플레이어 캐릭터 hit, damage, death   => (찾는중)
-- 플레이어 스킬 사운드                  => (찾는중)
-- 적 캐릭터 hit, damage, death 사운드  => (찾는중)  
+- 플레이어 스킬 사운드 => (찾는중)
 
 Interaction
 - 타이틀씬에 Title을 텍스트로 바꾸고 애니메이션화    => 폰트 찾는중

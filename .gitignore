@@ -107,3 +107,7 @@ InitTestScene*.unity*
 
 # auto commit bat
 auto_commit.bat
+
+# todo list
+/[Aa]ssets/Scripts/TODO.txt
+/[Aa]ssets/Scripts/TODO.txt.meta
