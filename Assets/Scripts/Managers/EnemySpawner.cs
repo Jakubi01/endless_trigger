@@ -112,6 +112,8 @@ namespace Managers
 
         private void Update()
         {
+            if (!Player) return;
+            
             _elapsedTime += Time.deltaTime;
             
             // 웨이브가 끝났는지 체크 및 갱신

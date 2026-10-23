@@ -26,6 +26,8 @@ namespace Managers
 
         private void FixedUpdate()
         {
+            if (!Player) return;
+            
             Vector2 targetPosition = Player.CharacterRigidbody
                 ? Player.CharacterRigidbody.position
                 : Player.transform.position;

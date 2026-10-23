@@ -46,7 +46,7 @@ namespace UserInterface.Utilities
 
         private IEnumerator AnimateCharacters()
         {
-            if (!targetText) yield break;
+            if (!targetText) yield break; 
 
             if(_button)
                 _button.interactable = false;

@@ -20,12 +20,11 @@ namespace Managers
         private PlayerCharacter _player;
         private CinemachineCamera _cineMachineCamera;
         private GameHUD _gameHUD;
-
-        private void Start()
+        
+        public void StartScene() 
         {
             GameManager.Instance?.BeginRun();
             SpawnPlayer();
-            SpawnCamera();
             ConfigureCamera();
             SpawnGameHUD();
             SpawnDamageTextManager();
@@ -45,7 +44,7 @@ namespace Managers
             _player = Instantiate(playerPrefab, spawnPosition, Quaternion.identity);
         }
 
-        private void SpawnCamera()
+        public void SpawnCamera()
         {
             if (!cineMachineCameraPrefab)
             {
