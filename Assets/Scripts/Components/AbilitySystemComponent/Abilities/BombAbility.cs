@@ -3,7 +3,7 @@ using Character.Enemy;
 using Items.Weapon;
 using UnityEngine;
 
-namespace Components.AbilitySystem.Abilities
+namespace Components.AbilitySystemComponent.Abilities
 {
     [CreateAssetMenu(fileName = "Bomb Ability", menuName = "Endless Trigger/Abilities/Bomb Ability")]
     public class BombAbility : AbilityBase

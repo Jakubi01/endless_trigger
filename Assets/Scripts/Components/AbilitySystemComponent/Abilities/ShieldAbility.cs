@@ -2,7 +2,7 @@
 using Items.Weapon;
 using UnityEngine;
 
-namespace Components.AbilitySystem.Abilities
+namespace Components.AbilitySystemComponent.Abilities
 {
     [CreateAssetMenu(fileName = "Shield Ability", menuName = "Endless Trigger/Abilities/Shield Ability")]
     public class ShieldAbility : AbilityBase

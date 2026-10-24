@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
-using Character;
 using Items.ProjectileManager;
 using Items.Weapon;
 using Managers;
 using UnityEngine;
 
-namespace Components.AbilitySystem.Abilities
+namespace Components.AbilitySystemComponent.Abilities
 {
     [CreateAssetMenu(fileName = "Boomerang Ability", menuName = "Endless Trigger/Abilities/Boomerang Ability")]
     public class BoomerangAbility : AbilityBase

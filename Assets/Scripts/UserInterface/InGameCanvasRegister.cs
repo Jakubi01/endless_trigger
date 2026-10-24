@@ -7,7 +7,7 @@ namespace UserInterface
     {
         private void Start()
         {
-            if (UIManager.Instance == null) return;
+            if (!UIManager.Instance) return;
             
             Canvas myCanvas = GetComponent<Canvas>();
             UIManager.Instance.SetMainCanvas(myCanvas);

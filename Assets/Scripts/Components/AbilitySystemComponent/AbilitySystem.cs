@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Components.AbilitySystem.Abilities;
+using Components.AbilitySystemComponent.Abilities;
 using UnityEngine;
 
 /*
@@ -10,11 +10,12 @@ using UnityEngine;
  * -- 타이머에 따라 실행 -> ability
  */
 
-namespace Components.AbilitySystem
+namespace Components.AbilitySystemComponent
 {
     public class AbilitySystem : ComponentBase
     {
         public List<AbilityBase> Abilities { get; private set; }
+        public event System.Action<AbilityBase> OnAbilityAdded;
         
         protected override void Awake()
         {
@@ -45,6 +46,7 @@ namespace Components.AbilitySystem
             newAbility.hideFlags = HideFlags.DontSave;
             newAbility.Initialize(Owner);
             Abilities.Add(newAbility);
+            OnAbilityAdded?.Invoke(newAbility);
         }
         
         public bool TryGetAbility(AbilityType type, out AbilityBase ability)

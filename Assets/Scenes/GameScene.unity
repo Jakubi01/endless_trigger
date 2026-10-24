@@ -403238,8 +403238,8 @@ MonoBehaviour:
   spawnCountIncreasePerWave: 1
   minimumZombieRatio: 0.05
   maximumTankerRatio: 0.75
-  defaultPoolCapacity: 32
-  maxPoolSize: 256
+  defaultPoolCapacity: 64
+  maxPoolSize: 512
   prewarmCountPerEnemy: 8
 --- !u!1 &808167477
 GameObject:

@@ -1,5 +1,5 @@
-﻿using Components.AbilitySystem;
-using Components.AbilitySystem.Abilities;
+﻿using Components.AbilitySystemComponent.Abilities;
+using Components.AbilitySystemComponent;
 using UnityEngine;
 
 namespace Character.Player.Upgrade.Effects

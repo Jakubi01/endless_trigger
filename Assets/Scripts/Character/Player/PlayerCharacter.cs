@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using Components;
-using Components.AbilitySystem;
+using Components.AbilitySystemComponent;
 using Effects.DamageText;
 using Items.Weapon;
 using Managers;

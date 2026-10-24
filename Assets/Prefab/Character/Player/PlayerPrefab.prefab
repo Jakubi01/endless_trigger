@@ -146,6 +146,7 @@ GameObject:
   - component: {fileID: 8284455876908917826}
   - component: {fileID: 702156230923412395}
   - component: {fileID: 4009226983604993383}
+  - component: {fileID: -1541630286243665851}
   m_Layer: 6
   m_Name: PlayerPrefab
   m_TagString: Untagged
@@ -527,9 +528,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Components.HealthComponent
   maxHealth: 500
-  hitClip: {fileID: 0}
-  healClip: {fileID: 0}
-  deathClip: {fileID: 0}
 --- !u!114 &8284455876908917826
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -569,6 +567,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Components.HitEffect
   hitColor: {r: 1, g: 0, b: 0, a: 1}
+--- !u!114 &-1541630286243665851
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3916445856850801725}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3c489cee3834b83b858ee4daa119556, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Components.StatusComponent
+  coolTimePanel: {fileID: 3004542205154752473, guid: e5b00d426da14f644b91bf3e4c8d70a6, type: 3}
 --- !u!1 &5667776659969451183
 GameObject:
   m_ObjectHideFlags: 0
@@ -632,6 +643,7 @@ MonoBehaviour:
   baseFireInterval: 3
   damage: 10
   cooldown: 2
+  weaponImage: {fileID: 21300000, guid: 7854f2316f4dcd943a9a4b823ddd53c4, type: 3}
   owner: {fileID: 0}
   targetRange: 4
   muzzlePoint: {fileID: 3131273836581289883}
@@ -699,6 +711,7 @@ MonoBehaviour:
   baseFireInterval: 3
   damage: 40
   cooldown: 5
+  weaponImage: {fileID: 21300000, guid: ea3b42e54d2092a4487e5a2d2f15fde3, type: 3}
   owner: {fileID: 0}
   range: 20
   pierceCount: 1

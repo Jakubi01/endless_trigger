@@ -1,7 +1,10 @@
+using System;
 using Character;
 using Character.Enemy;
 using Items.ProjectileManager;
 using UnityEngine;
+using UnityEngine.UI;
+using UserInterface;
 
 namespace Items.Weapon
 {
@@ -12,10 +15,12 @@ namespace Items.Weapon
         [SerializeField] private float baseFireInterval = 3f;
         [SerializeField] private float damage;
         [SerializeField] private float cooldown;
+        [SerializeField] private Sprite weaponImage;
 
         private float _attackSpeedMultiplier = 1f;
         private float _timer;
         private bool _isFiringEnabled;
+        private CoolTimePanel _coolTimePanel;
 
         protected EnemyCharacterBase CurrentTarget;
         protected ProjectilePoolManager ProjectileManager;
@@ -27,6 +32,15 @@ namespace Items.Weapon
         public float RemainingCooldown => _isFiringEnabled ? Mathf.Max(0f, CurrentFireInterval - _timer) : 0f;
         public float CooldownProgress => CurrentFireInterval <= 0f ? 0f : Mathf.Clamp01(RemainingCooldown / CurrentFireInterval);
 
+        public void SetCoolTimePanel(CoolTimePanel panel)
+        {
+            _coolTimePanel = panel;
+            if (!_coolTimePanel) return;
+
+            _coolTimePanel.SetWeaponImage(weaponImage);
+            UpdateCoolTimePanel();
+        }
+        
         protected virtual void Awake()
         {
             ProjectileManager = GetComponent<ProjectilePoolManager>();
@@ -45,11 +59,13 @@ namespace Items.Weapon
 
             _isFiringEnabled = true;
             _timer = CurrentFireInterval;
+            UpdateCoolTimePanel();
         }
 
         public void StopFiring()
         {
             _isFiringEnabled = false;
+            UpdateCoolTimePanel();
         }
 
         protected virtual void Update()
@@ -58,18 +74,29 @@ namespace Items.Weapon
 
             _timer += Time.deltaTime;
             
+            UpdateCoolTimePanel();
+            
             if (_timer >= CurrentFireInterval)
             {
                 UpdateTarget();
                 if (!CurrentTarget) return;
                 
                 _timer = 0f;
+                UpdateCoolTimePanel();
                 Attack();
             }
         }
 
         protected abstract void Attack();
         protected abstract void UpdateTarget();
+
+        private void UpdateCoolTimePanel()
+        {
+            if (_coolTimePanel)
+            {
+                _coolTimePanel.SetCoolTimeText(RemainingCooldown);
+            }
+        }
 
         public virtual void ModifyAttackSpeed(float newMultiplier)
         {

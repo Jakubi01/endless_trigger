@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Components.AbilitySystem.Abilities.ShieldAbility
   baseExecuteInterval: 5
   abilityType: 1
+  abilityImage: {fileID: 21300000, guid: 8daddeb323196244fa8bcfd27b62c19d, type: 3}

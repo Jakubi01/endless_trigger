@@ -1,4 +1,4 @@
-﻿using Components.AbilitySystem;
+﻿using Components.AbilitySystemComponent;
 using UnityEngine;
 
 namespace Character.Player.Upgrade.Effects

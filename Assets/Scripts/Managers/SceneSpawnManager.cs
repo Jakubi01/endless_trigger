@@ -28,8 +28,6 @@ namespace Managers
             ConfigureCamera();
             SpawnGameHUD();
             SpawnDamageTextManager();
-            var mainCanvas = FindFirstObjectByType<Canvas>();
-            UIManager.Instance.SetMainCanvas(mainCanvas);
         }
 
         private void SpawnPlayer()
