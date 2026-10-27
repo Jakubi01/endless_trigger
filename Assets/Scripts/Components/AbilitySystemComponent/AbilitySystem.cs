@@ -2,7 +2,7 @@
 using Components.AbilitySystemComponent.Abilities;
 using UnityEngine;
 
-/*
+/* 
  * feature
  * - 각 능력을 보관, 실행
  * - 능력은 1회 실행하는 능력과, 매 프레임마다 타이머에 따라 실행되는 능력으로 구분됨

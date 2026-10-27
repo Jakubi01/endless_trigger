@@ -1,7 +1,4 @@
-﻿using System;
-using Character.Player;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine;
 using UserInterface;
 
 namespace Components.AbilitySystemComponent
@@ -21,13 +18,12 @@ namespace Components.AbilitySystemComponent.Abilities
         [SerializeField, Min(0.1f)] private float baseExecuteInterval = 3f;
         [SerializeField] private AbilityType abilityType;
         [SerializeField] private Sprite abilityImage;
-        
-        public float CurrentExecuteInterval => Mathf.Max(0.1f, baseExecuteInterval / _executeSpeedMultiplier);
-        public Sprite AbilityImage => abilityImage;
+
+        private float CurrentExecuteInterval => Mathf.Max(0.1f, baseExecuteInterval / _executeSpeedMultiplier);
+        private float RemainingCooldown => Mathf.Max(0f, CurrentExecuteInterval - _timer);
         public int Level { get; private set; } = 1;
         public AbilityType AbilityType => abilityType;
-        public event Action<float> OnUpdate; 
-        
+
         protected GameObject Owner;
         
         private float _executeSpeedMultiplier = 1f;
@@ -51,12 +47,12 @@ namespace Components.AbilitySystemComponent.Abilities
         
         public void UpdateTimer(float deltaTime)
         {
-            _timer = Mathf.Min(_timer + Mathf.Max(0f, deltaTime), CurrentExecuteInterval);
-            OnUpdate?.Invoke(_timer);
+            _timer += deltaTime;
+            
             UpdateCoolTimePanel();
         }
-        
-        public bool CanExecute()
+
+        private bool CanExecute()
         {
             return _timer >= CurrentExecuteInterval;
         }
@@ -82,7 +78,7 @@ namespace Components.AbilitySystemComponent.Abilities
         {
             if (_coolTimePanel)
             {
-                _coolTimePanel.SetCoolTimeText(Mathf.Max(0f, CurrentExecuteInterval - _timer));
+                _coolTimePanel.SetCoolTimeText(RemainingCooldown);
             }
         }
         

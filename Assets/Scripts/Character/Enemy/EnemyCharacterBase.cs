@@ -24,13 +24,16 @@ namespace Character.Enemy
         [SerializeField] private float attackRadius = 1f;
         [SerializeField] private float contactDamageInterval = 1f;
         [SerializeField] private float proximityLimitRadius = 1f;
+        
+        protected HealthComponent EnemyHealthComponent;
+
+        public float AttackRadius => attackRadius;
 
         private EnemyType _enemyType;
         private EnemyManager _enemyManager;
         private Action<EnemyCharacterBase> _releaseToPool;
         private BoxCollider2D _hitAreaBoxCollider2D;
         private CircleCollider2D _proximityLimitCircleCollider2D;
-        private HealthComponent _healthComponent;
         private WaitForSeconds _waitForDiedAnimationEnd;
         private int _experienceReward;
         private float _contactDamage;
@@ -44,7 +47,7 @@ namespace Character.Enemy
         
         protected PlayerCharacter Target { get; private set; }
 
-        public bool IsAlive => _healthComponent && _healthComponent.IsAlive;
+        public bool IsAlive => EnemyHealthComponent && EnemyHealthComponent.IsAlive;
 
         protected override void Awake()
         {
@@ -77,7 +80,7 @@ namespace Character.Enemy
         {
             OnAttackAction += Attack;
             OnDeathAction += Death;
-            _healthComponent?.ResetHealth();
+            EnemyHealthComponent?.ResetHealth();
             _nextContactDamageTime = 0f;
             _enemyManager ??= EnemyManager.Instance;
             _enemyManager?.Register(this);
@@ -85,9 +88,9 @@ namespace Character.Enemy
 
         private void OnDestroy()
         {
-            if (_healthComponent)
+            if (EnemyHealthComponent)
             {
-                _healthComponent.Died -= OnDeath;
+                EnemyHealthComponent.Died -= OnDeath;
             }
         }
 
@@ -111,7 +114,7 @@ namespace Character.Enemy
             _contactDamage = damage;
             _experienceReward = expReward;
             SetMoveSpeed(moveSpeed);
-            _healthComponent.Initialize(hp);
+            EnemyHealthComponent.Initialize(hp);
         }
 
         private void FixedUpdate()
@@ -140,25 +143,25 @@ namespace Character.Enemy
             MoveToward(targetPosition);
         }
 
-        public void TakeDamage(float amount)
+        public virtual void TakeDamage(float amount)
         {
             if(damageSound)
                 soundManager.PlaySfx(damageSound);
             
-            _healthComponent?.TakeDamage(amount);
+            EnemyHealthComponent?.TakeDamage(amount);
             animator.SetTrigger(AnimatorParamToHash.TakeDamage);
             DamageTextManager.Instance?.ShowDamageText(transform.position, amount.ToString(CultureInfo.InvariantCulture));
         }
 
         private void InitializeHealthComponent()
         {
-            _healthComponent = GetComponent<HealthComponent>();
-            if (!_healthComponent)
+            EnemyHealthComponent = GetComponent<HealthComponent>();
+            if (!EnemyHealthComponent)
             {
-                _healthComponent = gameObject.AddComponent<HealthComponent>();
+                EnemyHealthComponent = gameObject.AddComponent<HealthComponent>();
             }
 
-            _healthComponent.Died += OnDeath;
+            EnemyHealthComponent.Died += OnDeath;
         }
 
         private void TryDamagePlayer(PlayerCharacter playerCharacter)

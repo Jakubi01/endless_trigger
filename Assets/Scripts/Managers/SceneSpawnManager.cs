@@ -17,10 +17,11 @@ namespace Managers
         [SerializeField] private bool disableSceneCameraTemplate = true;
         [SerializeField] private GameHUD gameHudPrefab;
 
-        private PlayerCharacter _player;
         private CinemachineCamera _cineMachineCamera;
         private GameHUD _gameHUD;
-        
+
+        public PlayerCharacter Player { get; private set; }
+
         public void StartScene() 
         {
             GameManager.Instance?.BeginRun();
@@ -39,7 +40,8 @@ namespace Managers
             }
 
             Vector3 spawnPosition = playerSpawnPoint ? playerSpawnPoint.position : Vector3.zero;
-            _player = Instantiate(playerPrefab, spawnPosition, Quaternion.identity);
+            Player = Instantiate(playerPrefab, spawnPosition, Quaternion.identity);
+            Player = Player;
         }
 
         public void SpawnCamera()
@@ -71,14 +73,14 @@ namespace Managers
 
         private void ConfigureCamera()
         {
-            if (!_player || !_cineMachineCamera) return;
+            if (!Player || !_cineMachineCamera) return;
 
             if (Camera.main && Camera.main.TryGetComponent(out CinemachineBrain cinemachineBrain))
             {
                 cinemachineBrain.UpdateMethod = CinemachineBrain.UpdateMethods.FixedUpdate;
             }
 
-            _cineMachineCamera.Target.TrackingTarget = _player.transform;
+            _cineMachineCamera.Target.TrackingTarget = Player.transform;
 
             if (_cineMachineCamera.TryGetComponent(out CinemachineConfiner2D confiner))
             {
@@ -114,7 +116,7 @@ namespace Managers
                 rectTransform.anchoredPosition = Vector2.zero;
             }
 
-            _gameHUD.Initialize(_player, FindFirstObjectByType<EnemySpawner>());
+            _gameHUD.Initialize(Player, FindFirstObjectByType<EnemySpawner>());
         }
     }
 }

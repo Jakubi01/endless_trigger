@@ -33,7 +33,7 @@ namespace Character.Player.Upgrade.Effects
                 return;
             }
             
-            WeaponAttackBase targetWeapon = 
+            var targetWeapon = 
                 player.EquippedWeapons.FirstOrDefault(
                     weapon => 
                         (target == PlayerWeaponTarget.Sword && weapon is SwordAttack) || 
