@@ -108,6 +108,13 @@ namespace Components
         private int _lastPattern;
         private EPhase _phase;
         private Vector2 _facing = Vector2.right;
+
+        private WaitForSeconds _pillarWaitForSeconds;
+        private WaitForSeconds _dashWaitForSeconds;
+        private WaitForSeconds _boneBusrtWaitForSeconds;
+        private WaitForSeconds _swingWaitForSeconds;
+        private WaitForSeconds _swordAuraSpinWaitForSeconds;
+        private WaitForSeconds _slashFrameWaitForSeconds;
         
         public bool IsExecutingPattern { get; private set; }
 
@@ -120,7 +127,19 @@ namespace Components
             EPhase.Phase2 => phase2DamageMultiplier,
             _ => 1f
         };
+        // new
 
+        protected override void Awake()
+        {
+            base.Awake();
+            
+            _pillarWaitForSeconds = new WaitForSeconds(pillarTelegraphTime);
+            _dashWaitForSeconds = new WaitForSeconds(dashTelegraphTime);
+            _boneBusrtWaitForSeconds = new WaitForSeconds(boneBurstInterval);
+            _swingWaitForSeconds = new WaitForSeconds(swingTelegraphTime);
+            _swordAuraSpinWaitForSeconds = new WaitForSeconds(swordAuraSpinInterval);
+        }
+        
         public void SetTarget(Transform target)
         {
             if (!target)
@@ -259,8 +278,11 @@ namespace Components
             GameObject hitFx, GameObject endFx, bool pierce)
         {
             var go = Instantiate(prefab, transform.position, AngleOf(dir));
-            go.GetComponent<Rigidbody2D>().linearVelocity = dir * speed;
-            go.GetComponent<BossProjectile>().Init(damage, pierce, lifetime, hitFx, endFx);
+            if(go.TryGetComponent<Rigidbody2D>(out var rb))
+                rb.linearVelocity = dir * speed;
+            
+            if(go.TryGetComponent<BossProjectile>(out var projectile))
+               projectile.Init(damage, pierce, lifetime, hitFx, endFx);
         }
 
         private void FireAura(Vector2 dir, float damage)
@@ -293,7 +315,7 @@ namespace Components
         private IEnumerator SwordAura()
         {
             // [Resource] 베기 애니메이션
-            yield return new WaitForSeconds(slashFrameDelay);
+            yield return _slashFrameWaitForSeconds;
             if (!_target) { ClearExecutingFlag(); yield break; }
 
             _facing = DirTo(_target.position);
@@ -311,7 +333,7 @@ namespace Components
                     for (var i = 0; i < swordAuraSpinCount; i++)
                     {
                         FireAura(Rotate(_facing, 360f / swordAuraSpinCount * i), swordAuraSpinDamage * Mult);
-                        yield return new WaitForSeconds(swordAuraSpinInterval);
+                        yield return _swordAuraSpinWaitForSeconds;
                     }
                     break;
             }
@@ -328,7 +350,7 @@ namespace Components
             // [Resource] 대검 휘두르기 애니메이션, 타격 SFX
             _facing = DirTo(_target.position);
             var fan = Instantiate(fanTelegraphPrefab, transform.position, AngleOf(_facing));
-            yield return new WaitForSeconds(swingTelegraphTime);
+            yield return _swingWaitForSeconds; 
             Destroy(fan);
 
             TryHitFan(swingRange, swingAngle, swingDamage * Mult);
@@ -348,7 +370,7 @@ namespace Components
 
             for (var b = 0; b < bursts; b++)
             {
-                if (b > 0) yield return new WaitForSeconds(boneBurstInterval);
+                if (b > 0) yield return _boneBusrtWaitForSeconds;
 
                 SpawnFx(boneBurstRingPrefab, transform.position, Quaternion.identity);
                 for (var i = 0; i < boneCount; i++)
@@ -374,7 +396,7 @@ namespace Components
 
             var line = Instantiate(dashLinePrefab, origin, rotation);
             var fan = Instantiate(fanTelegraphPrefab, origin + _facing * dashDistance, rotation);
-            yield return new WaitForSeconds(dashTelegraphTime);
+            yield return _dashWaitForSeconds;
             Destroy(line);
             Destroy(fan);
 
@@ -416,7 +438,7 @@ namespace Components
                 telegraphs[i] = Instantiate(pillarTelegraphPrefab, positions[i], Quaternion.identity);
             }
 
-            yield return new WaitForSeconds(pillarTelegraphTime);
+            yield return _pillarWaitForSeconds;
 
             var hit = false;
             for (var i = 0; i < pillarCount; i++)
