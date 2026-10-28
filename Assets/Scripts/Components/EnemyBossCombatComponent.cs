@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Character;
 using Character.Player;
 using Items.Weapon;
 using UnityEngine;
@@ -102,6 +103,7 @@ namespace Components
         [SerializeField] private float pillarDamage = 50f;
 
         private Transform _target;
+        private Animator _animator;
         private readonly float[] _nextTime = new float[6]; // 인덱스 = 패턴 번호
         private float _restUntil;
         private float _pairRestUntil;
@@ -111,7 +113,7 @@ namespace Components
 
         private WaitForSeconds _pillarWaitForSeconds;
         private WaitForSeconds _dashWaitForSeconds;
-        private WaitForSeconds _boneBusrtWaitForSeconds;
+        private WaitForSeconds _boneBurstWaitForSeconds;
         private WaitForSeconds _swingWaitForSeconds;
         private WaitForSeconds _swordAuraSpinWaitForSeconds;
         private WaitForSeconds _slashFrameWaitForSeconds;
@@ -132,10 +134,12 @@ namespace Components
         protected override void Awake()
         {
             base.Awake();
+
+            _animator = GetComponent<Animator>();
             
             _pillarWaitForSeconds = new WaitForSeconds(pillarTelegraphTime);
             _dashWaitForSeconds = new WaitForSeconds(dashTelegraphTime);
-            _boneBusrtWaitForSeconds = new WaitForSeconds(boneBurstInterval);
+            _boneBurstWaitForSeconds = new WaitForSeconds(boneBurstInterval);
             _swingWaitForSeconds = new WaitForSeconds(swingTelegraphTime);
             _swordAuraSpinWaitForSeconds = new WaitForSeconds(swordAuraSpinInterval);
         }
@@ -314,6 +318,9 @@ namespace Components
          */
         private IEnumerator SwordAura()
         {
+            if (_animator)
+                _animator.SetTrigger(AnimatorParamToHash.EnemyAttack);
+            
             // [Resource] 베기 애니메이션
             yield return _slashFrameWaitForSeconds;
             if (!_target) { ClearExecutingFlag(); yield break; }
@@ -347,6 +354,9 @@ namespace Components
          */
         private IEnumerator SwingGreatSword()
         {
+            if (_animator)
+                _animator.SetTrigger(AnimatorParamToHash.EnemyAttack);
+            
             // [Resource] 대검 휘두르기 애니메이션, 타격 SFX
             _facing = DirTo(_target.position);
             var fan = Instantiate(fanTelegraphPrefab, transform.position, AngleOf(_facing));
@@ -364,13 +374,16 @@ namespace Components
          */
         private IEnumerator BoneExplosion()
         {
+            if (_animator)
+                _animator.SetTrigger(AnimatorParamToHash.SpecialAttack);
+            
             // [Resource] 뼈 폭발 시전 애니메이션/SFX
             var bursts = _phase == EPhase.Phase3 ? 2 : 1;
             var step = 360f / boneCount;
 
             for (var b = 0; b < bursts; b++)
             {
-                if (b > 0) yield return _boneBusrtWaitForSeconds;
+                if (b > 0) yield return _boneBurstWaitForSeconds;
 
                 SpawnFx(boneBurstRingPrefab, transform.position, Quaternion.identity);
                 for (var i = 0; i < boneCount; i++)
@@ -399,6 +412,9 @@ namespace Components
             yield return _dashWaitForSeconds;
             Destroy(line);
             Destroy(fan);
+            
+            if (_animator)
+                _animator.SetTrigger(AnimatorParamToHash.EnemyAttack);
 
             // [Resource] 돌진 애니메이션, 돌진/베기 SFX
             // 주의: Rigidbody2D(Dynamic)를 쓰면 transform 직접 이동과 충돌하므로 Kinematic으로 두거나 MovePosition으로 교체 필요
@@ -428,6 +444,9 @@ namespace Components
          */
         private IEnumerator SoulPillar()
         {
+            if (_animator)
+                _animator.SetTrigger(AnimatorParamToHash.SpecialAttack);
+            
             // [Resource] 시전 애니메이션, 기둥 솟는 SFX
             var positions = new Vector2[pillarCount];
             var telegraphs = new GameObject[pillarCount];

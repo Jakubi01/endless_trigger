@@ -37,6 +37,7 @@ namespace Character
         public static readonly int Move;
         public static readonly int EnemyAttack;
         public static readonly int TakeDamage;
+        public static readonly int SpecialAttack;
         public static readonly int Died;
 
         // Item
@@ -51,6 +52,7 @@ namespace Character
             Move = Animator.StringToHash("Move");
             EnemyAttack = Animator.StringToHash("EnemyAttack");
             TakeDamage = Animator.StringToHash("TakeDamage");
+            SpecialAttack = Animator.StringToHash("SpecialAttack");
             Died = Animator.StringToHash("Died");
             
             Execute = Animator.StringToHash("Execute");

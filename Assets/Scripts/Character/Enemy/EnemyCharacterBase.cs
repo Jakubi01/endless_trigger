@@ -13,7 +13,8 @@ namespace Character.Enemy
     {
         Zombie,
         Rusher,
-        Tanker
+        Tanker,
+        Boss
     }
 
     [RequireComponent(typeof(HealthComponent))]

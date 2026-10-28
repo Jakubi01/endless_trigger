@@ -1,3 +1,6 @@
+#define ENDLESS_DEBUG
+
+using System.Collections;
 using System.Collections.Generic;
 using Character.Enemy;
 using Character.Player;
@@ -110,8 +113,20 @@ namespace Managers
             _prewarmBuffer.Clear();
         }
 
+#if ENDLESS_DEBUG
+        private IEnumerator Start()
+        {
+            yield return new WaitForSeconds(2f);
+
+            SpawnBoss();
+        }
+#endif        
+
         private void Update()
         {
+#if ENDLESS_DEBUG
+            return;
+#endif
             if (!Player) return;
             
             _elapsedTime += Time.deltaTime;
@@ -372,6 +387,11 @@ namespace Managers
             
             // 플레이어의 현재 평면 위치에 방향 * 거리를 더해 최종 Vector3 월드 좌표 연산
             return _player.transform.position + (Vector3)(direction * distance);
+        }
+
+        private void SpawnBoss()
+        {
+            SpawnEnemy(EnemyType.Boss, 10f);
         }
     }
 }
