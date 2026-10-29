@@ -36,6 +36,8 @@ namespace Character.Enemy
         private BoxCollider2D _hitAreaBoxCollider2D;
         private CircleCollider2D _proximityLimitCircleCollider2D;
         private WaitForSeconds _waitForDiedAnimationEnd;
+        private SpriteRenderer _spriteRenderer;
+        private Color _initialColor;
         private int _experienceReward;
         private float _contactDamage;
         private float _nextContactDamageTime;
@@ -68,6 +70,10 @@ namespace Character.Enemy
             _proximityLimitCircleCollider2D = GetComponent<CircleCollider2D>();
             SetProximityLimitRadius(proximityLimitRadius);
             
+            _spriteRenderer = GetComponent<SpriteRenderer>();
+            _spriteRenderer.sortingLayerName = "Enemy";
+            _initialColor = _spriteRenderer.color;
+            
             const string clipName = "Death";
             var length = AnimationExtension.GetAnimClipLength(animator, clipName);
 
@@ -87,6 +93,10 @@ namespace Character.Enemy
             _nextContactDamageTime = 0f;
             _enemyManager ??= EnemyManager.Instance;
             _enemyManager?.Register(this);
+            animator.Rebind();
+            animator.Update(0f);
+            _spriteRenderer.color = _initialColor;
+            EnableColliders(true);
         }
 
         private void OnDestroy()
@@ -102,10 +112,12 @@ namespace Character.Enemy
             OnAttackAction -= Attack;
             OnDeathAction -= Death;
             _enemyManager?.Unregister(this);
+            Debug.Log($"{name} disabled\n{new System.Diagnostics.StackTrace()}", this);
         }
 
         private void OnTriggerStay2D(Collider2D other)
         {
+            if (!EnemyHealthComponent.IsAlive) return;
             if (!other.TryGetComponent(out PlayerCharacter player)) return;
             
             TryDamagePlayer(player);
@@ -118,6 +130,9 @@ namespace Character.Enemy
             _experienceReward = expReward;
             SetMoveSpeed(moveSpeed);
             EnemyHealthComponent.Initialize(hp);
+            var newColor = _spriteRenderer.color;
+            newColor.a = 1f;
+            _spriteRenderer.color = newColor;
         }
 
         private void FixedUpdate()
@@ -213,6 +228,8 @@ namespace Character.Enemy
             GameManager.Instance?.RegisterKill();
             _enemyManager?.SpawnExperience(transform.position, _experienceReward);
 
+            EnableColliders(false);
+
             StartCoroutine(WaitForDiedAnimationEnd());
         }
 
@@ -237,6 +254,19 @@ namespace Character.Enemy
         public void StartBuffCoroutine(IEnumerator applySpeedBuff)
         {
             StartCoroutine(applySpeedBuff);
+        }
+
+        private void EnableColliders(bool enable)
+        {
+            if (TryGetComponent(out CircleCollider2D col))
+            {
+                col.enabled = enable;
+            }
+
+            if (TryGetComponent(out BoxCollider2D box))
+            {
+                box.enabled = enable;
+            }
         }
     }
 }

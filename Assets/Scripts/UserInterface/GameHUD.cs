@@ -19,6 +19,9 @@ namespace UserInterface
         private PlayerCharacter _player;
         private HealthComponent _healthComponent;
         private PlayerLevelComponent _levelComponent;
+        private EnemySpawner _enemySpawner;
+        private int _lastTimerMode = -1;
+        private int _lastTimerSecond = -1;
 
         protected override void Awake()
         {
@@ -32,9 +35,51 @@ namespace UserInterface
             UnsubscribeStatEvents();
 
             _player = player;
+            _enemySpawner = enemySpawner;
             CachePlayerReferences();
             SubscribeStatEvents();
             RefreshStats();
+        }
+        
+        private void Update()
+        {
+            RefreshTimer();
+        }
+
+        private void RefreshTimer()
+        {
+            if (!timerText || !_enemySpawner) return;
+
+            int mode;
+            float time;
+
+            if (_enemySpawner.TimeUntilGameStart > 0f)
+            {
+                mode = 0;
+                time = _enemySpawner.TimeUntilGameStart;
+            }
+            else if (_enemySpawner.NextRoundCountdown > 0f)
+            {
+                mode = 1;
+                time = _enemySpawner.NextRoundCountdown;
+            }
+            else
+            {
+                mode = 2;
+                time = _enemySpawner.CurrentWaveRemainingTime;
+            }
+
+            var second = Mathf.CeilToInt(time);
+            if (mode == _lastTimerMode && second == _lastTimerSecond) return;
+
+            _lastTimerMode = mode;
+            _lastTimerSecond = second;
+            timerText.text = mode switch
+            {
+                0 => $"{second}",
+                1 => $"{second}",
+                _ => $"{_enemySpawner.CurrentRound} | {second}"
+            };
         }
 
         private void OnDestroy()
