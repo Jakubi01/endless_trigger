@@ -39,7 +39,7 @@ namespace Managers
 
         private void Awake()
         {
-            if (Instance == null)
+            if (!Instance)
             {
                 Instance = this;
                 DontDestroyOnLoad(gameObject);
@@ -113,7 +113,7 @@ namespace Managers
 
         public void OnContinueButtonClicked()
         {
-            if (_currentPauseWindow == null) return;
+            if (!_currentPauseWindow) return;
             
             Destroy(_currentPauseWindow.gameObject);
             _currentPauseWindow = null;
@@ -126,7 +126,7 @@ namespace Managers
         public void OnExitButtonClicked()
         {
             var win = OpenWindow(exitWindowPrefab, ref _currentExitWindow);
-            if (win == null) return;
+            if (!win) return;
 
             var parentGroup = GetActiveCanvas().GetComponent<CanvasGroup>();
             if (parentGroup) parentGroup.interactable = false;
@@ -147,7 +147,7 @@ namespace Managers
 
         public void OnExitCancel()
         {
-            if (_currentExitWindow == null) return;
+            if (!_currentExitWindow) return;
             
             var parentGroup = GetActiveCanvas().GetComponent<CanvasGroup>();
             if (parentGroup) parentGroup.interactable = true;

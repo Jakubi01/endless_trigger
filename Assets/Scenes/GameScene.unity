@@ -403229,6 +403229,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 7f36d5c826508e84aa3967206295cb54, type: 2}
   - {fileID: 11400000, guid: e933cc14d0b17484db7b7d5a4a57ceab, type: 2}
   - {fileID: 11400000, guid: 2d92282c038d98e4fba77089c08a732a, type: 2}
+  - {fileID: 11400000, guid: 5d9b3ae6a4a13b942982a43efcf023e9, type: 2}
   minSpawnDistanceFromPlayer: 10
   maxSpawnDistanceFromPlayer: 20
   initialSpawnDelay: 5

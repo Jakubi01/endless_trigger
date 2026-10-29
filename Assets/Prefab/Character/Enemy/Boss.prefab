@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 2477420741484171067}
   - component: {fileID: 3431421709342280417}
   - component: {fileID: 1774331362370477491}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Boss
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -33,8 +33,8 @@ Transform:
   m_GameObject: {fileID: 3796199684198692983}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 844.6761, y: 529.8131, z: 0}
-  m_LocalScale: {x: 3, y: 3, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 2, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -124,11 +124,11 @@ CircleCollider2D:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 128
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
+    m_Bits: 64
+  m_LayerOverridePriority: 10
   m_ForceSendLayers:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -260,6 +260,7 @@ MonoBehaviour:
   attackRadius: 3.5
   contactDamageInterval: 1
   proximityLimitRadius: 2.1
+  minimunAttackRadius: 2
 --- !u!114 &1774331362370477491
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -289,10 +290,10 @@ MonoBehaviour:
   pattern3Cooldown: 6
   pattern4Cooldown: 10
   pattern5Cooldown: 8
-  fanTelegraphPrefab: {fileID: 0}
-  swordAuraPrefab: {fileID: 0}
-  swordAuraVanishPrefab: {fileID: 0}
-  swordAuraHitSparkPrefab: {fileID: 0}
+  fanTelegraphPrefab: {fileID: 3264113253416196351, guid: 2c3f209c5c24f044ba9fabaf9a435d72, type: 3}
+  swordAuraPrefab: {fileID: 3264113253416196351, guid: 1f6de214055a6234ab1d977c7a8228e7, type: 3}
+  swordAuraVanishPrefab: {fileID: 3264113253416196351, guid: aa438e6fc2ade594fad67d6eda986c0d, type: 3}
+  swordAuraHitSparkPrefab: {fileID: 3264113253416196351, guid: f216192b6307e214ba1abd008a95e9a7, type: 3}
   slashFrameDelay: 0.3
   swordAuraSpeed: 8
   swordAuraLifetime: 2
@@ -305,16 +306,16 @@ MonoBehaviour:
   swingRange: 3
   swingAngle: 120
   swingDamage: 50
-  bonePrefab: {fileID: 0}
-  boneShatterPrefab: {fileID: 0}
-  boneBurstRingPrefab: {fileID: 0}
+  bonePrefab: {fileID: 3264113253416196351, guid: ac92747476b40504cbb9f4c971543c28, type: 3}
+  boneShatterPrefab: {fileID: 3264113253416196351, guid: 1e31be1085820cf43aa560618a988a63, type: 3}
+  boneBurstRingPrefab: {fileID: 3264113253416196351, guid: 170aed545d265464b9101e2ae0faf3b5, type: 3}
   boneCount: 12
   boneSpeed: 6
   boneLifetime: 3
   boneDamage: 15
   boneBurstInterval: 0.6
-  dashLinePrefab: {fileID: 0}
-  dashAfterimagePrefab: {fileID: 0}
+  dashLinePrefab: {fileID: 3264113253416196351, guid: e0492622c06efb54b8e12bc4d7c3153e, type: 3}
+  dashAfterimagePrefab: {fileID: 3264113253416196351, guid: fe799ce2bbd0ddb47bd57e505217126b, type: 3}
   dashTelegraphTime: 1
   dashDistance: 8
   dashSpeed: 12
@@ -323,8 +324,8 @@ MonoBehaviour:
   dashSlashRange: 3
   dashSlashAngle: 120
   dashSlashDamage: 60
-  pillarTelegraphPrefab: {fileID: 0}
-  pillarPrefab: {fileID: 0}
+  pillarTelegraphPrefab: {fileID: 3264113253416196351, guid: 0699de5cea16bcd438c906af1e9c6f17, type: 3}
+  pillarPrefab: {fileID: 3264113253416196351, guid: 688181ab19220b749810873546e8d9dc, type: 3}
   pillarCount: 6
   pillarSpawnRadius: 6
   pillarTelegraphTime: 1.2

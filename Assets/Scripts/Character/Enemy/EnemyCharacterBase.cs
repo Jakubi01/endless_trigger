@@ -50,6 +50,8 @@ namespace Character.Enemy
 
         public bool IsAlive => EnemyHealthComponent && EnemyHealthComponent.IsAlive;
 
+        public bool IgnoreManager { get; protected set;}
+
         protected override void Awake()
         {
             base.Awake();

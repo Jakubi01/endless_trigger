@@ -147,6 +147,72 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: Telegraph_Fan_Red_96x168_1
+      rect:
+        serializedVersion: 2
+        x: 97
+        y: 0
+        width: 96
+        height: 168
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c709ba3aac7659d4ea724181365557ed
+      internalID: -2145372029
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Telegraph_Fan_Red_96x168_2
+      rect:
+        serializedVersion: 2
+        x: 193
+        y: 0
+        width: 96
+        height: 168
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3a978374231456b4f8bc30ba56a65246
+      internalID: -682690301
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Telegraph_Fan_Red_96x168_3
+      rect:
+        serializedVersion: 2
+        x: 289
+        y: 0
+        width: 95
+        height: 168
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f07601657b57d3c459093585ecec89de
+      internalID: 1403345011
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
@@ -162,6 +228,9 @@ TextureImporter:
       entries: []
     nameFileIdTable:
       Telegraph_Fan_Red_96x168_0: 597562397381776634
+      Telegraph_Fan_Red_96x168_1: -2145372029
+      Telegraph_Fan_Red_96x168_2: -682690301
+      Telegraph_Fan_Red_96x168_3: 1403345011
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

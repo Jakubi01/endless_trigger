@@ -16,7 +16,8 @@ namespace Character.Enemy
             ExecutePattern,
             Dead
         }
-        
+
+        [SerializeField] private float minimunAttackRadius = 2f;
         private EnemyBossCombatComponent _bossCombatComponent;
         private EBehaviourState _behaviourState = EBehaviourState.None;
         private PlayerCharacter _playerCharacter;
@@ -26,16 +27,14 @@ namespace Character.Enemy
             base.Awake();
             
             _bossCombatComponent = GetComponent<EnemyBossCombatComponent>();
-            
-            _playerCharacter = FindFirstObjectByType<PlayerCharacter>();
-            if (!_playerCharacter)
-            {
-                var sceneSpawnManager = FindFirstObjectByType<SceneSpawnManager>();
-                _playerCharacter = sceneSpawnManager?.Player;
-                if(_playerCharacter)
-                    _bossCombatComponent.SetTarget(_playerCharacter.transform);
-            }
 
+            SetPlayerRef();
+
+            IgnoreManager = true;
+        }
+
+        private void Start()
+        {
             // state machine에서 처리하기 때문에 event에서 제거
             OnAttackAction -= Attack;
         }
@@ -45,6 +44,7 @@ namespace Character.Enemy
             if (!_playerCharacter)
             {
                 ChangeState(EBehaviourState.None);
+                SetPlayerRef();
                 return;
             }
 
@@ -61,7 +61,7 @@ namespace Character.Enemy
             }
 
             var distance = Vector2.Distance(transform.position, _playerCharacter.transform.position);
-            var nextState = distance <= AttackRadius
+            var nextState = distance <= minimunAttackRadius
                 ? EBehaviourState.Combat
                 : EBehaviourState.MoveToTarget;
 
@@ -112,6 +112,21 @@ namespace Character.Enemy
             // Clear UI pop up
             _playerCharacter = null;
             _behaviourState = EBehaviourState.Idle;
+        }
+
+        private void SetPlayerRef()
+        {
+            _playerCharacter = FindFirstObjectByType<PlayerCharacter>();
+            if (_playerCharacter)
+            {
+                _bossCombatComponent.SetTarget(_playerCharacter.transform);
+                return;
+            }
+            
+            var sceneSpawnManager = FindFirstObjectByType<SceneSpawnManager>();
+            _playerCharacter = sceneSpawnManager?.Player;
+            if(_playerCharacter)
+                _bossCombatComponent.SetTarget(_playerCharacter.transform);
         }
     }
 }

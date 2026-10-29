@@ -1,6 +1,3 @@
-#define ENDLESS_DEBUG
-
-using System.Collections;
 using System.Collections.Generic;
 using Character.Enemy;
 using Character.Player;
@@ -31,12 +28,26 @@ namespace Managers
             public IObjectPool<EnemyCharacterBase> Pool;
         }
 
+        /// <summary>
+        /// 라운드 진행 단계
+        /// </summary>
+        private enum Phase
+        {
+            InitialDelay,    // 게임 시작 후 첫 라운드 전 대기
+            Spawning,        // 라운드 진행 중 (일반 몬스터 스폰)
+            WaitingForClear, // 타이머 0 고정, 필드 몬스터 소탕 대기
+            Intermission,    // 라운드 클리어 후 다음 라운드까지 대기
+            Finished         // 마지막(보스) 라운드 클리어 후 종료
+        }
+
         [Header("Spawn Settings")]
         [SerializeField] private EnemyData[] enemyData;                   // 스폰 가능한 적들의 ScriptableObject 데이터 배열
         [SerializeField] private float minSpawnDistanceFromPlayer = 5f;   // 플레이어 기준 최소 스폰 거리
         [SerializeField] private float maxSpawnDistanceFromPlayer = 9f;   // 플레이어 기준 최대 스폰 거리
         [SerializeField] private float initialSpawnDelay = 5f;            // 게임 시작 후 첫 스폰까지의 대기 시간
         [SerializeField] private float waveDuration = 30f;                // 한 웨이브의 지속 시간
+        [SerializeField] private float intermissionDuration = 10f;        // 라운드 클리어 후 다음 라운드까지의 대기 시간
+        [SerializeField] private int bossRound = 10;                      // 보스 전용 라운드 (일반 몬스터 스폰 금지)
         [SerializeField] private int baseSpawnCount = 2;                  // 게임 시작 시 기본 스폰 마리 수
         [SerializeField] private int spawnCountIncreasePerSection = 2;    // 한 웨이브 내 섹션 진행 시 증가할 스폰 마리 수
         [SerializeField] private int spawnCountIncreasePerWave = 1;       // 웨이브 단계 상승 시 증가할 기본 스폰 마리 수
@@ -60,26 +71,29 @@ namespace Managers
             get => _player;
             set => _player = value;
         }
-        
-        private float _elapsedTime;         // 게임 시작 후 흐른 총 시간
-        private float _nextSpawnTime;       // 다음 스폰이 일어날 타겟 시간값
-        private int _completedWaveCount;    // 현재까지 클리어 처리된 총 웨이브 수
+
+        private Phase _phase;
+        private float _phaseTimer;      // InitialDelay / Intermission 에서 사용하는 남은 시간
+        private float _roundTimer;      // Spawning 중 라운드 경과 시간
+        private int _roundNumber;       // 현재 라운드 (1부터)
+        private int _sectionIndex;      // 이번 라운드에서 다음에 스폰할 섹션 인덱스
+        private int _aliveEnemyCount;   // 필드에 살아있는 몬스터 수 (스폰 +1 / 풀 반환 -1)
 
         // --- 외부 UI 나 매니저 시스템에서 정보 확인용으로 사용할 프로퍼티들 ---
-        public float TimeUntilGameStart => Mathf.Max(0f, initialSpawnDelay - _elapsedTime);
-        
+        public int CurrentRound => _roundNumber;
+
+        public float TimeUntilGameStart => _phase == Phase.InitialDelay ? Mathf.Max(0f, _phaseTimer) : 0f;
+
         /// <summary>
-        /// 현재 진행 중인 웨이브의 남은 시간을 계산하여 반환
+        /// 현재 라운드의 남은 시간. 스폰이 끝난 뒤 소탕 대기 중에는 0에 머문다.
         /// </summary>
-        public float CurrentWaveRemainingTime
-        {
-            get
-            {
-                float activeTime = Mathf.Max(0f, _elapsedTime - initialSpawnDelay);
-                float timeInWave = activeTime % waveDuration;
-                return Mathf.Max(0f, waveDuration - timeInWave);
-            }
-        }
+        public float CurrentWaveRemainingTime =>
+            _phase == Phase.Spawning ? Mathf.Max(0f, waveDuration - _roundTimer) : 0f;
+
+        /// <summary>
+        /// 다음 라운드 시작까지 남은 대기 시간 (Intermission 중에만 값이 있음)
+        /// </summary>
+        public float NextRoundCountdown => _phase == Phase.Intermission ? Mathf.Max(0f, _phaseTimer) : 0f;
 
         private void Awake()
         {
@@ -91,9 +105,11 @@ namespace Managers
 
             initialSpawnDelay = Mathf.Max(0f, initialSpawnDelay);
             waveDuration = Mathf.Max(0.1f, waveDuration);
-            
-            // 첫 번째 스폰 타이밍 설정
-            _nextSpawnTime = initialSpawnDelay;
+            intermissionDuration = Mathf.Max(0f, intermissionDuration);
+
+            // 첫 라운드 시작까지 대기
+            _phase = Phase.InitialDelay;
+            _phaseTimer = initialSpawnDelay;
             
             // 오브젝트 풀 초기화 및 세팅
             BuildPools();
@@ -113,55 +129,87 @@ namespace Managers
             _prewarmBuffer.Clear();
         }
 
-#if ENDLESS_DEBUG
-        private IEnumerator Start()
-        {
-            yield return new WaitForSeconds(2f);
-
-            SpawnBoss();
-        }
-#endif        
-
         private void Update()
         {
-#if ENDLESS_DEBUG
-            return;
-#endif
             if (!Player) return;
-            
-            _elapsedTime += Time.deltaTime;
-            
-            // 웨이브가 끝났는지 체크 및 갱신
-            UpdateWaveClearedCount();
-            
-            // 아직 스폰 타이밍이 되지 않았다면 리턴
-            if (_elapsedTime < _nextSpawnTime) return;
 
-            // 딜레이 시간을 뺀 스폰 구동 시간을 구해 스폰 로직 실행
-            float activeSpawnTime = Mathf.Max(0f, _nextSpawnTime - initialSpawnDelay);
-            SpawnWaveSection(activeSpawnTime);
-            
-            // 다음 스폰 목표 시간 갱신
-            _nextSpawnTime += SpawnInterval;
+            switch (_phase)
+            {
+                case Phase.InitialDelay:
+                    _phaseTimer -= Time.deltaTime;
+                    if (_phaseTimer <= 0f) StartRound(1);
+                    break;
+
+                case Phase.Spawning:
+                    UpdateSpawning();
+                    break;
+
+                case Phase.WaitingForClear:
+                    // 타이머는 0에 머문 채, 필드의 몬스터가 모두 사라질 때까지 대기
+                    if (_aliveEnemyCount <= 0) OnRoundCleared();
+                    break;
+
+                case Phase.Intermission:
+                    _phaseTimer -= Time.deltaTime;
+                    if (_phaseTimer <= 0f) StartRound(_roundNumber + 1);
+                    break;
+            }
         }
 
         /// <summary>
-        /// 흐른 시간을 지속적으로 체크해 웨이브 시간이 만료될 때마다 GameManager에 클리어를 알림
+        /// 라운드 시작. 보스 라운드면 일반 몬스터 없이 보스만 소환한다.
         /// </summary>
-        private void UpdateWaveClearedCount()
+        private void StartRound(int roundNumber)
         {
-            float activeTime = _elapsedTime - initialSpawnDelay;
-            if (activeTime < waveDuration) return;
+            _roundNumber = roundNumber;
+            _roundTimer = 0f;
+            _sectionIndex = 0;
 
-            // 현재 도달해야 하는 이론적인 클리어 웨이브 수 계산
-            int completedWaveCount = Mathf.FloorToInt(activeTime / waveDuration);
-            
-            // 실제 반영된 카운트가 이에 못 미치면 추적해가며 매니저에 등록
-            while (_completedWaveCount < completedWaveCount)
+            if (_roundNumber >= bossRound)
             {
-                _completedWaveCount++;
-                GameManager.Instance?.RegisterWaveCleared();
+                SpawnBoss();
+                _phase = Phase.WaitingForClear;
+                return;
             }
+
+            _phase = Phase.Spawning;
+        }
+
+        /// <summary>
+        /// 라운드 시간 동안 SpawnInterval 마다 섹션 스폰을 실행하고, 시간이 끝나면 소탕 대기 상태로 전환
+        /// </summary>
+        private void UpdateSpawning()
+        {
+            _roundTimer += Time.deltaTime;
+
+            int sectionCount = Mathf.CeilToInt(waveDuration / SpawnInterval);
+            while (_sectionIndex < sectionCount && _roundTimer >= _sectionIndex * SpawnInterval)
+            {
+                SpawnWaveSection(_roundNumber, _sectionIndex);
+                _sectionIndex++;
+            }
+
+            if (_roundTimer >= waveDuration)
+            {
+                _phase = Phase.WaitingForClear;
+            }
+        }
+
+        /// <summary>
+        /// 필드가 비워진 시점에 클리어 처리. 보스 라운드면 종료, 아니면 대기 시간 시작.
+        /// </summary>
+        private void OnRoundCleared()
+        {
+            GameManager.Instance?.RegisterWaveCleared();
+
+            if (_roundNumber >= bossRound)
+            {
+                _phase = Phase.Finished;
+                return;
+            }
+
+            _phase = Phase.Intermission;
+            _phaseTimer = intermissionDuration;
         }
 
         /// <summary>
@@ -222,8 +270,17 @@ namespace Managers
             enemy.gameObject.SetActive(false);
             
             // 적 캐릭터가 스스로 죽었을 때 자신을 풀로 돌려보낼 수 있도록 Action 디지게이트 연결
-            enemy.SetPoolReleaseAction(enemyPool.Pool.Release);
+            enemy.SetPoolReleaseAction(releasedEnemy => ReleaseEnemy(enemyPool, releasedEnemy));
             return enemy;
+        }
+
+        /// <summary>
+        /// 적을 풀로 반환하고 필드 몬스터 수를 감소시킴
+        /// </summary>
+        private void ReleaseEnemy(EnemyPool enemyPool, EnemyCharacterBase enemy)
+        {
+            enemyPool.Pool.Release(enemy);
+            _aliveEnemyCount--;
         }
 
         /// <summary>
@@ -248,38 +305,33 @@ namespace Managers
         }
 
         /// <summary>
-        /// 특정 스폰 시간대에 맞춰 계산된 횟수만큼 적을 무작위로 추첨해 스폰
+        /// 특정 라운드/섹션에 맞춰 계산된 횟수만큼 적을 무작위로 추첨해 스폰
         /// </summary>
-        private void SpawnWaveSection(float spawnTime)
+        private void SpawnWaveSection(int waveNumber, int sectionIndex)
         {
-            SpawnRate rate = GetSpawnRate(spawnTime);
+            SpawnRate rate = GetSpawnRate(waveNumber, sectionIndex);
             for (int i = 0; i < rate.SpawnCount; i++)
             {
-                SpawnEnemy(PickEnemyType(rate), spawnTime);
+                SpawnEnemy(PickEnemyType(rate), waveNumber);
             }
         }
 
         /// <summary>
-        /// 현재 게임 진행 시간(spawnTime)을 기준으로
+        /// 라운드 번호와 섹션 인덱스를 기준으로
         /// 이번 섹션에서 사용할 스폰 정보(총 스폰 수, 몬스터 종류별 가중치)를 계산한다.
         /// </summary>
-        /// <param name="spawnTime">게임 시작 이후 경과 시간(초)</param>
+        /// <param name="waveNumber">현재 라운드 번호 (1부터)</param>
+        /// <param name="sectionIndex">라운드 내 섹션 인덱스 (0~5)</param>
         /// <returns>
         /// SpawnCount     : 이번 섹션에서 생성할 몬스터 수
         /// ZombieWeight   : 일반 좀비 등장 가중치
         /// RusherWeight   : 러셔 등장 가중치
         /// TankerWeight   : 탱커 등장 가중치
         /// </returns>
-        private SpawnRate GetSpawnRate(float spawnTime)
+        private SpawnRate GetSpawnRate(int waveNumber, int sectionIndex)
         {
-            // 현재 진행 중인 웨이브 번호 계산
-            int waveNumber = Mathf.FloorToInt(spawnTime / waveDuration) + 1;
-            
-            // 현재 웨이브 내에서 경과한 시간
-            float timeInWave = spawnTime % waveDuration;
-            
-            // 웨이브를 6개 섹션(0~5)으로 분할하여 현재 섹션 인덱스 계산
-            int sectionIndex = Mathf.Clamp(Mathf.FloorToInt(timeInWave / SpawnInterval), 0, 5);
+            // 웨이브를 6개 섹션(0~5)으로 분할하여 현재 섹션 인덱스 보정
+            sectionIndex = Mathf.Clamp(sectionIndex, 0, 5);
             
             // 현재 웨이브 진행도 (0.0 ~ 1.0)
             float sectionProgress = sectionIndex / 5f;
@@ -346,22 +398,23 @@ namespace Managers
         }
 
         /// <summary>
-        /// 오브젝트 풀에서 적을 하나 활성화한 후, 플레이어 주변에 배치하고 현재 웨이브 단계에 맞춰 스탯을 최종 부여(스케일링)
+        /// 오브젝트 풀에서 적을 하나 활성화한 후, 플레이어 주변에 배치하고 현재 라운드에 맞춰 스탯을 최종 부여(스케일링)
         /// </summary>
-        private void SpawnEnemy(EnemyType type, float spawnTime)
+        private void SpawnEnemy(EnemyType type, int waveNumber)
         {
             if (!_pools.TryGetValue(type, out EnemyPool enemyPool))
             {
+                Debug.LogError($"{nameof(EnemySpawner)}: No pool for {type}. Check the EnemyData list.", this);
                 return;
             }
 
             // 풀에서 오브젝트 하나 수령 및 초기 위치 세팅
             EnemyCharacterBase enemy = enemyPool.Pool.Get();
+            _aliveEnemyCount++;
             enemy.transform.position = GetSpawnPosition();
             enemy.transform.rotation = Quaternion.identity;
 
-            // 현재 웨이브 단계를 기준으로 ScriptableObject 내부에서 스탯 배율을 계산해 가져옴
-            int waveNumber = Mathf.FloorToInt(spawnTime / waveDuration) + 1;
+            // 현재 라운드를 기준으로 ScriptableObject 내부에서 스탯 배율을 계산해 가져옴
             enemyPool.Data.GetScaledStats(waveNumber, out float hp, out float speed, out float damage, out int experience);
             
             // 적 실체 캐릭터 컴포넌트에 최종 스탯 및 타입 주입하여 활성화 완료
@@ -391,7 +444,7 @@ namespace Managers
 
         private void SpawnBoss()
         {
-            SpawnEnemy(EnemyType.Boss, 10f);
+            SpawnEnemy(EnemyType.Boss, _roundNumber);
         }
     }
 }

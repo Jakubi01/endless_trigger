@@ -129,7 +129,6 @@ namespace Components
             EPhase.Phase2 => phase2DamageMultiplier,
             _ => 1f
         };
-        // new
 
         protected override void Awake()
         {
@@ -318,6 +317,7 @@ namespace Components
          */
         private IEnumerator SwordAura()
         {
+            Debug.LogFormat("{0}: {1}", nameof(EnemyBossCombatComponent), nameof(SwordAura));
             if (_animator)
                 _animator.SetTrigger(AnimatorParamToHash.EnemyAttack);
             
@@ -354,6 +354,7 @@ namespace Components
          */
         private IEnumerator SwingGreatSword()
         {
+            Debug.LogFormat("{0}: {1}", nameof(EnemyBossCombatComponent), nameof(SwingGreatSword));
             if (_animator)
                 _animator.SetTrigger(AnimatorParamToHash.EnemyAttack);
             
@@ -374,13 +375,14 @@ namespace Components
          */
         private IEnumerator BoneExplosion()
         {
+            Debug.LogFormat("{0}: {1}", nameof(EnemyBossCombatComponent), nameof(BoneExplosion));
             if (_animator)
                 _animator.SetTrigger(AnimatorParamToHash.SpecialAttack);
             
             // [Resource] 뼈 폭발 시전 애니메이션/SFX
             var bursts = _phase == EPhase.Phase3 ? 2 : 1;
             var step = 360f / boneCount;
-
+            
             for (var b = 0; b < bursts; b++)
             {
                 if (b > 0) yield return _boneBurstWaitForSeconds;
@@ -402,6 +404,7 @@ namespace Components
          */
         private IEnumerator DashSlash()
         {
+            Debug.LogFormat("{0}: {1}", nameof(EnemyBossCombatComponent), nameof(DashSlash));
             // 방향은 예고선이 뜰 때 고정
             _facing = DirTo(_target.position);
             var rotation = AngleOf(_facing);
@@ -444,6 +447,7 @@ namespace Components
          */
         private IEnumerator SoulPillar()
         {
+            Debug.LogFormat("{0}: {1}", nameof(EnemyBossCombatComponent), nameof(SoulPillar));
             if (_animator)
                 _animator.SetTrigger(AnimatorParamToHash.SpecialAttack);
             
