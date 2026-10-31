@@ -130,6 +130,7 @@ GameObject:
   - component: {fileID: 64048395}
   - component: {fileID: 64048394}
   - component: {fileID: 64048393}
+  - component: {fileID: 64048396}
   m_Layer: 0
   m_Name: Dungeon_16 (3)
   m_TagString: Untagged
@@ -248,6 +249,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1735785490}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &64048396
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 64048392}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9809bf1345abc5648af68b3a82653f08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: NavMeshPlus::NavMeshPlus.Components.NavMeshModifier
+  m_OverrideArea: 1
+  m_Area: 1
+  m_IgnoreFromBuild: 0
+  m_AffectedAgents: ffffffff
 --- !u!1 &65357179
 GameObject:
   m_ObjectHideFlags: 0
@@ -259,6 +276,7 @@ GameObject:
   - component: {fileID: 65357180}
   - component: {fileID: 65357182}
   - component: {fileID: 65357181}
+  - component: {fileID: 65357183}
   m_Layer: 0
   m_Name: Dungeon_16 (46)
   m_TagString: Untagged
@@ -377,6 +395,22 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &65357183
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 65357179}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9809bf1345abc5648af68b3a82653f08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: NavMeshPlus::NavMeshPlus.Components.NavMeshModifier
+  m_OverrideArea: 1
+  m_Area: 1
+  m_IgnoreFromBuild: 0
+  m_AffectedAgents: ffffffff
 --- !u!1 &91509589
 GameObject:
   m_ObjectHideFlags: 0
@@ -388,6 +422,7 @@ GameObject:
   - component: {fileID: 91509592}
   - component: {fileID: 91509591}
   - component: {fileID: 91509590}
+  - component: {fileID: 91509593}
   m_Layer: 0
   m_Name: Dungeon_16 (4)
   m_TagString: Untagged
@@ -507,6 +542,22 @@ Transform:
   - {fileID: 1402607461}
   m_Father: {fileID: 1735785490}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &91509593
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 91509589}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9809bf1345abc5648af68b3a82653f08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: NavMeshPlus::NavMeshPlus.Components.NavMeshModifier
+  m_OverrideArea: 1
+  m_Area: 1
+  m_IgnoreFromBuild: 0
+  m_AffectedAgents: ffffffff
 --- !u!1 &279143401
 GameObject:
   m_ObjectHideFlags: 0
@@ -518,6 +569,7 @@ GameObject:
   - component: {fileID: 279143404}
   - component: {fileID: 279143403}
   - component: {fileID: 279143402}
+  - component: {fileID: 279143405}
   m_Layer: 0
   m_Name: Dungeon_16 (2)
   m_TagString: Untagged
@@ -636,6 +688,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1735785490}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &279143405
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 279143401}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9809bf1345abc5648af68b3a82653f08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: NavMeshPlus::NavMeshPlus.Components.NavMeshModifier
+  m_OverrideArea: 1
+  m_Area: 1
+  m_IgnoreFromBuild: 0
+  m_AffectedAgents: ffffffff
 --- !u!1 &286268143
 GameObject:
   m_ObjectHideFlags: 0
@@ -647,6 +715,7 @@ GameObject:
   - component: {fileID: 286268144}
   - component: {fileID: 286268146}
   - component: {fileID: 286268145}
+  - component: {fileID: 286268147}
   m_Layer: 0
   m_Name: Dungeon_16 (36)
   m_TagString: Untagged
@@ -765,6 +834,22 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &286268147
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 286268143}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9809bf1345abc5648af68b3a82653f08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: NavMeshPlus::NavMeshPlus.Components.NavMeshModifier
+  m_OverrideArea: 1
+  m_Area: 1
+  m_IgnoreFromBuild: 0
+  m_AffectedAgents: ffffffff
 --- !u!1 &303958640
 GameObject:
   m_ObjectHideFlags: 0
@@ -854,6 +939,7 @@ GameObject:
   - component: {fileID: 324827046}
   - component: {fileID: 324827048}
   - component: {fileID: 324827047}
+  - component: {fileID: 324827049}
   m_Layer: 0
   m_Name: Dungeon_16 (47)
   m_TagString: Untagged
@@ -972,6 +1058,22 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &324827049
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 324827045}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9809bf1345abc5648af68b3a82653f08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: NavMeshPlus::NavMeshPlus.Components.NavMeshModifier
+  m_OverrideArea: 1
+  m_Area: 1
+  m_IgnoreFromBuild: 0
+  m_AffectedAgents: ffffffff
 --- !u!1 &325156291
 GameObject:
   m_ObjectHideFlags: 0
@@ -983,6 +1085,7 @@ GameObject:
   - component: {fileID: 325156292}
   - component: {fileID: 325156294}
   - component: {fileID: 325156293}
+  - component: {fileID: 325156295}
   m_Layer: 0
   m_Name: Dungeon_16 (40)
   m_TagString: Untagged
@@ -1101,6 +1204,22 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &325156295
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 325156291}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9809bf1345abc5648af68b3a82653f08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: NavMeshPlus::NavMeshPlus.Components.NavMeshModifier
+  m_OverrideArea: 1
+  m_Area: 1
+  m_IgnoreFromBuild: 0
+  m_AffectedAgents: ffffffff
 --- !u!1 &346675182
 GameObject:
   m_ObjectHideFlags: 0
@@ -1112,6 +1231,7 @@ GameObject:
   - component: {fileID: 346675185}
   - component: {fileID: 346675184}
   - component: {fileID: 346675183}
+  - component: {fileID: 346675186}
   m_Layer: 0
   m_Name: Dungeon_16 (25)
   m_TagString: Untagged
@@ -1230,6 +1350,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1735785490}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &346675186
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 346675182}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9809bf1345abc5648af68b3a82653f08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: NavMeshPlus::NavMeshPlus.Components.NavMeshModifier
+  m_OverrideArea: 1
+  m_Area: 1
+  m_IgnoreFromBuild: 0
+  m_AffectedAgents: ffffffff
 --- !u!1 &405537686
 GameObject:
   m_ObjectHideFlags: 0
@@ -1241,6 +1377,7 @@ GameObject:
   - component: {fileID: 405537689}
   - component: {fileID: 405537688}
   - component: {fileID: 405537687}
+  - component: {fileID: 405537690}
   m_Layer: 0
   m_Name: Dungeon_16 (32)
   m_TagString: Untagged
@@ -1359,6 +1496,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1735785490}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &405537690
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 405537686}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9809bf1345abc5648af68b3a82653f08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: NavMeshPlus::NavMeshPlus.Components.NavMeshModifier
+  m_OverrideArea: 1
+  m_Area: 1
+  m_IgnoreFromBuild: 0
+  m_AffectedAgents: ffffffff
 --- !u!1 &450932698
 GameObject:
   m_ObjectHideFlags: 0
@@ -1370,6 +1523,7 @@ GameObject:
   - component: {fileID: 450932701}
   - component: {fileID: 450932700}
   - component: {fileID: 450932699}
+  - component: {fileID: 450932702}
   m_Layer: 0
   m_Name: Dungeon_16 (9)
   m_TagString: Untagged
@@ -1488,6 +1642,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1735785490}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &450932702
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 450932698}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9809bf1345abc5648af68b3a82653f08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: NavMeshPlus::NavMeshPlus.Components.NavMeshModifier
+  m_OverrideArea: 1
+  m_Area: 1
+  m_IgnoreFromBuild: 0
+  m_AffectedAgents: ffffffff
 --- !u!1 &453797527
 GameObject:
   m_ObjectHideFlags: 0
@@ -1499,6 +1669,7 @@ GameObject:
   - component: {fileID: 453797530}
   - component: {fileID: 453797529}
   - component: {fileID: 453797528}
+  - component: {fileID: 453797531}
   m_Layer: 0
   m_Name: Dungeon_16 (28)
   m_TagString: Untagged
@@ -1617,6 +1788,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1735785490}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &453797531
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 453797527}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9809bf1345abc5648af68b3a82653f08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: NavMeshPlus::NavMeshPlus.Components.NavMeshModifier
+  m_OverrideArea: 1
+  m_Area: 1
+  m_IgnoreFromBuild: 0
+  m_AffectedAgents: ffffffff
 --- !u!1 &467956123
 GameObject:
   m_ObjectHideFlags: 0
@@ -1628,6 +1815,7 @@ GameObject:
   - component: {fileID: 467956126}
   - component: {fileID: 467956125}
   - component: {fileID: 467956124}
+  - component: {fileID: 467956127}
   m_Layer: 0
   m_Name: Dungeon_16 (17)
   m_TagString: Untagged
@@ -1746,6 +1934,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1735785490}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &467956127
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 467956123}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9809bf1345abc5648af68b3a82653f08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: NavMeshPlus::NavMeshPlus.Components.NavMeshModifier
+  m_OverrideArea: 1
+  m_Area: 1
+  m_IgnoreFromBuild: 0
+  m_AffectedAgents: ffffffff
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -1927,6 +2131,7 @@ GameObject:
   - component: {fileID: 532316063}
   - component: {fileID: 532316062}
   - component: {fileID: 532316061}
+  - component: {fileID: 532316064}
   m_Layer: 0
   m_Name: Dungeon_16 (22)
   m_TagString: Untagged
@@ -2045,6 +2250,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1735785490}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &532316064
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 532316060}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9809bf1345abc5648af68b3a82653f08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: NavMeshPlus::NavMeshPlus.Components.NavMeshModifier
+  m_OverrideArea: 1
+  m_Area: 1
+  m_IgnoreFromBuild: 0
+  m_AffectedAgents: ffffffff
 --- !u!1 &569184752
 GameObject:
   m_ObjectHideFlags: 0
@@ -2135,6 +2356,7 @@ GameObject:
   - component: {fileID: 570155695}
   - component: {fileID: 570155697}
   - component: {fileID: 570155696}
+  - component: {fileID: 570155698}
   m_Layer: 0
   m_Name: Dungeon_16 (49)
   m_TagString: Untagged
@@ -2253,6 +2475,22 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &570155698
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 570155694}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9809bf1345abc5648af68b3a82653f08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: NavMeshPlus::NavMeshPlus.Components.NavMeshModifier
+  m_OverrideArea: 1
+  m_Area: 1
+  m_IgnoreFromBuild: 0
+  m_AffectedAgents: ffffffff
 --- !u!1 &574660352
 GameObject:
   m_ObjectHideFlags: 0
@@ -2265,6 +2503,7 @@ GameObject:
   - component: {fileID: 574660356}
   - component: {fileID: 574660355}
   - component: {fileID: 574660354}
+  - component: {fileID: 574660357}
   m_Layer: 0
   m_Name: Tilemap
   m_TagString: Untagged
@@ -2281,7 +2520,7 @@ Transform:
   m_GameObject: {fileID: 574660352}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 3}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -402545,6 +402784,22 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!114 &574660357
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 574660352}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9809bf1345abc5648af68b3a82653f08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: NavMeshPlus::NavMeshPlus.Components.NavMeshModifier
+  m_OverrideArea: 1
+  m_Area: 0
+  m_IgnoreFromBuild: 0
+  m_AffectedAgents: ffffffff
 --- !u!1 &604140534
 GameObject:
   m_ObjectHideFlags: 0
@@ -402556,6 +402811,7 @@ GameObject:
   - component: {fileID: 604140537}
   - component: {fileID: 604140536}
   - component: {fileID: 604140535}
+  - component: {fileID: 604140538}
   m_Layer: 0
   m_Name: Dungeon_16 (19)
   m_TagString: Untagged
@@ -402674,6 +402930,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1735785490}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &604140538
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 604140534}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9809bf1345abc5648af68b3a82653f08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: NavMeshPlus::NavMeshPlus.Components.NavMeshModifier
+  m_OverrideArea: 1
+  m_Area: 1
+  m_IgnoreFromBuild: 0
+  m_AffectedAgents: ffffffff
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0
@@ -402769,6 +403041,7 @@ GameObject:
   - component: {fileID: 620674547}
   - component: {fileID: 620674546}
   - component: {fileID: 620674545}
+  - component: {fileID: 620674548}
   m_Layer: 0
   m_Name: Dungeon_16 (11)
   m_TagString: Untagged
@@ -402887,6 +403160,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1735785490}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &620674548
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 620674544}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9809bf1345abc5648af68b3a82653f08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: NavMeshPlus::NavMeshPlus.Components.NavMeshModifier
+  m_OverrideArea: 1
+  m_Area: 1
+  m_IgnoreFromBuild: 0
+  m_AffectedAgents: ffffffff
 --- !u!1 &634592071
 GameObject:
   m_ObjectHideFlags: 0
@@ -403049,6 +403338,7 @@ GameObject:
   - component: {fileID: 675039125}
   - component: {fileID: 675039127}
   - component: {fileID: 675039126}
+  - component: {fileID: 675039128}
   m_Layer: 0
   m_Name: Dungeon_16 (37)
   m_TagString: Untagged
@@ -403167,6 +403457,22 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &675039128
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 675039124}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9809bf1345abc5648af68b3a82653f08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: NavMeshPlus::NavMeshPlus.Components.NavMeshModifier
+  m_OverrideArea: 1
+  m_Area: 1
+  m_IgnoreFromBuild: 0
+  m_AffectedAgents: ffffffff
 --- !u!1 &770020810
 GameObject:
   m_ObjectHideFlags: 0
@@ -403255,6 +403561,7 @@ GameObject:
   - component: {fileID: 808167478}
   - component: {fileID: 808167480}
   - component: {fileID: 808167479}
+  - component: {fileID: 808167481}
   m_Layer: 0
   m_Name: Dungeon_16 (50)
   m_TagString: Untagged
@@ -403373,6 +403680,22 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &808167481
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 808167477}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9809bf1345abc5648af68b3a82653f08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: NavMeshPlus::NavMeshPlus.Components.NavMeshModifier
+  m_OverrideArea: 1
+  m_Area: 1
+  m_IgnoreFromBuild: 0
+  m_AffectedAgents: ffffffff
 --- !u!1 &817005377
 GameObject:
   m_ObjectHideFlags: 0
@@ -403384,6 +403707,7 @@ GameObject:
   - component: {fileID: 817005380}
   - component: {fileID: 817005379}
   - component: {fileID: 817005378}
+  - component: {fileID: 817005381}
   m_Layer: 0
   m_Name: Dungeon_16 (1)
   m_TagString: Untagged
@@ -403502,6 +403826,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1735785490}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &817005381
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 817005377}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9809bf1345abc5648af68b3a82653f08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: NavMeshPlus::NavMeshPlus.Components.NavMeshModifier
+  m_OverrideArea: 1
+  m_Area: 1
+  m_IgnoreFromBuild: 0
+  m_AffectedAgents: ffffffff
 --- !u!1 &955730731
 GameObject:
   m_ObjectHideFlags: 0
@@ -403513,6 +403853,7 @@ GameObject:
   - component: {fileID: 955730732}
   - component: {fileID: 955730734}
   - component: {fileID: 955730733}
+  - component: {fileID: 955730735}
   m_Layer: 0
   m_Name: Dungeon_16 (35)
   m_TagString: Untagged
@@ -403631,6 +403972,22 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &955730735
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 955730731}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9809bf1345abc5648af68b3a82653f08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: NavMeshPlus::NavMeshPlus.Components.NavMeshModifier
+  m_OverrideArea: 1
+  m_Area: 1
+  m_IgnoreFromBuild: 0
+  m_AffectedAgents: ffffffff
 --- !u!1 &983617884
 GameObject:
   m_ObjectHideFlags: 0
@@ -403733,6 +404090,7 @@ GameObject:
   - component: {fileID: 1032677045}
   - component: {fileID: 1032677044}
   - component: {fileID: 1032677043}
+  - component: {fileID: 1032677046}
   m_Layer: 0
   m_Name: Dungeon_16 (8)
   m_TagString: Untagged
@@ -403851,6 +404209,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1735785490}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1032677046
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1032677042}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9809bf1345abc5648af68b3a82653f08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: NavMeshPlus::NavMeshPlus.Components.NavMeshModifier
+  m_OverrideArea: 1
+  m_Area: 1
+  m_IgnoreFromBuild: 0
+  m_AffectedAgents: ffffffff
 --- !u!1 &1054139769
 GameObject:
   m_ObjectHideFlags: 0
@@ -403907,6 +404281,7 @@ GameObject:
   - component: {fileID: 1101263934}
   - component: {fileID: 1101263933}
   - component: {fileID: 1101263932}
+  - component: {fileID: 1101263935}
   m_Layer: 0
   m_Name: Dungeon_16 (13)
   m_TagString: Untagged
@@ -404025,6 +404400,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1735785490}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1101263935
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1101263931}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9809bf1345abc5648af68b3a82653f08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: NavMeshPlus::NavMeshPlus.Components.NavMeshModifier
+  m_OverrideArea: 1
+  m_Area: 1
+  m_IgnoreFromBuild: 0
+  m_AffectedAgents: ffffffff
 --- !u!1 &1129427399
 GameObject:
   m_ObjectHideFlags: 0
@@ -404036,6 +404427,7 @@ GameObject:
   - component: {fileID: 1129427400}
   - component: {fileID: 1129427402}
   - component: {fileID: 1129427401}
+  - component: {fileID: 1129427403}
   m_Layer: 0
   m_Name: Dungeon_16 (45)
   m_TagString: Untagged
@@ -404154,6 +404546,22 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &1129427403
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1129427399}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9809bf1345abc5648af68b3a82653f08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: NavMeshPlus::NavMeshPlus.Components.NavMeshModifier
+  m_OverrideArea: 1
+  m_Area: 1
+  m_IgnoreFromBuild: 0
+  m_AffectedAgents: ffffffff
 --- !u!1 &1153206618
 GameObject:
   m_ObjectHideFlags: 0
@@ -404165,6 +404573,7 @@ GameObject:
   - component: {fileID: 1153206621}
   - component: {fileID: 1153206620}
   - component: {fileID: 1153206619}
+  - component: {fileID: 1153206622}
   m_Layer: 0
   m_Name: Dungeon_16 (10)
   m_TagString: Untagged
@@ -404283,6 +404692,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1735785490}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1153206622
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1153206618}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9809bf1345abc5648af68b3a82653f08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: NavMeshPlus::NavMeshPlus.Components.NavMeshModifier
+  m_OverrideArea: 1
+  m_Area: 1
+  m_IgnoreFromBuild: 0
+  m_AffectedAgents: ffffffff
 --- !u!1 &1165413666
 GameObject:
   m_ObjectHideFlags: 0
@@ -404294,6 +404719,7 @@ GameObject:
   - component: {fileID: 1165413669}
   - component: {fileID: 1165413668}
   - component: {fileID: 1165413667}
+  - component: {fileID: 1165413670}
   m_Layer: 0
   m_Name: Dungeon_16 (21)
   m_TagString: Untagged
@@ -404412,6 +404838,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1735785490}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1165413670
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1165413666}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9809bf1345abc5648af68b3a82653f08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: NavMeshPlus::NavMeshPlus.Components.NavMeshModifier
+  m_OverrideArea: 1
+  m_Area: 1
+  m_IgnoreFromBuild: 0
+  m_AffectedAgents: ffffffff
 --- !u!1 &1204343545
 GameObject:
   m_ObjectHideFlags: 0
@@ -404423,6 +404865,7 @@ GameObject:
   - component: {fileID: 1204343548}
   - component: {fileID: 1204343547}
   - component: {fileID: 1204343546}
+  - component: {fileID: 1204343549}
   m_Layer: 0
   m_Name: Dungeon_16 (30)
   m_TagString: Untagged
@@ -404541,6 +404984,102 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1735785490}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1204343549
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1204343545}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9809bf1345abc5648af68b3a82653f08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: NavMeshPlus::NavMeshPlus.Components.NavMeshModifier
+  m_OverrideArea: 1
+  m_Area: 1
+  m_IgnoreFromBuild: 0
+  m_AffectedAgents: ffffffff
+--- !u!1 &1241507575
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1241507578}
+  - component: {fileID: 1241507577}
+  - component: {fileID: 1241507576}
+  m_Layer: 0
+  m_Name: NavigationSurface
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1241507576
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1241507575}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70bd44a44cd62c64fbfc1eea95b24880, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: NavMeshPlus::NavMeshPlus.Extensions.CollectSources2d
+  m_OverrideByGrid: 0
+  m_UseMeshPrefab: {fileID: 0}
+  m_CompressBounds: 0
+  m_OverrideVector: {x: 1, y: 1, z: 1}
+--- !u!114 &1241507577
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1241507575}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e04976799df50f54ba128eff723155a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: NavMeshPlus::NavMeshPlus.Components.NavMeshSurface
+  m_AgentTypeID: 0
+  m_CollectObjects: 0
+  m_Size: {x: 10, y: 10, z: 10}
+  m_Center: {x: 0, y: 2, z: 0}
+  m_LayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_UseGeometry: 0
+  m_DefaultArea: 0
+  m_IgnoreNavMeshAgent: 1
+  m_IgnoreNavMeshObstacle: 1
+  m_OverrideTileSize: 0
+  m_TileSize: 256
+  m_OverrideVoxelSize: 0
+  m_VoxelSize: 0.16666667
+  m_BuildHeightMesh: 0
+  m_MinRegionArea: 0
+  m_HideEditorLogs: 0
+  m_NavMeshData: {fileID: 23800000, guid: b70721c8ba334bc43b2c80063c558984, type: 2}
+--- !u!4 &1241507578
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1241507575}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: -13.47816, y: -11.7667, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1276903236
 GameObject:
   m_ObjectHideFlags: 0
@@ -404552,6 +405091,7 @@ GameObject:
   - component: {fileID: 1276903239}
   - component: {fileID: 1276903238}
   - component: {fileID: 1276903237}
+  - component: {fileID: 1276903240}
   m_Layer: 0
   m_Name: Dungeon_16 (6)
   m_TagString: Untagged
@@ -404670,6 +405210,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1735785490}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1276903240
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1276903236}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9809bf1345abc5648af68b3a82653f08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: NavMeshPlus::NavMeshPlus.Components.NavMeshModifier
+  m_OverrideArea: 1
+  m_Area: 1
+  m_IgnoreFromBuild: 0
+  m_AffectedAgents: ffffffff
 --- !u!1 &1345043288
 GameObject:
   m_ObjectHideFlags: 0
@@ -404681,6 +405237,7 @@ GameObject:
   - component: {fileID: 1345043289}
   - component: {fileID: 1345043291}
   - component: {fileID: 1345043290}
+  - component: {fileID: 1345043292}
   m_Layer: 0
   m_Name: Dungeon_16 (43)
   m_TagString: Untagged
@@ -404799,6 +405356,22 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &1345043292
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1345043288}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9809bf1345abc5648af68b3a82653f08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: NavMeshPlus::NavMeshPlus.Components.NavMeshModifier
+  m_OverrideArea: 1
+  m_Area: 1
+  m_IgnoreFromBuild: 0
+  m_AffectedAgents: ffffffff
 --- !u!1 &1348992657
 GameObject:
   m_ObjectHideFlags: 0
@@ -404810,6 +405383,7 @@ GameObject:
   - component: {fileID: 1348992660}
   - component: {fileID: 1348992659}
   - component: {fileID: 1348992658}
+  - component: {fileID: 1348992661}
   m_Layer: 0
   m_Name: Dungeon_16 (26)
   m_TagString: Untagged
@@ -404928,6 +405502,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1735785490}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1348992661
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1348992657}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9809bf1345abc5648af68b3a82653f08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: NavMeshPlus::NavMeshPlus.Components.NavMeshModifier
+  m_OverrideArea: 1
+  m_Area: 1
+  m_IgnoreFromBuild: 0
+  m_AffectedAgents: ffffffff
 --- !u!1 &1371124037
 GameObject:
   m_ObjectHideFlags: 0
@@ -404939,6 +405529,7 @@ GameObject:
   - component: {fileID: 1371124040}
   - component: {fileID: 1371124039}
   - component: {fileID: 1371124038}
+  - component: {fileID: 1371124041}
   m_Layer: 0
   m_Name: Dungeon_16 (27)
   m_TagString: Untagged
@@ -405057,6 +405648,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1735785490}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1371124041
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1371124037}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9809bf1345abc5648af68b3a82653f08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: NavMeshPlus::NavMeshPlus.Components.NavMeshModifier
+  m_OverrideArea: 1
+  m_Area: 1
+  m_IgnoreFromBuild: 0
+  m_AffectedAgents: ffffffff
 --- !u!1 &1376193568
 GameObject:
   m_ObjectHideFlags: 0
@@ -405068,6 +405675,7 @@ GameObject:
   - component: {fileID: 1376193569}
   - component: {fileID: 1376193571}
   - component: {fileID: 1376193570}
+  - component: {fileID: 1376193572}
   m_Layer: 0
   m_Name: Dungeon_16 (44)
   m_TagString: Untagged
@@ -405186,6 +405794,22 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &1376193572
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1376193568}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9809bf1345abc5648af68b3a82653f08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: NavMeshPlus::NavMeshPlus.Components.NavMeshModifier
+  m_OverrideArea: 1
+  m_Area: 1
+  m_IgnoreFromBuild: 0
+  m_AffectedAgents: ffffffff
 --- !u!1 &1402607458
 GameObject:
   m_ObjectHideFlags: 0
@@ -405326,6 +405950,7 @@ GameObject:
   - component: {fileID: 1411767763}
   - component: {fileID: 1411767762}
   - component: {fileID: 1411767761}
+  - component: {fileID: 1411767764}
   m_Layer: 0
   m_Name: Dungeon_16 (15)
   m_TagString: Untagged
@@ -405444,6 +406069,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1735785490}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1411767764
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1411767760}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9809bf1345abc5648af68b3a82653f08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: NavMeshPlus::NavMeshPlus.Components.NavMeshModifier
+  m_OverrideArea: 1
+  m_Area: 1
+  m_IgnoreFromBuild: 0
+  m_AffectedAgents: ffffffff
 --- !u!1 &1498276003
 GameObject:
   m_ObjectHideFlags: 0
@@ -405455,6 +406096,7 @@ GameObject:
   - component: {fileID: 1498276004}
   - component: {fileID: 1498276006}
   - component: {fileID: 1498276005}
+  - component: {fileID: 1498276007}
   m_Layer: 0
   m_Name: Dungeon_16 (33)
   m_TagString: Untagged
@@ -405573,6 +406215,22 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &1498276007
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1498276003}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9809bf1345abc5648af68b3a82653f08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: NavMeshPlus::NavMeshPlus.Components.NavMeshModifier
+  m_OverrideArea: 1
+  m_Area: 1
+  m_IgnoreFromBuild: 0
+  m_AffectedAgents: ffffffff
 --- !u!1 &1503038436
 GameObject:
   m_ObjectHideFlags: 0
@@ -405584,6 +406242,7 @@ GameObject:
   - component: {fileID: 1503038437}
   - component: {fileID: 1503038439}
   - component: {fileID: 1503038438}
+  - component: {fileID: 1503038440}
   m_Layer: 0
   m_Name: Dungeon_16 (48)
   m_TagString: Untagged
@@ -405702,6 +406361,22 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &1503038440
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1503038436}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9809bf1345abc5648af68b3a82653f08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: NavMeshPlus::NavMeshPlus.Components.NavMeshModifier
+  m_OverrideArea: 1
+  m_Area: 1
+  m_IgnoreFromBuild: 0
+  m_AffectedAgents: ffffffff
 --- !u!1 &1512000000
 GameObject:
   m_ObjectHideFlags: 0
@@ -405764,6 +406439,7 @@ GameObject:
   - component: {fileID: 1576022068}
   - component: {fileID: 1576022070}
   - component: {fileID: 1576022069}
+  - component: {fileID: 1576022071}
   m_Layer: 0
   m_Name: Dungeon_16 (42)
   m_TagString: Untagged
@@ -405882,6 +406558,22 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &1576022071
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1576022067}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9809bf1345abc5648af68b3a82653f08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: NavMeshPlus::NavMeshPlus.Components.NavMeshModifier
+  m_OverrideArea: 1
+  m_Area: 1
+  m_IgnoreFromBuild: 0
+  m_AffectedAgents: ffffffff
 --- !u!1 &1582244020
 GameObject:
   m_ObjectHideFlags: 0
@@ -405893,6 +406585,7 @@ GameObject:
   - component: {fileID: 1582244023}
   - component: {fileID: 1582244022}
   - component: {fileID: 1582244021}
+  - component: {fileID: 1582244024}
   m_Layer: 0
   m_Name: Dungeon_16 (12)
   m_TagString: Untagged
@@ -406011,6 +406704,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1735785490}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1582244024
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1582244020}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9809bf1345abc5648af68b3a82653f08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: NavMeshPlus::NavMeshPlus.Components.NavMeshModifier
+  m_OverrideArea: 1
+  m_Area: 1
+  m_IgnoreFromBuild: 0
+  m_AffectedAgents: ffffffff
 --- !u!1 &1612912141
 GameObject:
   m_ObjectHideFlags: 0
@@ -406022,6 +406731,7 @@ GameObject:
   - component: {fileID: 1612912144}
   - component: {fileID: 1612912143}
   - component: {fileID: 1612912142}
+  - component: {fileID: 1612912145}
   m_Layer: 0
   m_Name: Dungeon_16 (20)
   m_TagString: Untagged
@@ -406140,6 +406850,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1735785490}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1612912145
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1612912141}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9809bf1345abc5648af68b3a82653f08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: NavMeshPlus::NavMeshPlus.Components.NavMeshModifier
+  m_OverrideArea: 1
+  m_Area: 1
+  m_IgnoreFromBuild: 0
+  m_AffectedAgents: ffffffff
 --- !u!1 &1670352788
 GameObject:
   m_ObjectHideFlags: 0
@@ -406151,6 +406877,7 @@ GameObject:
   - component: {fileID: 1670352791}
   - component: {fileID: 1670352790}
   - component: {fileID: 1670352789}
+  - component: {fileID: 1670352792}
   m_Layer: 0
   m_Name: Dungeon_16 (16)
   m_TagString: Untagged
@@ -406269,6 +406996,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1735785490}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1670352792
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1670352788}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9809bf1345abc5648af68b3a82653f08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: NavMeshPlus::NavMeshPlus.Components.NavMeshModifier
+  m_OverrideArea: 1
+  m_Area: 1
+  m_IgnoreFromBuild: 0
+  m_AffectedAgents: ffffffff
 --- !u!1 &1673849290
 GameObject:
   m_ObjectHideFlags: 0
@@ -406280,6 +407023,7 @@ GameObject:
   - component: {fileID: 1673849293}
   - component: {fileID: 1673849292}
   - component: {fileID: 1673849291}
+  - component: {fileID: 1673849294}
   m_Layer: 0
   m_Name: Dungeon_16 (29)
   m_TagString: Untagged
@@ -406398,6 +407142,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1735785490}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1673849294
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1673849290}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9809bf1345abc5648af68b3a82653f08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: NavMeshPlus::NavMeshPlus.Components.NavMeshModifier
+  m_OverrideArea: 1
+  m_Area: 1
+  m_IgnoreFromBuild: 0
+  m_AffectedAgents: ffffffff
 --- !u!1 &1735785489
 GameObject:
   m_ObjectHideFlags: 0
@@ -406423,7 +407183,7 @@ Transform:
   m_GameObject: {fileID: 1735785489}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 37.31265, y: -55.91826, z: 0}
+  m_LocalPosition: {x: 37.31265, y: -55.91826, z: 3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -406490,6 +407250,7 @@ GameObject:
   - component: {fileID: 1753788024}
   - component: {fileID: 1753788023}
   - component: {fileID: 1753788022}
+  - component: {fileID: 1753788025}
   m_Layer: 0
   m_Name: Dungeon_16 (18)
   m_TagString: Untagged
@@ -406608,6 +407369,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1735785490}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1753788025
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1753788021}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9809bf1345abc5648af68b3a82653f08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: NavMeshPlus::NavMeshPlus.Components.NavMeshModifier
+  m_OverrideArea: 1
+  m_Area: 1
+  m_IgnoreFromBuild: 0
+  m_AffectedAgents: ffffffff
 --- !u!1 &1784771480
 GameObject:
   m_ObjectHideFlags: 0
@@ -406734,6 +407511,7 @@ GameObject:
   - component: {fileID: 1817005521}
   - component: {fileID: 1817005520}
   - component: {fileID: 1817005519}
+  - component: {fileID: 1817005522}
   m_Layer: 0
   m_Name: Dungeon_16 (7)
   m_TagString: Untagged
@@ -406852,6 +407630,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1735785490}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1817005522
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1817005518}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9809bf1345abc5648af68b3a82653f08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: NavMeshPlus::NavMeshPlus.Components.NavMeshModifier
+  m_OverrideArea: 1
+  m_Area: 1
+  m_IgnoreFromBuild: 0
+  m_AffectedAgents: ffffffff
 --- !u!1 &1818829618
 GameObject:
   m_ObjectHideFlags: 0
@@ -406863,6 +407657,7 @@ GameObject:
   - component: {fileID: 1818829621}
   - component: {fileID: 1818829620}
   - component: {fileID: 1818829619}
+  - component: {fileID: 1818829622}
   m_Layer: 0
   m_Name: Dungeon_16 (24)
   m_TagString: Untagged
@@ -406981,6 +407776,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1735785490}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1818829622
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1818829618}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9809bf1345abc5648af68b3a82653f08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: NavMeshPlus::NavMeshPlus.Components.NavMeshModifier
+  m_OverrideArea: 1
+  m_Area: 1
+  m_IgnoreFromBuild: 0
+  m_AffectedAgents: ffffffff
 --- !u!1 &1852253008
 GameObject:
   m_ObjectHideFlags: 0
@@ -407019,7 +407830,7 @@ Transform:
   m_GameObject: {fileID: 1852253008}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -407037,6 +407848,7 @@ GameObject:
   - component: {fileID: 1892058214}
   - component: {fileID: 1892058213}
   - component: {fileID: 1892058212}
+  - component: {fileID: 1892058215}
   m_Layer: 0
   m_Name: Dungeon_16 (23)
   m_TagString: Untagged
@@ -407155,6 +407967,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1735785490}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1892058215
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1892058211}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9809bf1345abc5648af68b3a82653f08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: NavMeshPlus::NavMeshPlus.Components.NavMeshModifier
+  m_OverrideArea: 1
+  m_Area: 1
+  m_IgnoreFromBuild: 0
+  m_AffectedAgents: ffffffff
 --- !u!1 &1947308173
 GameObject:
   m_ObjectHideFlags: 0
@@ -407166,6 +407994,7 @@ GameObject:
   - component: {fileID: 1947308174}
   - component: {fileID: 1947308176}
   - component: {fileID: 1947308175}
+  - component: {fileID: 1947308177}
   m_Layer: 0
   m_Name: Dungeon_16 (38)
   m_TagString: Untagged
@@ -407284,6 +408113,22 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &1947308177
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1947308173}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9809bf1345abc5648af68b3a82653f08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: NavMeshPlus::NavMeshPlus.Components.NavMeshModifier
+  m_OverrideArea: 1
+  m_Area: 1
+  m_IgnoreFromBuild: 0
+  m_AffectedAgents: ffffffff
 --- !u!1 &1965491786
 GameObject:
   m_ObjectHideFlags: 0
@@ -407295,6 +408140,7 @@ GameObject:
   - component: {fileID: 1965491787}
   - component: {fileID: 1965491789}
   - component: {fileID: 1965491788}
+  - component: {fileID: 1965491790}
   m_Layer: 0
   m_Name: Dungeon_16 (34)
   m_TagString: Untagged
@@ -407413,6 +408259,22 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &1965491790
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1965491786}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9809bf1345abc5648af68b3a82653f08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: NavMeshPlus::NavMeshPlus.Components.NavMeshModifier
+  m_OverrideArea: 1
+  m_Area: 1
+  m_IgnoreFromBuild: 0
+  m_AffectedAgents: ffffffff
 --- !u!1 &1973943048
 GameObject:
   m_ObjectHideFlags: 0
@@ -407424,6 +408286,7 @@ GameObject:
   - component: {fileID: 1973943051}
   - component: {fileID: 1973943050}
   - component: {fileID: 1973943049}
+  - component: {fileID: 1973943052}
   m_Layer: 0
   m_Name: Dungeon_16 (31)
   m_TagString: Untagged
@@ -407542,6 +408405,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1735785490}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1973943052
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1973943048}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9809bf1345abc5648af68b3a82653f08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: NavMeshPlus::NavMeshPlus.Components.NavMeshModifier
+  m_OverrideArea: 1
+  m_Area: 1
+  m_IgnoreFromBuild: 0
+  m_AffectedAgents: ffffffff
 --- !u!1 &1974406953
 GameObject:
   m_ObjectHideFlags: 0
@@ -407553,6 +408432,7 @@ GameObject:
   - component: {fileID: 1974406954}
   - component: {fileID: 1974406956}
   - component: {fileID: 1974406955}
+  - component: {fileID: 1974406957}
   m_Layer: 0
   m_Name: Dungeon_16 (41)
   m_TagString: Untagged
@@ -407671,6 +408551,22 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &1974406957
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1974406953}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9809bf1345abc5648af68b3a82653f08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: NavMeshPlus::NavMeshPlus.Components.NavMeshModifier
+  m_OverrideArea: 1
+  m_Area: 1
+  m_IgnoreFromBuild: 0
+  m_AffectedAgents: ffffffff
 --- !u!1 &2037187971
 GameObject:
   m_ObjectHideFlags: 0
@@ -407682,6 +408578,7 @@ GameObject:
   - component: {fileID: 2037187972}
   - component: {fileID: 2037187974}
   - component: {fileID: 2037187973}
+  - component: {fileID: 2037187975}
   m_Layer: 0
   m_Name: Dungeon_16 (39)
   m_TagString: Untagged
@@ -407800,6 +408697,22 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &2037187975
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2037187971}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9809bf1345abc5648af68b3a82653f08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: NavMeshPlus::NavMeshPlus.Components.NavMeshModifier
+  m_OverrideArea: 1
+  m_Area: 1
+  m_IgnoreFromBuild: 0
+  m_AffectedAgents: ffffffff
 --- !u!1 &2037590567
 GameObject:
   m_ObjectHideFlags: 0
@@ -407811,6 +408724,7 @@ GameObject:
   - component: {fileID: 2037590570}
   - component: {fileID: 2037590569}
   - component: {fileID: 2037590568}
+  - component: {fileID: 2037590571}
   m_Layer: 0
   m_Name: Dungeon_16 (14)
   m_TagString: Untagged
@@ -407929,6 +408843,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1735785490}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2037590571
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2037590567}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9809bf1345abc5648af68b3a82653f08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: NavMeshPlus::NavMeshPlus.Components.NavMeshModifier
+  m_OverrideArea: 1
+  m_Area: 1
+  m_IgnoreFromBuild: 0
+  m_AffectedAgents: ffffffff
 --- !u!1 &2094942652
 GameObject:
   m_ObjectHideFlags: 0
@@ -407940,6 +408870,7 @@ GameObject:
   - component: {fileID: 2094942655}
   - component: {fileID: 2094942654}
   - component: {fileID: 2094942656}
+  - component: {fileID: 2094942657}
   m_Layer: 0
   m_Name: Dungeon_16
   m_TagString: Untagged
@@ -408058,6 +408989,22 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0.51}
   m_Size: {x: 0.58, y: 2.14}
   m_Direction: 0
+--- !u!114 &2094942657
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2094942652}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9809bf1345abc5648af68b3a82653f08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: NavMeshPlus::NavMeshPlus.Components.NavMeshModifier
+  m_OverrideArea: 1
+  m_Area: 1
+  m_IgnoreFromBuild: 0
+  m_AffectedAgents: ffffffff
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -408073,3 +409020,4 @@ SceneRoots:
   - {fileID: 1735785490}
   - {fileID: 303958641}
   - {fileID: 1054139771}
+  - {fileID: 1241507578}

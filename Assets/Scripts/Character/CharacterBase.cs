@@ -61,16 +61,24 @@ namespace Character
             
             if (_characterSprite && Mathf.Abs(direction.x) > 0.01f)
             {
-                _characterSprite.flipX = direction.x < 0;
+                FlipSprite(direction.x < 0);
             }
 
             CharacterRigidbody.MovePosition(CharacterRigidbody.position + direction * (_moveSpeed * MoveSpeedMultiplier * Time.fixedDeltaTime));
         }
 
-        protected void MoveToward(Vector2 worldPosition)
+        protected void AIFlipSprite(Vector2 worldPosition)
         {
-            Vector2 direction = (worldPosition - CharacterRigidbody.position).normalized;
-            Move(direction);
+            var direction = (worldPosition - CharacterRigidbody.position).normalized;
+            if (_characterSprite && Mathf.Abs(direction.x) > 0.01f)
+            {
+                FlipSprite(direction.x < 0);
+            }
+        }
+
+        protected void FlipSprite(bool flip)
+        {
+            _characterSprite.flipX = flip;
         }
 
         protected virtual void OnDeath()
