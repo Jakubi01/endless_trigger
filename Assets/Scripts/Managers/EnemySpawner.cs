@@ -1,3 +1,6 @@
+#define DEBUG_BOSS
+
+using System.Collections;
 using System.Collections.Generic;
 using Character.Enemy;
 using Character.Player;
@@ -115,6 +118,14 @@ namespace Managers
             BuildPools();
         }
 
+#if DEBUG_BOSS
+        private IEnumerator Start()
+        {
+            yield return new WaitForSeconds(3f); 
+            SpawnBoss();
+        }
+#endif
+        
         private void OnDestroy()
         {
             // 스포너가 파괴될 때 풀 내부의 인스턴스들을 모두 제거하여 메모리 누수 방지
@@ -133,6 +144,9 @@ namespace Managers
         {
             if (!Player) return;
 
+#if DEBUG_BOSS
+            
+#else
             switch (_phase)
             {
                 case Phase.InitialDelay:
@@ -154,6 +168,7 @@ namespace Managers
                     if (_phaseTimer <= 0f) StartRound(_roundNumber + 1);
                     break;
             }
+#endif
         }
 
         /// <summary>
@@ -255,6 +270,8 @@ namespace Managers
 
                 _pools.Add(data.EnemyType, enemyPool);
                 _poolList.Add(enemyPool);
+
+                if (enemyPool.Data.EnemyType == EnemyType.Boss) continue;
                 
                 // 씬 시작 전 최적화를 위해 더미 객체 미리 생성 후 반환 프로세스 진행
                 Prewarm(enemyPool);

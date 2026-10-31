@@ -30,8 +30,8 @@ namespace Items.Weapon
 
         private void OnTriggerEnter2D(Collider2D other)
         {
-            if (_hit || !other.CompareTag("Player")) return;
-
+            if (_hit || other.gameObject.layer != LayerMask.NameToLayer("Player")) return;
+            
             var health = other.GetComponentInParent<HealthComponent>();
             if (!health) return;
 

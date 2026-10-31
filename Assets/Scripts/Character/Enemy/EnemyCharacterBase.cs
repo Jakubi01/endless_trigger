@@ -1,3 +1,5 @@
+#define DEBUG_BOSS
+
 using Character.Player;
 using Components;
 using System;
@@ -5,6 +7,7 @@ using System.Collections;
 using System.Globalization;
 using Effects.DamageText;
 using Managers;
+using UnityEditor;
 using UnityEngine;
 
 namespace Character.Enemy
@@ -112,7 +115,6 @@ namespace Character.Enemy
             OnAttackAction -= Attack;
             OnDeathAction -= Death;
             _enemyManager?.Unregister(this);
-            Debug.Log($"{name} disabled\n{new System.Diagnostics.StackTrace()}", this);
         }
 
         private void OnTriggerStay2D(Collider2D other)

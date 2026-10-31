@@ -1,4 +1,7 @@
-﻿using System.Collections;
+﻿
+#undef DEBUG_BOSS
+
+using System.Collections;
 using System.Collections.Generic;
 using Character;
 using Character.Player;
@@ -20,9 +23,10 @@ namespace Components
         [Header("Selection")]
         [Tooltip("Pattern 1 ~ 5 weight (index 0 = pattern 1)")]
         [SerializeField] private float[] weights = { 1f, 1f, 1f, 1f, 1f };
-        [SerializeField] private float restMin = 1f;
-        [SerializeField] private float restMax = 1.5f;
-        [SerializeField] private float dashPillarRest = 2f;
+        [SerializeField] private float minRestAfterAttack = 1f;
+        [SerializeField] private float maxRestAfterAttack = 1.5f;
+        [SerializeField] private float restAfterDashOrPillar = 2f;
+        [SerializeField] private float playerHitInvulnerability = 0.5f;
 
         [Header("Phase")]
         [SerializeField] private float phase2DamageMultiplier = 1.1f;
@@ -77,6 +81,7 @@ namespace Components
         [SerializeField] private float boneBurstInterval = 0.6f;
 
         [Header("Pattern 4 - DashSlash")]
+        [SerializeField] private Transform muzzlePoint;
         // [Resource] Telegraph_Line_Red_256x48 프리팹: 4프레임 루프, 피벗 왼쪽 중앙, +X 방향 (8m×1.5m)
         [SerializeField] private GameObject dashLinePrefab;
         // [Resource] 검기 잔상: SwordWave_Vanish_64 프리팹 재사용 가능
@@ -106,7 +111,7 @@ namespace Components
         private Animator _animator;
         private readonly float[] _nextTime = new float[6]; // 인덱스 = 패턴 번호
         private float _restUntil;
-        private float _pairRestUntil;
+        private float _invulnerableUntil;
         private int _lastPattern;
         private EPhase _phase;
         private Vector2 _facing = Vector2.right;
@@ -119,6 +124,19 @@ namespace Components
         private WaitForSeconds _slashFrameWaitForSeconds;
         
         public bool IsExecutingPattern { get; private set; }
+
+        public bool TryReceiveDamage()
+        {
+            if (Time.time < _invulnerableUntil) return false;
+            _invulnerableUntil = Time.time + playerHitInvulnerability;
+            return true;
+        }
+
+        private void LateUpdate()
+        {
+            if (!muzzlePoint || !_target) return;
+            muzzlePoint.rotation = AngleOf(DirTo(_target.position));
+        }
 
         // 이동 컴포넌트에서 곱해서 사용
         public float MoveSpeedMultiplier => _phase == EPhase.Phase3 ? phase3SpeedMultiplier : 1f;
@@ -163,12 +181,19 @@ namespace Components
 
             _phase = GetPhase(healthComponent.MaxHealth, healthComponent.CurrentHealth);
 
+#if DEBUG_BOSS
+              Debug.LogFormat("[{0}] {1}", nameof(EnemyBossCombatComponent), _phase.ToString());      
+#endif            
             var maxId = _phase switch
             {
                 EPhase.Phase1 => 2,
                 EPhase.Phase2 => 4,
-                _ => 5
+                EPhase.Phase3 => 5,
+                _ => -1
             };
+
+            if (maxId == -1) return;
+            
 
             var candidates = new List<int>();
             for (var id = 1; id <= maxId; id++)
@@ -176,6 +201,7 @@ namespace Components
                 if (CanUse(id)) candidates.Add(id);
             }
 
+            Debug.LogFormat("[{0}] {1}", nameof(EnemyBossCombatComponent), candidates.Count.ToString());
             if (candidates.Count == 0) return;
 
             ExecutePattern(PickWeighted(candidates));
@@ -185,13 +211,7 @@ namespace Components
         {
             if (id == _lastPattern) return false;
             if (Time.time < _nextTime[id]) return false;
-            if (id == 2 && Vector2.Distance(_target.position, transform.position) > swingRange) return false;
-
-            // 4와 5 사이에는 최소 dashPillarRest초
-            var isDashPillarPair = (id == 4 && _lastPattern == 5) || (id == 5 && _lastPattern == 4);
-            if (isDashPillarPair && Time.time < _pairRestUntil) return false;
-
-            return true;
+            return id != 2 || !(Vector2.Distance(_target.position, transform.position) > swingRange);
         }
 
         private int PickWeighted(List<int> candidates)
@@ -225,7 +245,6 @@ namespace Components
         {
             IsExecutingPattern = true;
             _lastPattern = patternId;
-            _nextTime[patternId] = Time.time + CooldownOf(patternId);
             
             switch (patternId)
             {
@@ -241,8 +260,11 @@ namespace Components
         public void ClearExecutingFlag()
         {
             IsExecutingPattern = false;
-            _restUntil = Time.time + Random.Range(restMin, restMax);
-            _pairRestUntil = Time.time + dashPillarRest;
+            _nextTime[_lastPattern] = Time.time + CooldownOf(_lastPattern);
+            var rest = _lastPattern is 4 or 5
+                ? restAfterDashOrPillar
+                : Random.Range(minRestAfterAttack, maxRestAfterAttack);
+            _restUntil = Time.time + rest;
         }
 
         private EPhase GetPhase(float maxHealth, float currentHealth)
@@ -360,7 +382,8 @@ namespace Components
             
             // [Resource] 대검 휘두르기 애니메이션, 타격 SFX
             _facing = DirTo(_target.position);
-            var fan = Instantiate(fanTelegraphPrefab, transform.position, AngleOf(_facing));
+            var spawnPoint = muzzlePoint ? muzzlePoint.transform.position : transform.position;
+            var fan = Instantiate(fanTelegraphPrefab, spawnPoint, AngleOf(_facing));
             yield return _swingWaitForSeconds; 
             Destroy(fan);
 
@@ -437,7 +460,13 @@ namespace Components
                 yield return null;
             }
 
-            TryHitFan(dashSlashRange, dashSlashAngle, dashSlashDamage);
+            if (muzzlePoint)
+            {
+                muzzlePoint.rotation = rotation;
+                var toTarget = (Vector2)_target.position - (Vector2)muzzlePoint.position;
+                if (toTarget.magnitude <= dashSlashRange && Vector2.Angle(_facing, toTarget) <= dashSlashAngle * 0.5f)
+                    Damage(dashSlashDamage);
+            }
             ClearExecutingFlag();
         }
         

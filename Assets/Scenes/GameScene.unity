@@ -403234,6 +403234,8 @@ MonoBehaviour:
   maxSpawnDistanceFromPlayer: 20
   initialSpawnDelay: 5
   waveDuration: 30
+  intermissionDuration: 10
+  bossRound: 10
   baseSpawnCount: 2
   spawnCountIncreasePerSection: 2
   spawnCountIncreasePerWave: 1

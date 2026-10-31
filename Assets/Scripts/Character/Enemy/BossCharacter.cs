@@ -17,7 +17,6 @@ namespace Character.Enemy
             Dead
         }
 
-        [SerializeField] private float minimunAttackRadius = 2f;
         private EnemyBossCombatComponent _bossCombatComponent;
         private EBehaviourState _behaviourState = EBehaviourState.None;
         private PlayerCharacter _playerCharacter;
@@ -61,7 +60,7 @@ namespace Character.Enemy
             }
 
             var distance = Vector2.Distance(transform.position, _playerCharacter.transform.position);
-            var nextState = distance <= minimunAttackRadius
+            var nextState = distance <= AttackRadius
                 ? EBehaviourState.Combat
                 : EBehaviourState.MoveToTarget;
 
@@ -100,8 +99,7 @@ namespace Character.Enemy
 
         public override void TakeDamage(float amount)
         {
-            // 여기에 무적 시간
-            
+            if (!_bossCombatComponent || !_bossCombatComponent.TryReceiveDamage()) return;
             base.TakeDamage(amount);
         }
         
