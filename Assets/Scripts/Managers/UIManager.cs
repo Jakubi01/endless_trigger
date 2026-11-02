@@ -34,6 +34,9 @@ namespace Managers
         
         [SerializeField] private LevelUpSelectionWindow levelUpSelectionWindowPrefab;
         private LevelUpSelectionWindow _currentLevelUpSelectionWindow;
+        
+        [SerializeField] private GameClearWindow gameClearWindowPrefab;
+        private GameClearWindow _currentGameClearWindow;
 
         private GameHUD _gameHUD;
 
@@ -58,6 +61,8 @@ namespace Managers
             }
             Time.timeScale = 1f;
         }
+
+        public void SetGameHUD(GameHUD gameHUd) => _gameHUD = gameHUd;
 
         /// <summary>
         /// 현재 사용 가능한 유효한 캔버스를 반환합니다.
@@ -261,6 +266,30 @@ namespace Managers
         }
 #endregion
 
+#region GameClear
+
+        public void ShowGameClearWindow()
+        {
+            _gameHUD.gameObject.SetActive(false);
+            OpenWindow(gameClearWindowPrefab, ref _currentGameClearWindow);
+        }
+
+        public void OnGameClearWindowClosed(GameClearWindow gameClearWindow)
+        {
+            if (_currentGameClearWindow == gameClearWindow)
+            {
+                Destroy(_currentGameClearWindow.gameObject);
+                _currentGameClearWindow = null;
+            }
+            else if (gameClearWindow)
+            {
+                Destroy(gameClearWindow.gameObject);
+            }
+            
+            RefreshPauseState();
+        }
+#endregion
+
 #region Shared
         private void ClearWindowReferences()
         {
@@ -270,6 +299,7 @@ namespace Managers
             DestroyWindowIfAlive(_currentGameOverWindow);
             DestroyWindowIfAlive(_currentGoToTitleWindow);
             DestroyWindowIfAlive(_currentLevelUpSelectionWindow);
+            DestroyWindowIfAlive(_currentGameClearWindow);
 
             _currentExitWindow = null;
             _currentSettingWindow = null;
@@ -277,6 +307,7 @@ namespace Managers
             _currentGameOverWindow = null;
             _currentGoToTitleWindow = null;
             _currentLevelUpSelectionWindow = null;
+            _currentGameClearWindow = null;
         }
 
         private void DestroyWindowIfAlive(MonoBehaviour window)

@@ -1,5 +1,7 @@
-﻿using Character.Player;
+﻿using Character.Enemy.Boss;
+using Character.Player;
 using Components;
+using System.Collections;
 using Managers;
 using UnityEngine;
 
@@ -17,9 +19,11 @@ namespace Character.Enemy
             Dead
         }
 
+        
         private EnemyBossCombatComponent _bossCombatComponent;
         private EBehaviourState _behaviourState = EBehaviourState.None;
         private PlayerCharacter _playerCharacter;
+        private BossClear _bossClear;
 
         protected override void Awake()
         {
@@ -36,6 +40,8 @@ namespace Character.Enemy
         {
             // state machine에서 처리하기 때문에 event에서 제거
             OnAttackAction -= Attack;
+
+            _bossClear = FindAnyObjectByType<BossClear>();
         }
 
         private void Update()
@@ -120,6 +126,7 @@ namespace Character.Enemy
             // Clear UI pop up
             _playerCharacter = null;
             _behaviourState = EBehaviourState.Idle;
+            _bossClear?.StartGameClearEvent();
         }
 
         private void SetPlayerRef()

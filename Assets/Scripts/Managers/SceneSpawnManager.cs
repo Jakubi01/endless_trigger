@@ -117,6 +117,7 @@ namespace Managers
             }
 
             _gameHUD.Initialize(Player, FindFirstObjectByType<EnemySpawner>());
+            UIManager.Instance.SetGameHUD(_gameHUD);
         }
     }
 }

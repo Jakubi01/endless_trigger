@@ -129,6 +129,7 @@ namespace Components
         private EPhase _phase;
         private Vector2 _facing = Vector2.right;
         private BossCharacter _bossCharacter;
+        private Coroutine _patternRoutine;
 
         private WaitForSeconds _pillarWaitForSeconds;
         private WaitForSeconds _dashWaitForSeconds;
@@ -169,7 +170,14 @@ namespace Components
             _animator = GetComponent<Animator>();
 
             _bossCharacter = GetComponent<BossCharacter>();
-            
+            _bossCharacter.OnDeathAction += () =>
+            {
+                if (_patternRoutine != null)
+                {
+                    StopCoroutine(_patternRoutine);
+                }
+            };
+
             _slashFrameWaitForSeconds = new WaitForSeconds(slashFrameDelay);
             _pillarWaitForSeconds = new WaitForSeconds(pillarTelegraphTime);
             _dashWaitForSeconds = new WaitForSeconds(dashTelegraphTime);
@@ -263,14 +271,15 @@ namespace Components
 #endif
             _lastPattern = patternId;
 
-            switch (patternId)
+            _patternRoutine = patternId switch
             {
-                case 1: StartCoroutine(SwordAura()); break;
-                case 2: StartCoroutine(SwingGreatSword()); break;
-                case 3: StartCoroutine(BoneExplosion()); break;
-                case 4: StartCoroutine(DashSlash()); break;
-                case 5: StartCoroutine(SoulPillar()); break;
-            }
+                1 => StartCoroutine(SwordAura()),
+                2 => StartCoroutine(SwingGreatSword()),
+                3 => StartCoroutine(BoneExplosion()),
+                4 => StartCoroutine(DashSlash()),
+                5 => StartCoroutine(SoulPillar()),
+                _ => null
+            };
         }
 
         // 패턴 코루틴이 끝날 때 호출됨 (애니메이션 이벤트에 등록하면 이중 호출되니 주의)

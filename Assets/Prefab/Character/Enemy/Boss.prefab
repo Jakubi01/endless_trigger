@@ -293,6 +293,7 @@ MonoBehaviour:
   attackRadius: 5
   contactDamageInterval: 1
   proximityLimitRadius: 2.1
+  bossClear: {fileID: 0}
 --- !u!114 &1774331362370477491
 MonoBehaviour:
   m_ObjectHideFlags: 0
