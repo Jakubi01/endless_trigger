@@ -70,9 +70,19 @@ namespace Character.Enemy
         
         private void ChangeState(EBehaviourState newState)
         {
+            if (_behaviourState == newState) return;
             _behaviourState = newState;
 
-            // 상태 진입 시 필요한 처리를 여기에 구현
+            if (!EnemyNavMeshAgent || !EnemyNavMeshAgent.enabled) return;
+            if (_behaviourState == EBehaviourState.MoveToTarget)
+            {
+                EnemyNavMeshAgent.isStopped = false;
+            }
+            else
+            {
+                EnemyNavMeshAgent.isStopped = true;
+                EnemyNavMeshAgent.ResetPath();
+            }
         }
 
         private void SetAction()

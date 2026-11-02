@@ -58,6 +58,8 @@ namespace Character.Enemy
         public bool IsAlive => EnemyHealthComponent && EnemyHealthComponent.IsAlive;
 
         public bool IgnoreManager { get; protected set;}
+        
+        protected NavMeshAgent EnemyNavMeshAgent => _navMeshAgent;
 
         protected override void Awake()
         {
@@ -176,7 +178,7 @@ namespace Character.Enemy
         public virtual void TakeDamage(float amount)
         {
             if(damageSound)
-                soundManager.PlaySfx(damageSound);
+                SoundManagerInstance.PlaySfx(damageSound);
             
             EnemyHealthComponent?.TakeDamage(amount);
             animator.SetTrigger(AnimatorParamToHash.TakeDamage);
@@ -212,7 +214,7 @@ namespace Character.Enemy
         protected void DamageToTarget()
         {
             if(damageSound)
-                soundManager.PlaySfx(damageSound);
+                SoundManagerInstance.PlaySfx(damageSound);
             
             Target?.TakeDamage(_contactDamage);
             _nextContactDamageTime = Time.time + contactDamageInterval;
@@ -226,7 +228,7 @@ namespace Character.Enemy
         protected virtual void Death()
         {
             if(deathSound)
-                soundManager.PlaySfx(deathSound);
+                SoundManagerInstance.PlaySfx(deathSound);
                 
             animator.SetTrigger(AnimatorParamToHash.Died);
         }

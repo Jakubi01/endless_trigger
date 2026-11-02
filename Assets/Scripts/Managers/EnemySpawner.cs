@@ -1,5 +1,5 @@
 #define DEBUG_BOSS
-#undef DEBUG_BOSS
+// #undef DEBUG_BOSS
 
 using System.Collections;
 using System.Collections.Generic;
@@ -79,12 +79,10 @@ namespace Managers
         private Phase _phase;
         private float _phaseTimer;      // InitialDelay / Intermission 에서 사용하는 남은 시간
         private float _roundTimer;      // Spawning 중 라운드 경과 시간
-        private int _roundNumber;       // 현재 라운드 (1부터)
         private int _sectionIndex;      // 이번 라운드에서 다음에 스폰할 섹션 인덱스
-        private int _aliveEnemyCount;   // 필드에 살아있는 몬스터 수 (스폰 +1 / 풀 반환 -1)
 
         // --- 외부 UI 나 매니저 시스템에서 정보 확인용으로 사용할 프로퍼티들 ---
-        public int CurrentRound => _roundNumber;
+        public int CurrentRound { get; private set; }
 
         public float TimeUntilGameStart => _phase == Phase.InitialDelay ? Mathf.Max(0f, _phaseTimer) : 0f;
 
@@ -132,7 +130,7 @@ namespace Managers
             // 스포너가 파괴될 때 풀 내부의 인스턴스들을 모두 제거하여 메모리 누수 방지
             for (int i = 0, count = _poolList.Count; i < count; i++)
             {
-                EnemyPool enemyPool = _poolList[i];
+                var enemyPool = _poolList[i];
                 enemyPool.Pool?.Clear();
             }
 
@@ -177,11 +175,11 @@ namespace Managers
         /// </summary>
         private void StartRound(int roundNumber)
         {
-            _roundNumber = roundNumber;
+            CurrentRound = roundNumber;
             _roundTimer = 0f;
             _sectionIndex = 0;
 
-            if (_roundNumber >= bossRound)
+            if (CurrentRound >= bossRound)
             {
                 SpawnBoss();
                 _phase = Phase.WaitingForClear;
@@ -198,10 +196,10 @@ namespace Managers
         {
             _roundTimer += Time.deltaTime;
 
-            int sectionCount = Mathf.CeilToInt(waveDuration / SpawnInterval);
+            var sectionCount = Mathf.CeilToInt(waveDuration / SpawnInterval);
             while (_sectionIndex < sectionCount && _roundTimer >= _sectionIndex * SpawnInterval)
             {
-                SpawnWaveSection(_roundNumber, _sectionIndex);
+                SpawnWaveSection(CurrentRound, _sectionIndex);
                 _sectionIndex++;
             }
 
@@ -218,7 +216,7 @@ namespace Managers
         {
             GameManager.Instance?.RegisterWaveCleared();
 
-            if (_roundNumber >= bossRound)
+            if (CurrentRound >= bossRound)
             {
                 _phase = Phase.Finished;
                 return;
@@ -244,7 +242,7 @@ namespace Managers
 
             for (int i = 0, count = enemyData.Length; i < count; i++)
             {
-                EnemyData data = enemyData[i];
+                var data = enemyData[i];
                 if (!data || !data.Prefab)
                 {
                     Debug.LogError($"{nameof(EnemySpawner)}: EnemyData or prefab is not assigned.", this);
@@ -257,7 +255,7 @@ namespace Managers
                     continue;
                 }
 
-                EnemyPool enemyPool = new EnemyPool { Data = data };
+                var enemyPool = new EnemyPool { Data = data };
                 
                 enemyPool.Pool = new ObjectPool<EnemyCharacterBase>(
                     createFunc: () => CreateEnemy(enemyPool),                    // 풀에 여분이 없을 때 새로 생성할 함수
@@ -284,7 +282,7 @@ namespace Managers
         /// </summary>
         private EnemyCharacterBase CreateEnemy(EnemyPool enemyPool)
         {
-            EnemyCharacterBase enemy = Instantiate(enemyPool.Data.Prefab, transform);
+            var enemy = Instantiate(enemyPool.Data.Prefab, transform);
             enemy.gameObject.SetActive(false);
             
             // 적 캐릭터가 스스로 죽었을 때 자신을 풀로 돌려보낼 수 있도록 Action 디지게이트 연결
@@ -298,7 +296,6 @@ namespace Managers
         private void ReleaseEnemy(EnemyPool enemyPool, EnemyCharacterBase enemy)
         {
             enemyPool.Pool.Release(enemy);
-            _aliveEnemyCount--;
         }
 
         /// <summary>
@@ -317,7 +314,7 @@ namespace Managers
             // 꺼내온 오브젝트들을 다시 풀 내부로 원상 복귀 (비활성화 상태로 풀 대기조 안착)
             for (int i = 0, count = _prewarmBuffer.Count; i < count; i++)
             {
-                EnemyCharacterBase enemy = _prewarmBuffer[i];
+                var enemy = _prewarmBuffer[i];
                 enemyPool.Pool.Release(enemy);
             }
         }
@@ -327,7 +324,7 @@ namespace Managers
         /// </summary>
         private void SpawnWaveSection(int waveNumber, int sectionIndex)
         {
-            SpawnRate rate = GetSpawnRate(waveNumber, sectionIndex);
+            var rate = GetSpawnRate(waveNumber, sectionIndex);
             for (int i = 0; i < rate.SpawnCount; i++)
             {
                 SpawnEnemy(PickEnemyType(rate), waveNumber);
@@ -352,29 +349,29 @@ namespace Managers
             sectionIndex = Mathf.Clamp(sectionIndex, 0, 5);
             
             // 현재 웨이브 진행도 (0.0 ~ 1.0)
-            float sectionProgress = sectionIndex / 5f;
+            var sectionProgress = sectionIndex / 5f;
             
             // 전체 난이도 계산
             // 웨이브가 증가할수록, 그리고 같은 웨이브 내에서도 후반부일수록 증가
-            float difficulty = waveNumber - 1 + sectionProgress;
+            var difficulty = waveNumber - 1 + sectionProgress;
 
             // 일반 좀비 비율
             // 난이도가 증가할수록 감소하지만 최소 비율은 유지
-            float zombieRatio = Mathf.Clamp(1f - difficulty * 0.18f, minimumZombieRatio, 1f);
+            var zombieRatio = Mathf.Clamp(1f - difficulty * 0.18f, minimumZombieRatio, 1f);
             
             // 탱커 비율
             // 2웨이브 이후부터 점진적으로 증가
-            float tankerRatio = Mathf.Clamp((difficulty - 1f) * 0.1f, 0f, maximumTankerRatio);
+            var tankerRatio = Mathf.Clamp((difficulty - 1f) * 0.1f, 0f, maximumTankerRatio);
             
             // 러셔 비율
             // 남은 비율을 모두 할당
-            float rusherRatio = Mathf.Max(0f, 1f - zombieRatio - tankerRatio);
+            var rusherRatio = Mathf.Max(0f, 1f - zombieRatio - tankerRatio);
 
             // 부동소수점 오차 또는 비율 계산 문제로
             // 총합이 1을 초과할 경우 일반 좀비 비율을 조정
             if (zombieRatio + rusherRatio + tankerRatio > 1f)
             {
-                float overflow = zombieRatio + rusherRatio + tankerRatio - 1f;
+                var overflow = zombieRatio + rusherRatio + tankerRatio - 1f;
                 zombieRatio = Mathf.Max(minimumZombieRatio, zombieRatio - overflow);
             }
 
@@ -395,10 +392,10 @@ namespace Managers
         /// </summary>
         private EnemyType PickEnemyType(SpawnRate rate)
         {
-            float totalWeight = rate.ZombieWeight + rate.RusherWeight + rate.TankerWeight;
+            var totalWeight = rate.ZombieWeight + rate.RusherWeight + rate.TankerWeight;
             if (totalWeight <= 0f) return EnemyType.Zombie;
 
-            float roll = Random.Range(0f, totalWeight);
+            var roll = Random.Range(0f, totalWeight);
             if (roll < rate.ZombieWeight) return EnemyType.Zombie;
 
             roll -= rate.ZombieWeight;
@@ -410,8 +407,8 @@ namespace Managers
         /// </summary>
         private int GetSpawnCount(int waveNumber, int sectionIndex)
         {
-            int waveBonus = Mathf.Max(0, waveNumber - 1) * spawnCountIncreasePerWave;
-            int sectionBonus = sectionIndex * spawnCountIncreasePerSection;
+            var waveBonus = Mathf.Max(0, waveNumber - 1) * spawnCountIncreasePerWave;
+            var sectionBonus = sectionIndex * spawnCountIncreasePerSection;
             return Mathf.Max(1, baseSpawnCount + waveBonus + sectionBonus);
         }
 
@@ -427,8 +424,7 @@ namespace Managers
             }
 
             // 풀에서 오브젝트 하나 수령 및 초기 위치 세팅
-            EnemyCharacterBase enemy = enemyPool.Pool.Get();
-            _aliveEnemyCount++;
+            var enemy = enemyPool.Pool.Get();
             enemy.transform.position = GetSpawnPosition();
             enemy.transform.rotation = Quaternion.identity;
 
@@ -445,7 +441,7 @@ namespace Managers
         private Vector3 GetSpawnPosition()
         {
             // 반지름이 1인 원 내부의 임의의 점 벡터를 뽑고 노멀라이즈하여 무작위 방향 점 벡터 추출
-            Vector2 direction = Random.insideUnitCircle.normalized;
+            var direction = Random.insideUnitCircle.normalized;
             
             // 혹시라도 (0,0)이 뽑혀 노멀라이즈가 깨졌을 때를 대비한 예외 처리
             if (direction.sqrMagnitude < 0.01f)
@@ -454,7 +450,7 @@ namespace Managers
             }
 
             // 최소~최대 거리 사이의 임의의 스폰 거리 계산
-            float distance = Random.Range(minSpawnDistanceFromPlayer, maxSpawnDistanceFromPlayer);
+            var distance = Random.Range(minSpawnDistanceFromPlayer, maxSpawnDistanceFromPlayer);
             
             // 플레이어의 현재 평면 위치에 방향 * 거리를 더해 최종 Vector3 월드 좌표 연산
             return _player.transform.position + (Vector3)(direction * distance);
@@ -462,7 +458,7 @@ namespace Managers
 
         private void SpawnBoss()
         {
-            SpawnEnemy(EnemyType.Boss, _roundNumber);
+            SpawnEnemy(EnemyType.Boss, CurrentRound);
         }
     }
 }

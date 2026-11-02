@@ -28,6 +28,9 @@ namespace UserInterface
             base.Awake();
             
             Canvas.ForceUpdateCanvases();
+
+            if (expBarSlider) expBarSlider.interactable = false;
+            if (hpBarSlider) hpBarSlider.interactable = false;
         }
         
         public void Initialize(PlayerCharacter player, EnemySpawner enemySpawner)

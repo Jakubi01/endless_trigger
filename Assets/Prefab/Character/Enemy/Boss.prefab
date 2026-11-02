@@ -351,7 +351,7 @@ MonoBehaviour:
   dashLinePrefab: {fileID: 3264113253416196351, guid: e0492622c06efb54b8e12bc4d7c3153e, type: 3}
   dashAfterimagePrefab: {fileID: 3264113253416196351, guid: fe799ce2bbd0ddb47bd57e505217126b, type: 3}
   dashTelegraphTime: 1
-  dashDistance: 8
+  dashDistance: 10
   dashSpeed: 12
   afterimageSpacing: 1
   afterimageLifetime: 1

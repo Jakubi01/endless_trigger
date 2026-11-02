@@ -34,7 +34,7 @@ namespace Managers
 
             for (int i = _enemies.Count - 1; i >= 0; i--)
             {
-                EnemyCharacterBase enemy = _enemies[i];
+                var enemy = _enemies[i];
                 if (!enemy)
                 {
                     _enemies.RemoveAt(i);
@@ -68,7 +68,7 @@ namespace Managers
             _enemies.Remove(enemy);
         }
 
-        public GameObject FindNearestEnemy(Transform callerTransform, float range, HashSet<GameObject> exclude = null)
+        public GameObject FindNearestEnemy(Transform caller, float range, HashSet<GameObject> exclude = null)
         {
             if (_enemies.Count <= 0) return null;
             
@@ -87,7 +87,7 @@ namespace Managers
                 if (exclude != null && exclude.Contains(enemy.gameObject)) 
                     continue;
 
-                float sqrDistance = (enemy.transform.position - callerTransform.position).sqrMagnitude;
+                float sqrDistance = (enemy.transform.position - caller.position).sqrMagnitude;
                 if (sqrDistance <= nearestSqrDistance)
                 {
                     nearestSqrDistance = sqrDistance;
@@ -98,7 +98,7 @@ namespace Managers
             return nearest ? nearest.gameObject : null;
         }
 
-        public GameObject FindFarthestEnemy(Transform callerTransform, float range)
+        public GameObject FindFarthestEnemy(Transform caller, float range)
         {
             if (_enemies.Count <= 0) return null;
             
@@ -115,7 +115,7 @@ namespace Managers
                     continue;
                 }
 
-                float sqrDistance = (enemy.transform.position - callerTransform.position).sqrMagnitude;
+                float sqrDistance = (enemy.transform.position - caller.position).sqrMagnitude;
                 if (sqrDistance <= maxSqrDistance && sqrDistance > farthestSqrDistance)
                 {
                     farthestSqrDistance = sqrDistance;

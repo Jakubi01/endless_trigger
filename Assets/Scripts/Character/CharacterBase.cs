@@ -21,7 +21,7 @@ namespace Character
         private float _moveSpeed;
 
         protected Vector2 MoveInput;
-        protected SoundManager soundManager;
+        protected SoundManager SoundManagerInstance;
 
         public float MoveSpeedMultiplier { get; set; }
         protected Animator animator;
@@ -45,12 +45,12 @@ namespace Character
             
             animator = GetComponent<Animator>();
             
-            soundManager = SoundManager.Instance;
+            SoundManagerInstance = SoundManager.Instance;
         }
 
-        protected virtual void SetMoveSpeed(float value) { _moveSpeed = value; }
+        protected void SetMoveSpeed(float value) { _moveSpeed = value; }
 
-        protected virtual void Move(Vector2 direction)
+        protected void Move(Vector2 direction)
         {
             MoveInput = direction;
             
@@ -67,7 +67,7 @@ namespace Character
             CharacterRigidbody.MovePosition(CharacterRigidbody.position + direction * (_moveSpeed * MoveSpeedMultiplier * Time.fixedDeltaTime));
         }
 
-        protected void AIFlipSprite(Vector2 worldPosition)
+        public void AIFlipSprite(Vector2 worldPosition) 
         {
             var direction = (worldPosition - CharacterRigidbody.position).normalized;
             if (_characterSprite && Mathf.Abs(direction.x) > 0.01f)
@@ -76,7 +76,7 @@ namespace Character
             }
         }
 
-        protected void FlipSprite(bool flip)
+        private void FlipSprite(bool flip)
         {
             _characterSprite.flipX = flip;
         }
