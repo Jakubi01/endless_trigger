@@ -106,15 +106,12 @@ namespace Components
 
         [Header("Pattern 5 - SoulPillar")]
         // [Resource] Telegraph_Circle_Blue_96 프리팹: 4프레임 루프, 피벗 중앙 (지름 3m)
-        [SerializeField]
-        private GameObject pillarTelegraphPrefab;
-
+        [SerializeField] private GameObject pillarTelegraphPrefab;
         // [Resource] SoulPillar_96x128 프리팹: 8프레임 루프 끔, 피벗은 바닥이 예고 원 중심에 맞도록 조정
         [SerializeField] private GameObject pillarPrefab;
         [SerializeField] private int pillarCount = 6;
         [SerializeField] private float pillarSpawnRadius = 6f;
         [Min(1.2f)] [SerializeField] private float pillarTelegraphTime = 1.2f;
-        [SerializeField] private float pillarRadius = 1.5f;
         [SerializeField] private float pillarLifetime = 1f;
         [SerializeField] private float pillarDamage = 50f;
 
@@ -138,6 +135,8 @@ namespace Components
         private WaitForSeconds _swordAuraSpinWaitForSeconds;
         private WaitForSeconds _slashFrameWaitForSeconds;
 
+        [SerializeField] private int DEBUG_PHASE_IDX = 5;
+        
         public bool IsExecutingPattern { get; private set; }
 
         public bool TryReceiveDamage()
@@ -221,8 +220,7 @@ namespace Components
             {
                 if (CanUse(id)) candidates.Add(id);
             }
-
-            Debug.LogFormat("[{0}] {1}", nameof(EnemyBossCombatComponent), candidates.Count.ToString());
+            
             if (candidates.Count == 0) return;
 
             ExecutePattern(PickWeighted(candidates));
@@ -267,7 +265,7 @@ namespace Components
             IsExecutingPattern = true;
 
 #if DEBUG_PHASE
-            patternId = 4;
+            patternId = DEBUG_PHASE_IDX;
 #endif
             _lastPattern = patternId;
 
@@ -333,7 +331,7 @@ namespace Components
                 rb.linearVelocity = dir * speed;
 
             if (go.TryGetComponent<BossProjectile>(out var projectile))
-                projectile.Init(damage, pierce, lifetime, hitFx, endFx);
+                projectile.Init(damage, pierce, false, lifetime, hitFx, endFx);
         }
 
         private void FireAura(Vector2 dir, float damage)
@@ -514,12 +512,12 @@ namespace Components
             line.transform.position = origin + _facing * (lineLength * 0.5f);
 
             if (line.TryGetComponent(out BossProjectile lineProjectile))
-                lineProjectile.Init(0f, false, dashTelegraphTime, null, null);
+                lineProjectile.Init(0f, false, false, dashTelegraphTime, null, null);
 
             // fan은 line의 끝에 배치
             var fan = Instantiate(fanTelegraphPrefab, origin + _facing * lineLength, rotation);
             if (fan.TryGetComponent(out BossProjectile fanProjectile))
-                fanProjectile.Init(0f, false, dashTelegraphTime, null, null);
+                fanProjectile.Init(0f, false, false, dashTelegraphTime, null, null);
 
             yield return _dashWaitForSeconds;
 
@@ -584,22 +582,23 @@ namespace Components
             for (var i = 0; i < pillarCount; i++)
             {
                 positions[i] = (Vector2)_target.position + Random.insideUnitCircle * pillarSpawnRadius;
-                telegraphs[i] = Instantiate(pillarTelegraphPrefab, positions[i], Quaternion.identity);
+                var pillarTelegraph= Instantiate(pillarTelegraphPrefab, positions[i], Quaternion.identity);
+                if (pillarTelegraph.TryGetComponent(out BossProjectile pillarProjectile)) 
+                    pillarProjectile.Init(0, false, false, pillarTelegraphTime, null, null);
+                    
+                telegraphs[i] = pillarTelegraph;
             }
 
             yield return _pillarWaitForSeconds;
 
-            var hit = false;
             for (var i = 0; i < pillarCount; i++)
             {
                 Destroy(telegraphs[i]);
-                SpawnFx(pillarPrefab, positions[i], Quaternion.identity, pillarLifetime);
-
-                if (_target && Vector2.Distance(_target.position, positions[i]) <= pillarRadius) hit = true;
+                var pillar = Instantiate(pillarPrefab, positions[i], Quaternion.identity);
+                if(pillar.TryGetComponent(out BossProjectile pillarProjectile))
+                    pillarProjectile.Init(pillarDamage, false, true, pillarLifetime, null, null);
             }
-
-            // 기둥이 겹쳐도 한 번만 데미지
-            if (hit) Damage(pillarDamage);
+            
             ClearExecutingFlag();
         }
     }

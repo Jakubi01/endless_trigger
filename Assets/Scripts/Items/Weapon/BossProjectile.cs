@@ -10,16 +10,18 @@ namespace Items.Weapon
         private bool _pierce;
         private bool _hit;
         private bool _ended;
+        private bool _skipTrigDestroy;
         private GameObject _hitFx;
         private GameObject _endFx;
 
-        public void Init(float damage, bool pierce, float lifetime, GameObject hitFx, GameObject endFx)
+        public void Init(float damage, bool pierce, bool skipTrigDestroy, float lifetime, GameObject hitFx, GameObject endFx)
         {
             _damage = damage;
             _pierce = pierce;
             _timer = lifetime;
             _hitFx = hitFx;
             _endFx = endFx;
+            _skipTrigDestroy = skipTrigDestroy;
         }
 
         private void Update()
@@ -38,7 +40,8 @@ namespace Items.Weapon
             _hit = true;
             health.TakeDamage(_damage);
             Spawn(_hitFx);
-            if (!_pierce) End();
+            if (_pierce || _skipTrigDestroy) return;
+            End();
         }
 
         private void End()
