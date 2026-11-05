@@ -363,7 +363,6 @@ namespace Components
          */
         private IEnumerator SwordAura()
         {
-            Debug.LogFormat("{0}: {1}", nameof(EnemyBossCombatComponent), nameof(SwordAura));
             if (_animator)
                 _animator.SetTrigger(AnimatorParamToHash.EnemyAttack);
 
@@ -405,7 +404,6 @@ namespace Components
          */
         private IEnumerator SwingGreatSword()
         {
-            Debug.LogFormat("{0}: {1}", nameof(EnemyBossCombatComponent), nameof(SwingGreatSword));
             if (_animator)
                 _animator.SetTrigger(AnimatorParamToHash.EnemyAttack);
 
@@ -427,7 +425,6 @@ namespace Components
          */
         private IEnumerator BoneExplosion()
         {
-            Debug.LogFormat("{0}: {1}", nameof(EnemyBossCombatComponent), nameof(BoneExplosion));
             if (_animator)
                 _animator.SetTrigger(AnimatorParamToHash.SpecialAttack);
 
@@ -459,8 +456,6 @@ namespace Components
          */
         private IEnumerator DashSlash()
         {
-            Debug.LogFormat("{0}: {1}", nameof(EnemyBossCombatComponent), nameof(DashSlash));
-
             if (_target)
             {
                 var backDir = -DirTo(_target.position);
@@ -568,7 +563,6 @@ namespace Components
          */
         private IEnumerator SoulPillar()
         {
-            Debug.LogFormat("{0}: {1}", nameof(EnemyBossCombatComponent), nameof(SoulPillar));
             if (_animator)
                 _animator.SetTrigger(AnimatorParamToHash.SpecialAttack);
 

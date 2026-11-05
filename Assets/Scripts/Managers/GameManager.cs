@@ -23,10 +23,8 @@ namespace Managers
                 var player = sceneSpawnManager.Player;
                 if (!player) return 1;
 
-                var playerLevelComponent = player.GetComponent<PlayerLevelComponent>();
-                if(!playerLevelComponent) return 1;
-
-                return playerLevelComponent.Level;
+                var validComponent = player.TryGetComponent(out PlayerLevelComponent playerLevelComponent);
+                return validComponent ? playerLevelComponent.Level : 1;
             }
         }
 
