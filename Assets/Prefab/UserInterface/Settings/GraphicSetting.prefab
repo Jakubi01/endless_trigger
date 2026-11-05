@@ -3185,6 +3185,7 @@ GameObject:
   - component: {fileID: 693591382544530608}
   - component: {fileID: 827858075821792882}
   - component: {fileID: 5064589324149715508}
+  - component: {fileID: 665307111637267891}
   m_Layer: 5
   m_Name: GraphicSetting
   m_TagString: Untagged
@@ -3271,6 +3272,18 @@ MonoBehaviour:
   resolutionDropdown: {fileID: 8041597411804123393}
   qualityDropdown: {fileID: 8596015170933114672}
   frameRateDropdown: {fileID: 849337100694825501}
+--- !u!225 &665307111637267891
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5506277387913557056}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &5635637847536217407
 GameObject:
   m_ObjectHideFlags: 0

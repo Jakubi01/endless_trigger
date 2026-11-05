@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Components;
+using UnityEngine;
 
 namespace Managers
 {
@@ -11,6 +12,23 @@ namespace Managers
         public int KillCount { get; private set; }
 
         public int WaveClearedCount { get; private set; }
+
+        public int LevelReached
+        {
+            get
+            {
+                var sceneSpawnManager = FindAnyObjectByType<SceneSpawnManager>();
+                if (!sceneSpawnManager) return 1;
+
+                var player = sceneSpawnManager.Player;
+                if (!player) return 1;
+
+                var playerLevelComponent = player.GetComponent<PlayerLevelComponent>();
+                if(!playerLevelComponent) return 1;
+
+                return playerLevelComponent.Level;
+            }
+        }
 
         public int TotalKillCount => SettingManager.Instance ? SettingManager.Instance.TotalKillCount : 0;
 

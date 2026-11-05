@@ -271,7 +271,10 @@ namespace Managers
         public void ShowGameClearWindow()
         {
             _gameHUD.gameObject.SetActive(false);
-            OpenWindow(gameClearWindowPrefab, ref _currentGameClearWindow);
+            var gameClearWindow = OpenWindow(gameClearWindowPrefab, ref _currentGameClearWindow);
+            if (!gameClearWindow) return;
+
+            gameClearWindow.Init();
         }
 
         public void OnGameClearWindowClosed(GameClearWindow gameClearWindow)

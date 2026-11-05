@@ -1366,6 +1366,7 @@ GameObject:
   - component: {fileID: 931735408600038806}
   - component: {fileID: 4968146279442968086}
   - component: {fileID: 3559841661632273867}
+  - component: {fileID: 7812145608023378567}
   m_Layer: 5
   m_Name: SettingWindow
   m_TagString: Untagged
@@ -1458,6 +1459,18 @@ MonoBehaviour:
   displayButton: {fileID: 6147690972700348483}
   soundButton: {fileID: 6163210377741465647}
   gameplayButton: {fileID: 1949419128771245877}
+--- !u!225 &7812145608023378567
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8698051459923772091}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &8865662885486793378
 GameObject:
   m_ObjectHideFlags: 0

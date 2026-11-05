@@ -84,7 +84,6 @@ namespace Character
         protected virtual void OnDeath()
         {
             CharacterRigidbody.linearVelocity = Vector2.zero;
-            // _animator.SetBool(AnimatorParamToHash.Death, true);
             
             PlayDeathSound();
         }

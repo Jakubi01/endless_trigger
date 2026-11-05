@@ -168,7 +168,6 @@ namespace Character.Player
             base.OnDeath();
             
             StopAllWeapons();
-            gameObject.SetActive(false);
             animator.SetTrigger(AnimatorParamToHash.PlayerDeath);
             
             var length = AnimationExtension.GetAnimClipLength(animator, StateName);

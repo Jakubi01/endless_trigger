@@ -43,5 +43,26 @@ namespace UserInterface
             _uiManagerInstance?.OnGameClearWindowClosed(this);
             _uiManagerInstance?.OnStartButtonClicked();
         }
+
+        public void Init()
+        {
+            var gameManagerInstance = GameManager.Instance;
+            if(!gameManagerInstance) return;
+
+            if (roundCleared)
+            {
+                roundCleared.text = gameManagerInstance.WaveClearedCount + " / 10";
+            }
+
+            if (levelRechead)
+            {
+                levelRechead.text = gameManagerInstance.LevelReached.ToString();
+            }
+
+            if (enemiesSlain)
+            {
+                enemiesSlain.text = gameManagerInstance.KillCount.ToString();
+            }
+        }
     }
 }
