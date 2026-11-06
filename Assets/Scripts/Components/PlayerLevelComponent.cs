@@ -8,9 +8,9 @@ namespace Components
     {
         [Header("Level")] 
         [SerializeField] private GameObject levelUpVFXPrefab;
-        [SerializeField] private int requiredExperiencePerLevel = 100;
 
         private bool _awaitingUpgradeSelection;
+        private const float NextExperienceMult = 1.15f;
 
         public event Action LeveledUp;
         public event Action ExperienceChanged;
@@ -18,10 +18,17 @@ namespace Components
 
         public int CurrentExperience { get; private set; }
 
-        public int RequiredExperiencePerLevel => requiredExperiencePerLevel;
+        public int RequiredExperiencePerLevel { get; private set; }
         public float ExperiencePickupRange { get; private set; } = 2.5f;
         public GameObject LevelUpVFXPrefab => levelUpVFXPrefab;
 
+        protected override void Awake()
+        {
+            base.Awake();
+
+            RequiredExperiencePerLevel = 100;
+        }
+        
         public void GainExperience(int amount)
         {
             if (amount <= 0) return;
@@ -45,9 +52,10 @@ namespace Components
 
         private void TryStartNextLevelUp()
         {
-            if (_awaitingUpgradeSelection || CurrentExperience < requiredExperiencePerLevel) return;
+            if (_awaitingUpgradeSelection || CurrentExperience < RequiredExperiencePerLevel) return;
 
-            CurrentExperience -= requiredExperiencePerLevel;
+            CurrentExperience -= RequiredExperiencePerLevel;
+            RequiredExperiencePerLevel = Mathf.RoundToInt(RequiredExperiencePerLevel * NextExperienceMult);
             Level++;
             _awaitingUpgradeSelection = true;
             LeveledUp?.Invoke();
