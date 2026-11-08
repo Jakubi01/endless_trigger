@@ -15,7 +15,7 @@ MonoBehaviour:
   buttonClick: {fileID: 0}
   popupOpen: {fileID: 0}
   gameStart: {fileID: 0}
-  itemGet: {fileID: 0}
+  itemGet: {fileID: 8300000, guid: 4563f8fa5ca8c5c41a934ed8a4bd596f, type: 3}
   levelUp: {fileID: 8300000, guid: cd8013fb899c0c440a4ddbc9172e0405, type: 3}
   stageClear: {fileID: 8300000, guid: 22d1923ac29c41447a6a8b7ba185813a, type: 3}
   lobbyBGM: {fileID: 8300000, guid: dad6afdba3a9b9e4792eb6e77a90ce55, type: 3}
