@@ -107,6 +107,7 @@ namespace Character.Enemy.Boss
                 case EBehaviourState.Dead:
                 case EBehaviourState.None:
                 default:
+                    StopMove();
                     return;
             }
         }

@@ -264,8 +264,8 @@ namespace Managers
                 
                 enemyPool.Pool = new ObjectPool<EnemyCharacterBase>(
                     createFunc: () => CreateEnemy(enemyPool),                    // 풀에 여분이 없을 때 새로 생성할 함수
-                    actionOnGet: enemy => enemy.gameObject.SetActive(true),      // 풀에서 꺼낼 때
-                    actionOnRelease: enemy => enemy.gameObject.SetActive(false), // 풀로 반환할 때
+                    actionOnGet: enemy => enemy.SetActive(true),                 // 풀에서 꺼낼 때
+                    actionOnRelease: enemy => enemy.SetActive(false),            // 풀로 반환할 때
                     actionOnDestroy: enemy => Destroy(enemy.gameObject),         // 풀 공간 초과 등으로 파괴할 때
                     collectionCheck: true,                                       // 이미 반환된 오브젝트를 또 반환하는지 검사 여부
                     defaultCapacity: defaultPoolCapacity,

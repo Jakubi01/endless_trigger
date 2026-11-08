@@ -7,7 +7,6 @@ using System.Collections;
 using System.Globalization;
 using Effects.DamageText;
 using Managers;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -32,7 +31,7 @@ namespace Character.Enemy
         
         protected HealthComponent EnemyHealthComponent;
 
-        public float AttackRadius => attackRadius;
+        protected float AttackRadius => attackRadius;
 
         private NavMeshAgent _navMeshAgent;
         private EnemyType _enemyType;
@@ -81,7 +80,7 @@ namespace Character.Enemy
             
             _spriteRenderer = GetComponent<SpriteRenderer>();
             _spriteRenderer.sortingLayerName = "Enemy";
-            _initialColor = _spriteRenderer.color;
+            _initialColor = Color.white;
             
             const string clipName = "Death";
             var length = AnimationExtension.GetAnimClipLength(animator, clipName);
@@ -146,6 +145,15 @@ namespace Character.Enemy
             _navMeshAgent.updateUpAxis = false;
             _navMeshAgent.speed = moveSpeed;
             _navMeshAgent.height = 1.5f;
+        }
+
+        public void SetActive(bool value)
+        {
+            var newColor = _spriteRenderer.color;
+            newColor.a = value ? 1f : 0f;
+            _spriteRenderer.color = newColor;
+            
+            gameObject.SetActive(value);
         }
 
         private void FixedUpdate()
@@ -240,8 +248,11 @@ namespace Character.Enemy
             OnDeathAction?.Invoke();
             
             GameManager.Instance?.RegisterKill();
-            _enemyManager?.SpawnExperience(transform.position, _experienceReward);
-            _enemyManager.DecreaseEnemyCount();
+            if (_enemyManager)
+            {
+                _enemyManager.SpawnExperience(transform.position, _experienceReward);
+                _enemyManager.DecreaseEnemyCount();
+            }
 
             EnableColliders(false);
 
@@ -282,6 +293,11 @@ namespace Character.Enemy
             {
                 box.enabled = enable;
             }
+        }
+
+        public void StopMove()
+        {
+            _navMeshAgent.isStopped = true;
         }
     }
 }

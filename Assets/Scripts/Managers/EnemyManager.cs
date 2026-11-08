@@ -45,7 +45,11 @@ namespace Managers
                     continue;
                 }
 
-                if (!enemy.IsAlive || enemy.IgnoreManager) continue;
+                if (!enemy.IsAlive || enemy.IgnoreManager)
+                {
+                    enemy.StopMove();
+                    continue;
+                }
 
                 enemy.MoveToTargetPosition(targetPosition);
             }
