@@ -1,4 +1,5 @@
 using Character.Player;
+using Managers;
 using UnityEngine;
 
 namespace Items.Exp
@@ -10,11 +11,13 @@ namespace Items.Exp
         [SerializeField] private float attractSpeed = 8f;
 
         private PlayerCharacter _player;
+        private SoundManager _soundManager;
 
         private void Awake()
         {
             CircleCollider2D pickupCollider = GetComponent<CircleCollider2D>();
             pickupCollider.isTrigger = true;
+            _soundManager = SoundManager.Instance;
         }
 
         private void Update()
@@ -51,6 +54,7 @@ namespace Items.Exp
         private void Collect(PlayerCharacter player)
         {
             player.GainExperience(amount);
+            _soundManager.Play(SfxType.ItemGet);
             Destroy(gameObject);
         }
     }

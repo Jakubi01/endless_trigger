@@ -180,6 +180,7 @@ namespace Character.Enemy
             if (!IsAlive) return;
 
             AIFlipSprite(targetPosition);
+            _navMeshAgent.isStopped = false;
             _navMeshAgent.SetDestination(targetPosition);
         }
 

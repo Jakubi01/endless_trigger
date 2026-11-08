@@ -18,10 +18,11 @@ namespace Managers
         [Header("Background SFX")] 
         public AudioClip lobbyBGM;
         public AudioClip inGameBGM;
+        public AudioClip bossBGM;
 
         public bool IsBGMValid()
         {
-            return lobbyBGM && inGameBGM;
+            return lobbyBGM && inGameBGM && bossBGM;
         }
     }
 }

@@ -423,11 +423,7 @@ namespace Managers
         /// </summary>
         private void SpawnEnemy(EnemyType type, int waveNumber)
         {
-            if (!_pools.TryGetValue(type, out EnemyPool enemyPool))
-            {
-                Debug.LogError($"{nameof(EnemySpawner)}: No pool for {type}. Check the EnemyData list.", this);
-                return;
-            }
+            if (!_pools.TryGetValue(type, out EnemyPool enemyPool)) return;
 
             // 풀에서 오브젝트 하나 수령 및 초기 위치 세팅
             var enemy = enemyPool.Pool.Get();
@@ -465,6 +461,7 @@ namespace Managers
         private void SpawnBoss()
         {
             SpawnEnemy(EnemyType.Boss, CurrentRound);
+            SoundManager.Instance.PlayBGM(BgmType.Boss);
             AliveEnemyCount++;
         }
     }

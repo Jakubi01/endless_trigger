@@ -20,3 +20,4 @@ MonoBehaviour:
   stageClear: {fileID: 8300000, guid: 22d1923ac29c41447a6a8b7ba185813a, type: 3}
   lobbyBGM: {fileID: 8300000, guid: dad6afdba3a9b9e4792eb6e77a90ce55, type: 3}
   inGameBGM: {fileID: 8300000, guid: 4a5de2e7ea5de4d4b962d87dc0ee1c48, type: 3}
+  bossBGM: {fileID: 8300000, guid: 3f5272ec422014f4e93c4089178b1460, type: 3}
