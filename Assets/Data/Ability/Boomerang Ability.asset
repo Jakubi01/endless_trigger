@@ -15,3 +15,4 @@ MonoBehaviour:
   baseExecuteInterval: 5
   abilityType: 0
   abilityImage: {fileID: 21300000, guid: 5e346b200335bf045a93a1ffb3a94c84, type: 3}
+  executeClip: {fileID: 8300000, guid: a462b07aef0456d49a23b5f233d34a60, type: 3}

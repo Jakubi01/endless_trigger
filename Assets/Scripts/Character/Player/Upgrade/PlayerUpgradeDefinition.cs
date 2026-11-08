@@ -1,8 +1,7 @@
 using System.Collections.Generic;
-using Character.Player.Upgrade;
 using UnityEngine;
 
-namespace Character.Player
+namespace Character.Player.Upgrade
 {
     public enum DefinitionType
     {

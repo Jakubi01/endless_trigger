@@ -189,3 +189,4 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  executeClip: {fileID: 8300000, guid: 5acf4b0be3bcba340bba3d500f88573f, type: 3}

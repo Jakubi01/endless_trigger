@@ -21,6 +21,7 @@ namespace Items.Weapon
             Quaternion rotation = Quaternion.Euler(0f, 0f, angle);
             Vector3 muzzlePosition = muzzlePoint ? muzzlePoint.position : transform.position;
             ProjectileManager.Spawn(muzzlePosition, rotation, direction, Damage, pierceCount);
+            if(executeClip) SoundManagerInstance.PlaySfx(executeClip);
         }
 
         protected override void UpdateTarget()

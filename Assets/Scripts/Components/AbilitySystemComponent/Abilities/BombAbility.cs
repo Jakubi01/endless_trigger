@@ -93,6 +93,7 @@ namespace Components.AbilitySystemComponent.Abilities
 
             EnemyCharacterBase target = targets[Random.Range(0, targets.Count)];
             
+            SoundManagerInstance.PlaySfx(executeClip);
             var bombObject = Instantiate(bombPrefab, Owner.transform.position, Quaternion.identity);
             if (!bombObject.TryGetComponent(out Bomb bomb))
             {

@@ -1,5 +1,5 @@
 #define DEBUG_BOSS
-// #undef DEBUG_BOSS
+#undef DEBUG_BOSS
 
 using System.Collections;
 using System.Collections.Generic;
@@ -76,10 +76,13 @@ namespace Managers
             set => _player = value;
         }
 
+        public int AliveEnemyCount { get; set; }
+
         private Phase _phase;
         private float _phaseTimer;      // InitialDelay / Intermission 에서 사용하는 남은 시간
         private float _roundTimer;      // Spawning 중 라운드 경과 시간
         private int _sectionIndex;      // 이번 라운드에서 다음에 스폰할 섹션 인덱스
+        private int _roundNumber;
 
         // --- 외부 UI 나 매니저 시스템에서 정보 확인용으로 사용할 프로퍼티들 ---
         public int CurrentRound { get; private set; }
@@ -112,6 +115,8 @@ namespace Managers
             // 첫 라운드 시작까지 대기
             _phase = Phase.InitialDelay;
             _phaseTimer = initialSpawnDelay;
+            AliveEnemyCount = 0;
+            _roundNumber = 1;
             
             // 오브젝트 풀 초기화 및 세팅
             BuildPools();
@@ -159,7 +164,7 @@ namespace Managers
 
                 case Phase.WaitingForClear:
                     // 타이머는 0에 머문 채, 필드의 몬스터가 모두 사라질 때까지 대기
-                    if (_aliveEnemyCount <= 0) OnRoundCleared();
+                    if (AliveEnemyCount <= 0) OnRoundCleared();
                     break;
 
                 case Phase.Intermission:
@@ -328,6 +333,7 @@ namespace Managers
             for (int i = 0; i < rate.SpawnCount; i++)
             {
                 SpawnEnemy(PickEnemyType(rate), waveNumber);
+                AliveEnemyCount++;
             }
         }
 
@@ -459,6 +465,7 @@ namespace Managers
         private void SpawnBoss()
         {
             SpawnEnemy(EnemyType.Boss, CurrentRound);
+            AliveEnemyCount++;
         }
     }
 }

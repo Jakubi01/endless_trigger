@@ -324,6 +324,7 @@ MonoBehaviour:
   pattern4Cooldown: 10
   pattern5Cooldown: 8
   fanTelegraphPrefab: {fileID: 3264113253416196351, guid: 2c3f209c5c24f044ba9fabaf9a435d72, type: 3}
+  slashGreatSwordClip: {fileID: 8300000, guid: 0545702d9cde6d14b849fd1fe1748cb0, type: 3}
   swordAuraPrefab: {fileID: 3264113253416196351, guid: 1f6de214055a6234ab1d977c7a8228e7, type: 3}
   swordAuraVanishPrefab: {fileID: 3264113253416196351, guid: aa438e6fc2ade594fad67d6eda986c0d, type: 3}
   swordAuraHitSparkPrefab: {fileID: 3264113253416196351, guid: f216192b6307e214ba1abd008a95e9a7, type: 3}
@@ -335,10 +336,12 @@ MonoBehaviour:
   swordAuraSpinCount: 8
   swordAuraSpinInterval: 0.1
   swordAuraSpinDamage: 25
+  swordAuraAudioClip: {fileID: 8300000, guid: a6efde96cfe9a6c4a981c24265391ac5, type: 3}
   swingTelegraphTime: 0.6
   swingRange: 5
   swingAngle: 120
   swingDamage: 50
+  swingGreatSwordClip: {fileID: 8300000, guid: 0545702d9cde6d14b849fd1fe1748cb0, type: 3}
   bonePrefab: {fileID: 3264113253416196351, guid: ac92747476b40504cbb9f4c971543c28, type: 3}
   boneShatterPrefab: {fileID: 3264113253416196351, guid: 1e31be1085820cf43aa560618a988a63, type: 3}
   boneBurstRingPrefab: {fileID: 3264113253416196351, guid: 170aed545d265464b9101e2ae0faf3b5, type: 3}
@@ -347,6 +350,8 @@ MonoBehaviour:
   boneLifetime: 3
   boneDamage: 15
   boneBurstInterval: 0.6
+  boneThrowClip: {fileID: 8300000, guid: 51a20f2d442370d4d8617c202d013bf5, type: 3}
+  explosionBoneClip: {fileID: 8300000, guid: 272c875d8e0dba6469045762a27b7682, type: 3}
   muzzlePoint: {fileID: 1817787263218877822}
   dashLinePrefab: {fileID: 3264113253416196351, guid: e0492622c06efb54b8e12bc4d7c3153e, type: 3}
   dashAfterimagePrefab: {fileID: 3264113253416196351, guid: fe799ce2bbd0ddb47bd57e505217126b, type: 3}
@@ -363,9 +368,9 @@ MonoBehaviour:
   pillarCount: 6
   pillarSpawnRadius: 6
   pillarTelegraphTime: 1.2
-  pillarRadius: 1.5
   pillarLifetime: 1
   pillarDamage: 50
+  pillarAudioClip: {fileID: 8300000, guid: fa3b896223a3ae049bd70d22819d8c06, type: 3}
   DEBUG_PHASE_IDX: 5
 --- !u!195 &-8292371541436376532
 NavMeshAgent:

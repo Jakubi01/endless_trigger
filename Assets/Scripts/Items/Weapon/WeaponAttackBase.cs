@@ -1,6 +1,7 @@
 using Character;
 using Character.Enemy;
 using Items.ProjectileManager;
+using Managers;
 using UnityEngine;
 using UserInterface;
 
@@ -14,6 +15,7 @@ namespace Items.Weapon
         [SerializeField] private float damage;
         [SerializeField] private float cooldown;
         [SerializeField] private Sprite weaponImage;
+        [SerializeField] protected AudioClip executeClip;
 
         private float _attackSpeedMultiplier = 1f;
         private float _timer;
@@ -22,6 +24,7 @@ namespace Items.Weapon
 
         protected EnemyCharacterBase CurrentTarget;
         protected ProjectilePoolManager ProjectileManager;
+        protected SoundManager SoundManagerInstance;
         public CharacterBase owner;
         protected Animator OwnerAnimator;
 
@@ -48,6 +51,7 @@ namespace Items.Weapon
             
             owner = GetComponentInParent<CharacterBase>();
             OwnerAnimator = owner.GetComponent<Animator>();
+            SoundManagerInstance = SoundManager.Instance;
         }
 
         public void StartFiring()

@@ -33,6 +33,7 @@ namespace Items.Weapon
             Transform trackingTarget = muzzlePoint ? muzzlePoint : owner.transform;
             
             ProjectileManager.Spawn(spawnPosition, rotation, Vector2.zero, Damage, PierceCount, true, trackingTarget);
+            if(executeClip) SoundManagerInstance.PlaySfx(executeClip);
             OwnerAnimator?.SetTrigger(AnimatorParamToHash.Attack);
         }
 

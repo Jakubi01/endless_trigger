@@ -2,10 +2,13 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Character;
 using Character.Enemy;
+using Character.Enemy.Boss;
 using Character.Player;
 using Items.Weapon;
+using Managers;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -20,19 +23,21 @@ namespace Components
             Phase3
         }
 
-        [Header("Selection")] [Tooltip("Pattern 1 ~ 5 weight (index 0 = pattern 1)")] [SerializeField]
-        private float[] weights = { 1f, 1f, 1f, 1f, 1f };
+        [Header("Selection")] [Tooltip("Pattern 1 ~ 5 weight (index 0 = pattern 1)")] 
+        [SerializeField] private float[] weights = { 1f, 1f, 1f, 1f, 1f };
 
         [SerializeField] private float minRestAfterAttack = 1f;
         [SerializeField] private float maxRestAfterAttack = 1.5f;
         [SerializeField] private float restAfterDashOrPillar = 2f;
         [SerializeField] private float playerHitInvulnerability = 0.5f;
 
-        [Header("Phase")] [SerializeField] private float phase2DamageMultiplier = 1.1f;
+        [Header("Phase")]
+        [SerializeField] private float phase2DamageMultiplier = 1.1f;
         [SerializeField] private float phase3DamageMultiplier = 1.15f;
         [SerializeField] private float phase3SpeedMultiplier = 1.3f;
 
-        [Header("Cooldowns")] [SerializeField] private float pattern1Cooldown = 3f;
+        [Header("Cooldowns")] 
+        [SerializeField] private float pattern1Cooldown = 3f;
         [SerializeField] private float pattern2Cooldown = 4f;
         [SerializeField] private float pattern3Cooldown = 6f;
         [SerializeField] private float pattern4Cooldown = 10f;
@@ -40,20 +45,16 @@ namespace Components
 
         [Header("Shared")]
         // [Resource] Telegraph_Fan_Red_96x168 프리팹: 4프레임 루프, 피벗 왼쪽 중앙, +X 방향 (②④ 공용)
-        [SerializeField]
-        private GameObject fanTelegraphPrefab;
+        [SerializeField] private GameObject fanTelegraphPrefab;
+        [SerializeField] private AudioClip slashGreatSwordClip;
 
         [Header("Pattern 1 - SwordAura")]
         // [Resource] SwordWave_Fly_64 프리팹: 루프, 오른쪽 향함 + Rigidbody2D + Trigger Collider2D + BossProjectile
-        [SerializeField]
-        private GameObject swordAuraPrefab;
-
+        [SerializeField] private GameObject swordAuraPrefab;
         // [Resource] SwordWave_Vanish_64 프리팹: 루프 끔, 재생 후 자동 삭제
         [SerializeField] private GameObject swordAuraVanishPrefab;
-
         // [Resource] SwordWave_HitSpark_48 프리팹: 재생 후 자동 삭제
         [SerializeField] private GameObject swordAuraHitSparkPrefab;
-
         // [Resource] 베기 애니메이션 (아직 없으므로 slashFrameDelay로 베기 프레임 시점을 대신함)
         [SerializeField] private float slashFrameDelay = 0.3f;
         [SerializeField] private float swordAuraSpeed = 8f;
@@ -63,22 +64,20 @@ namespace Components
         [SerializeField] private int swordAuraSpinCount = 8;
         [SerializeField] private float swordAuraSpinInterval = 0.1f;
         [SerializeField] private float swordAuraSpinDamage = 25f;
+        [SerializeField] private AudioClip swordAuraAudioClip;
 
-        [Header("Pattern 2 - SwingGreatSword")] [Min(0.5f)] [SerializeField]
-        private float swingTelegraphTime = 0.6f;
-
+        [Header("Pattern 2 - SwingGreatSword")] [Min(0.5f)] 
+        [SerializeField] private float swingTelegraphTime = 0.6f;
         [SerializeField] private float swingRange = 3f;
         [SerializeField] private float swingAngle = 120f;
         [SerializeField] private float swingDamage = 50f;
+        [SerializeField] private AudioClip swingGreatSwordClip;
 
         [Header("Pattern 3 - BoneExplosion")]
         // [Resource] Bone_Spin_48 프리팹: 루프 + 자식으로 Bone_Trail_48x32 + Rigidbody2D + Trigger Collider2D + BossProjectile
-        [SerializeField]
-        private GameObject bonePrefab;
-
+        [SerializeField] private GameObject bonePrefab;
         // [Resource] Bone_Shatter_48 프리팹: 재생 후 자동 삭제
         [SerializeField] private GameObject boneShatterPrefab;
-
         // [Resource] BoneBurst_Ring_128 프리팹: 재생 후 자동 삭제
         [SerializeField] private GameObject boneBurstRingPrefab;
         [SerializeField] private int boneCount = 12;
@@ -86,9 +85,11 @@ namespace Components
         [SerializeField] private float boneLifetime = 3f;
         [SerializeField] private float boneDamage = 15f;
         [SerializeField] private float boneBurstInterval = 0.6f;
+        [SerializeField] private AudioClip boneThrowClip;
+        [SerializeField] private AudioClip explosionBoneClip;
 
-        [Header("Pattern 4 - DashSlash")] [SerializeField]
-        private Transform muzzlePoint;
+        [Header("Pattern 4 - DashSlash")] 
+        [SerializeField] private Transform muzzlePoint;
 
         // [Resource] Telegraph_Line_Red_256x48 프리팹: 4프레임 루프, 피벗 왼쪽 중앙, +X 방향 (8m×1.5m)
         [SerializeField] private GameObject dashLinePrefab;
@@ -114,6 +115,7 @@ namespace Components
         [Min(1.2f)] [SerializeField] private float pillarTelegraphTime = 1.2f;
         [SerializeField] private float pillarLifetime = 1f;
         [SerializeField] private float pillarDamage = 50f;
+        [SerializeField] private AudioClip pillarAudioClip;
 
         private Transform _target;
         private Animator _animator;
@@ -126,6 +128,7 @@ namespace Components
         private EPhase _phase;
         private Vector2 _facing = Vector2.right;
         private BossCharacter _bossCharacter;
+        private SoundManager _soundManager;
         private Coroutine _patternRoutine;
 
         private WaitForSeconds _pillarWaitForSeconds;
@@ -176,6 +179,8 @@ namespace Components
                     StopCoroutine(_patternRoutine);
                 }
             };
+
+            _soundManager = SoundManager.Instance;
 
             _slashFrameWaitForSeconds = new WaitForSeconds(slashFrameDelay);
             _pillarWaitForSeconds = new WaitForSeconds(pillarTelegraphTime);
@@ -414,6 +419,7 @@ namespace Components
             yield return _swingWaitForSeconds;
             Destroy(fan);
 
+            _soundManager.PlaySfx(slashGreatSwordClip);
             TryHitFan(swingRange, swingAngle, swingDamage * Mult);
             ClearExecutingFlag();
         }
@@ -440,6 +446,7 @@ namespace Components
                 if (b > 0) yield return _boneBurstWaitForSeconds;
 
                 SpawnFx(boneBurstRingPrefab, transform.position, Quaternion.identity);
+                _soundManager.PlaySfx(boneThrowClip);
                 for (var i = 0; i < boneCount; i++)
                 {
                     var dir = Rotate(Vector2.right, step * 0.5f * b + step * i);
@@ -540,6 +547,8 @@ namespace Components
 
                 yield return null;
             }
+            
+            _soundManager.PlaySfx(swingGreatSwordClip);
 
             if (muzzlePoint && _target)
             {
@@ -582,6 +591,8 @@ namespace Components
                     
                 telegraphs[i] = pillarTelegraph;
             }
+
+            _soundManager.PlaySfx(pillarAudioClip);
 
             yield return _pillarWaitForSeconds;
 

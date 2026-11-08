@@ -241,6 +241,7 @@ namespace Character.Enemy
             
             GameManager.Instance?.RegisterKill();
             _enemyManager?.SpawnExperience(transform.position, _experienceReward);
+            _enemyManager.DecreaseEnemyCount();
 
             EnableColliders(false);
 

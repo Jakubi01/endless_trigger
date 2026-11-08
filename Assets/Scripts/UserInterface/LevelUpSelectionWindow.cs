@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using Character.Player;
+using Character.Player.Upgrade;
 using UnityEngine;
 
 namespace UserInterface

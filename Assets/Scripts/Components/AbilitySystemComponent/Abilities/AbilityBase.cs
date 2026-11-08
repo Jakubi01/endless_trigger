@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Managers;
+using UnityEngine;
 using UserInterface;
 
 namespace Components.AbilitySystemComponent
@@ -18,6 +19,7 @@ namespace Components.AbilitySystemComponent.Abilities
         [SerializeField, Min(0.1f)] private float baseExecuteInterval = 3f;
         [SerializeField] private AbilityType abilityType;
         [SerializeField] private Sprite abilityImage;
+        [SerializeField] protected AudioClip executeClip;
 
         private float CurrentExecuteInterval => Mathf.Max(0.1f, baseExecuteInterval / _executeSpeedMultiplier);
         private float RemainingCooldown => Mathf.Max(0f, CurrentExecuteInterval - _timer);
@@ -25,6 +27,7 @@ namespace Components.AbilitySystemComponent.Abilities
         public AbilityType AbilityType => abilityType;
 
         protected GameObject Owner;
+        protected SoundManager SoundManagerInstance;
         
         private float _executeSpeedMultiplier = 1f;
         private float _timer;
@@ -43,6 +46,7 @@ namespace Components.AbilitySystemComponent.Abilities
         {
             Owner = owner;
             _timer = CurrentExecuteInterval;
+            SoundManagerInstance = SoundManager.Instance;
         }
         
         public void UpdateTimer(float deltaTime)

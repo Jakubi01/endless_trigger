@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using Character;
 using Character.Enemy;
+using Managers;
 using UnityEngine;
 
 namespace Items.Weapon
@@ -11,6 +12,7 @@ namespace Items.Weapon
     {
         [SerializeField] private GameObject bombAreaPrefab;
         [SerializeField] private AnimationCurve moveCurve = AnimationCurve.Linear(0, 0, 1, 1);
+        [SerializeField] private AudioClip executeClip;
 
         private EnemyCharacterBase _target;
         private Animator _animator;
@@ -75,6 +77,8 @@ namespace Items.Weapon
         private IEnumerator Detonate()
         {
             _detonated = true;
+            
+            SoundManager.Instance.PlaySfx(executeClip);
             
             if (_animator)
             {

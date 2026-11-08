@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Character;
 using Character.Enemy;
+using Managers;
 using UnityEngine;
 
 namespace Items.ProjectileManager
@@ -14,10 +15,12 @@ namespace Items.ProjectileManager
         [SerializeField] private string animationName;
         [SerializeField] private bool shouldPlayerAnimation;
         [SerializeField] private float lifeTime;
+        [SerializeField] private AudioClip trigEnterClip;
 
         private Rigidbody2D _rb;
         private Collider2D _col;
         private Animator _animator;
+        private SoundManager _soundManager;
         private Action<GameObject> _returnToPool;
         private float _lifeTimer;
         private float _damage;
@@ -39,6 +42,8 @@ namespace Items.ProjectileManager
             _animator = GetComponent<Animator>();
 
             _overlappedObjects.Clear();
+
+            _soundManager = SoundManager.Instance;
         }
 
         public void Initialize(Vector2 direction, Action<GameObject> returnAction, float damage = 0f,
@@ -104,6 +109,7 @@ namespace Items.ProjectileManager
             if (_overlappedObjects.Contains(collision.gameObject)) return;
             _overlappedObjects.Add(collision.gameObject);
             
+            if(trigEnterClip) _soundManager.PlaySfx(trigEnterClip);
             damageable.TakeDamage(_damage);
             _remainingHits--;
 

@@ -548,7 +548,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Components.PlayerLevelComponent
   levelUpVFXPrefab: {fileID: 217846322293083766, guid: ae40f1f028ac5e14cb8b32618f67c7c5, type: 3}
-  requiredExperiencePerLevel: 100
 --- !u!114 &702156230923412395
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -651,6 +650,7 @@ MonoBehaviour:
   damage: 10
   cooldown: 2
   weaponImage: {fileID: 21300000, guid: 7854f2316f4dcd943a9a4b823ddd53c4, type: 3}
+  executeClip: {fileID: 0}
   owner: {fileID: 0}
   targetRange: 4
   muzzlePoint: {fileID: 3131273836581289883}
@@ -719,6 +719,7 @@ MonoBehaviour:
   damage: 40
   cooldown: 5
   weaponImage: {fileID: 21300000, guid: ea3b42e54d2092a4487e5a2d2f15fde3, type: 3}
+  executeClip: {fileID: 8300000, guid: 47984e6363def7e4ba2033c4f1a81bbe, type: 3}
   owner: {fileID: 0}
   range: 20
   pierceCount: 1

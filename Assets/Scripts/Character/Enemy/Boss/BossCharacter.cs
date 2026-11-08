@@ -1,11 +1,9 @@
-﻿using Character.Enemy.Boss;
-using Character.Player;
+﻿using Character.Player;
 using Components;
-using System.Collections;
 using Managers;
 using UnityEngine;
 
-namespace Character.Enemy
+namespace Character.Enemy.Boss
 {
     public class BossCharacter : EnemyCharacterBase
     {
@@ -18,7 +16,6 @@ namespace Character.Enemy
             ExecutePattern,
             Dead
         }
-
         
         private EnemyBossCombatComponent _bossCombatComponent;
         private EBehaviourState _behaviourState = EBehaviourState.None;
@@ -106,7 +103,8 @@ namespace Character.Enemy
                 case EBehaviourState.Combat:
                     _bossCombatComponent.TryExecuteNextPattern(EnemyHealthComponent);
                     break;
-                
+
+                case EBehaviourState.Dead:
                 case EBehaviourState.None:
                 default:
                     return;

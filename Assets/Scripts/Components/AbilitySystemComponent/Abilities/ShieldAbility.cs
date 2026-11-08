@@ -38,6 +38,7 @@ namespace Components.AbilitySystemComponent.Abilities
             float startAngle = _shieldCount == 4 ? 45f : 90f;
             float step = 360f / _shieldCount;
 
+            SoundManagerInstance.PlaySfx(executeClip);
             for (int i = 0; i < _shieldCount; i++)
             {
                 GameObject go = _projectilePoolManager.Spawn(Owner.transform.position, Quaternion.identity, Vector2.zero, _damage, pierceCount: 999);

@@ -11,6 +11,8 @@ namespace Managers
         [SerializeField] private GameObject experiencePickupPrefab;
 
         private readonly List<EnemyCharacterBase> _enemies = new();
+        private EnemySpawner _enemySpawner;
+        
         public static EnemyManager Instance { get; private set; }
         public PlayerCharacter Player { get; set; }
 
@@ -18,9 +20,11 @@ namespace Managers
         {
             Instance = this;
 
-            if (!GetComponent<EnemySpawner>())
+            _enemySpawner = GetComponent<EnemySpawner>();
+            
+            if (!_enemySpawner)
             {
-                gameObject.AddComponent<EnemySpawner>();
+                _enemySpawner = gameObject.AddComponent<EnemySpawner>();
             }
         }
 
@@ -136,6 +140,11 @@ namespace Managers
             {
                 experiencePickup.Initialize(amount);
             }
+        }
+
+        public void DecreaseEnemyCount()
+        {
+            if (_enemySpawner) _enemySpawner.AliveEnemyCount -= 1;
         }
     }
 }

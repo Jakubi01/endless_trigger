@@ -1,5 +1,5 @@
 ﻿using System;
-using Character.Player;
+using Character.Player.Upgrade;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;

@@ -38,6 +38,7 @@ namespace Components.AbilitySystemComponent.Abilities
         {
             if (!base.Execute()) return false;
 
+            SoundManagerInstance.PlaySfx(executeClip);
             _targets.Clear();
             for (int i = 0; i < _throwCount; i++)
             {
