@@ -12,12 +12,18 @@ namespace Items.Exp
 
         private PlayerCharacter _player;
         private SoundManager _soundManager;
+        private SceneSpawnManager _sceneSpawnManager;
 
         private void Awake()
         {
-            CircleCollider2D pickupCollider = GetComponent<CircleCollider2D>();
+            var pickupCollider = GetComponent<CircleCollider2D>();
             pickupCollider.isTrigger = true;
             _soundManager = SoundManager.Instance;
+
+            _sceneSpawnManager = FindFirstObjectByType<SceneSpawnManager>();
+            if (!_sceneSpawnManager) return;
+
+            _player = _sceneSpawnManager.Player;
         }
 
         private void Update()

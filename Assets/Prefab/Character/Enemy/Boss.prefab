@@ -287,9 +287,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e09a8a659eb4e5da790e1a5be8b1d97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Character.Enemy.BossCharacter
-  hitSound: {fileID: 0}
+  hitSound: {fileID: 8300000, guid: 3d6acf6bb88324745b30f0249650ab62, type: 3}
   damageSound: {fileID: 0}
-  deathSound: {fileID: 0}
+  deathSound: {fileID: 8300000, guid: 2e6d432d086003a4695082001019b113, type: 3}
   attackRadius: 5
   contactDamageInterval: 1
   proximityLimitRadius: 2.1
@@ -370,7 +370,7 @@ MonoBehaviour:
   pillarTelegraphTime: 1.2
   pillarLifetime: 1
   pillarDamage: 50
-  pillarAudioClip: {fileID: 8300000, guid: fa3b896223a3ae049bd70d22819d8c06, type: 3}
+  pillarAudioClip: {fileID: 8300000, guid: 6825fb08752ff244da1bf28865cf35d9, type: 3}
   DEBUG_PHASE_IDX: 5
 --- !u!195 &-8292371541436376532
 NavMeshAgent:

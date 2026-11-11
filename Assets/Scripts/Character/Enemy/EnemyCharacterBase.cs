@@ -186,8 +186,8 @@ namespace Character.Enemy
 
         public virtual void TakeDamage(float amount)
         {
-            if(damageSound)
-                SoundManagerInstance.PlaySfx(damageSound);
+            if(hitSound)
+                SoundManagerInstance.PlaySfx(hitSound);
             
             EnemyHealthComponent?.TakeDamage(amount);
             animator.SetTrigger(AnimatorParamToHash.TakeDamage);
