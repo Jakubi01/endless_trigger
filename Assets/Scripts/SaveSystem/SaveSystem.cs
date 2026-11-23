@@ -43,14 +43,13 @@ namespace SaveSystem
         }
     }
 
-    // SaveGame.json 형태로 저장될 인게임 플레이 데이터 클래스
+    // 인게임 플레이 데이터 클래스
     [Serializable]
     public class InGameSaveData
     {
-        public string playerName = "HaHaHuHe";
+        public string playerName = string.Empty;
         public int currentStageIndex;
         public int totalPlayTimeSec;
-        public int gold;
         public int totalKillCount;
     
         // 필요 시 인벤토리 목록 등 추가 확장 가능
@@ -58,10 +57,11 @@ namespace SaveSystem
     
     public static class SaveSystem
     {
-        private static readonly string SaveDirectory = Path.Combine(Application.persistentDataPath, "sys_data.bin");
+        private static readonly string Path = "gpsW6VLEUx6q2vM";
+        private static readonly string SaveDirectory = System.IO.Path.Combine(Application.persistentDataPath, Path);
 
-        private static readonly string EncryptKey = "PHN0UmmexfFOF5G0QbT2VN5jYQJvg8dS!"; 
-        private static readonly string EncryptIV = "pJK8ZkHoHdWYwOQT!";
+        private static readonly string EncryptKey = "HaHaHuHe_SecretKey_32Bytes_Long!"; 
+        private static readonly string EncryptIV = "HaHaHuHe_IV_16B!";
         
         /// <summary>
         /// 지정한 파일명으로 데이터를 JSON 저장합니다.
@@ -78,7 +78,7 @@ namespace SaveSystem
                     Directory.CreateDirectory(SaveDirectory);
                 }
 
-                var fullPath = Path.Combine(SaveDirectory, fileName);
+                var fullPath = System.IO.Path.Combine(SaveDirectory, fileName);
                 
                 // 용량 최적화 및 구조 파악 방지를 위해 prettyPrint를 false로 설정
                 var json = JsonUtility.ToJson(data, false);
@@ -104,7 +104,7 @@ namespace SaveSystem
 #if UNITY_WEBGL && !UNITY_EDITOR
             return new T();
 #else
-            var fullPath = Path.Combine(SaveDirectory, fileName);
+            var fullPath = System.IO.Path.Combine(SaveDirectory, fileName);
             try
             {
                 if (!File.Exists(fullPath))
@@ -140,29 +140,40 @@ namespace SaveSystem
         
         private static byte[] EncryptStringToBytes(string plainText)
         {
-            using var aes = Aes.Create();
-            aes.Key = Encoding.UTF8.GetBytes(EncryptKey);
-            aes.IV = Encoding.UTF8.GetBytes(EncryptIV);
+            using (var aes = Aes.Create())
+            {
+                aes.Key = Encoding.UTF8.GetBytes(EncryptKey);
+                aes.IV = Encoding.UTF8.GetBytes(EncryptIV);
 
-            var encryptor = aes.CreateEncryptor(aes.Key, aes.IV);
-            using var ms = new MemoryStream();
-            using var cs = new CryptoStream(ms, encryptor, CryptoStreamMode.Write);
-            using var sw = new StreamWriter(cs);
-            sw.Write(plainText);
-            return ms.ToArray();
+                using (var encryptor = aes.CreateEncryptor(aes.Key, aes.IV))
+                using (var ms = new MemoryStream())
+                {
+                    using (var cs = new CryptoStream(ms, encryptor, CryptoStreamMode.Write))
+                    using (var sw = new StreamWriter(cs, Encoding.UTF8))
+                    {
+                        sw.Write(plainText);
+                    }
+
+                    return ms.ToArray();
+                }
+            }
         }
 
         private static string DecryptBytesToString(byte[] cipherText)
         {
-            using var aes = Aes.Create();
-            aes.Key = Encoding.UTF8.GetBytes(EncryptKey);
-            aes.IV = Encoding.UTF8.GetBytes(EncryptIV);
+            using (var aes = Aes.Create())
+            {
+                aes.Key = Encoding.UTF8.GetBytes(EncryptKey);
+                aes.IV = Encoding.UTF8.GetBytes(EncryptIV);
 
-            var decryptor = aes.CreateDecryptor(aes.Key, aes.IV);
-            using var ms = new MemoryStream(cipherText);
-            using var cs = new CryptoStream(ms, decryptor, CryptoStreamMode.Read);
-            using var sr = new StreamReader(cs);
-            return sr.ReadToEnd();
+                using (var decryptor = aes.CreateDecryptor(aes.Key, aes.IV))
+                using (var ms = new MemoryStream(cipherText))
+                using (var cs = new CryptoStream(ms, decryptor, CryptoStreamMode.Read))
+                using (var sr = new StreamReader(cs, Encoding.UTF8))
+                {
+                    return sr.ReadToEnd();
+                }
+            }
         }
     }
 }

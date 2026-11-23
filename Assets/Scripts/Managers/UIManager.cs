@@ -142,7 +142,9 @@ namespace Managers
 
         public void OnExitAccept()
         {
-            Time.timeScale = 1f; 
+            Time.timeScale = 1f;
+            SettingManager.Instance?.SaveSettings();
+            SettingManager.Instance?.SaveInGameProgress();
             
         #if UNITY_EDITOR
             UnityEditor.EditorApplication.isPlaying = false;

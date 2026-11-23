@@ -10,8 +10,8 @@ namespace Managers
         public static SettingManager Instance { get; private set; }
         
         // 고정된 독립 파일 이름 정의
-        private const string SettingsFileName = "Settings.json";
-        private const string IngameSaveFileName = "SaveGame.json";
+        private const string SettingsFileName = "sys_opt.dat";
+        private const string IngameSaveFileName = "usr_cache.bin";
 
         // 런타임 메모리 데이터 홀더
         private SettingData _currentSettings;
@@ -78,6 +78,19 @@ namespace Managers
                 _currentSettings = new SettingData();
                 SetDefaultInitSettings();
             }
+
+            if (!string.IsNullOrEmpty(_inGameSaveData.playerName)) return;
+            
+            Debug.Log($"[{this}] Alloc New InGameData.");
+            _inGameSaveData = new InGameSaveData();
+            Debug.Log($"[{this}] set new player name.");
+            _inGameSaveData.playerName = PlayerNameHelper.GetDefaultPlayerName();
+            Debug.Log($"[{this}] {_inGameSaveData.playerName}.");
+            _inGameSaveData.currentStageIndex = 0;
+            _inGameSaveData.totalKillCount = 0;
+            _inGameSaveData.totalPlayTimeSec = 0;
+            SaveInGameProgress();
+            Debug.Log(_inGameSaveData.playerName);
         }
         
         /// <summary>
