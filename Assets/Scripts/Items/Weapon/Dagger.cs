@@ -1,35 +1,40 @@
-﻿using Character;
+using Character.Enemy;
+using Managers;
 using UnityEngine;
 
 namespace Items.Weapon
 {
     public class Dagger : MonoBehaviour
     {
-        private Rigidbody2D _rb;
-        
-        private float _speed;
-        private float _damage;
+        [SerializeField] private GameObject destroyFx;
+        [SerializeField] private AudioClip throwClip;
 
-        private void Awake()
+        private bool _hasHit;
+
+        private void OnEnable()
         {
-            _rb = GetComponent<Rigidbody2D>();
-        }
-        
-        public void Init(Vector2 targetDir)
-        {
-            _speed = 2f;
-            if(_rb is not null) _rb.linearVelocity = targetDir * _speed;
+            _hasHit = false;
         }
 
-        public void SetDamage(float damage) => _damage = damage;
+        public void Init(Vector2 direction)
+        {
+            if (direction.sqrMagnitude <= Mathf.Epsilon) return;
+
+            var angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+            transform.rotation = Quaternion.Euler(0f, 0f, angle);
+            _hasHit = false;
+            SoundManager.Instance.PlaySfx(throwClip);
+        }
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            if (collision.CompareTag("Player") || !collision.CompareTag("Enemy")) return;
-            if (!collision.TryGetComponent(out IDamageable damageable)) return;
-            
-            damageable.TakeDamage(_damage);
-            Destroy(gameObject);
+            if (_hasHit || !collision.TryGetComponent(out EnemyCharacterBase _)) return;
+
+            _hasHit = true;
+            if (!destroyFx) return;
+
+            var fx = Instantiate(destroyFx, transform.position, Quaternion.identity);
+            Destroy(fx, 1f);
         }
     }
 }

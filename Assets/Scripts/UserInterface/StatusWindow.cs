@@ -9,20 +9,20 @@ namespace UserInterface
         {
             base.Awake();
             
-            var verticalLayoutGroup = GetComponent<VerticalLayoutGroup>();
+            var verticalLayoutGroup = GetComponent<HorizontalLayoutGroup>();
             if (!verticalLayoutGroup)
             {
-                verticalLayoutGroup = gameObject.AddComponent<VerticalLayoutGroup>();
+                verticalLayoutGroup = gameObject.AddComponent<HorizontalLayoutGroup>();
             }
 
-            verticalLayoutGroup.spacing = 10f;
-            verticalLayoutGroup.padding = new RectOffset(0, 0, 5, 5);
-            verticalLayoutGroup.childAlignment = TextAnchor.UpperLeft;
-            verticalLayoutGroup.childControlWidth = true;
+            verticalLayoutGroup.spacing = 0f;
+            verticalLayoutGroup.padding = new RectOffset(20, 0, 0, 0);
+            verticalLayoutGroup.childAlignment = TextAnchor.MiddleLeft;
+            verticalLayoutGroup.childControlWidth = false;
             verticalLayoutGroup.childControlHeight = false;
             verticalLayoutGroup.childScaleWidth = true;
             verticalLayoutGroup.childScaleHeight = true;
-            verticalLayoutGroup.childForceExpandWidth = true;
+            verticalLayoutGroup.childForceExpandWidth = false;
             verticalLayoutGroup.childForceExpandHeight = false;
         }
     }

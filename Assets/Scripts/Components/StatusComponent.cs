@@ -66,7 +66,7 @@ namespace Components
             ability.SetCoolTimePanel(SpawnCoolTimePanel());
         }
 
-        public CoolTimePanel SpawnCoolTimePanel()
+        private CoolTimePanel SpawnCoolTimePanel()
         {
             return !coolTimePanel || !_statusWindow
                 ? null

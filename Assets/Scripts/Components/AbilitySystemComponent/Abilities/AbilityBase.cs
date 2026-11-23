@@ -1,4 +1,5 @@
-﻿using Managers;
+﻿using System;
+using Managers;
 using UnityEngine;
 using UserInterface;
 
@@ -8,7 +9,8 @@ namespace Components.AbilitySystemComponent
     {
         Boomerang,
         Shield,
-        Bomb
+        Bomb,
+        Dagger
     }
 }
 
@@ -29,9 +31,14 @@ namespace Components.AbilitySystemComponent.Abilities
         protected GameObject Owner;
         protected SoundManager SoundManagerInstance;
         
+        private CoolTimePanel _coolTimePanel;
         private float _executeSpeedMultiplier = 1f;
         private float _timer;
-        private CoolTimePanel _coolTimePanel;
+        private bool _isEnabled;
+
+        private void OnDisable() => _isEnabled = false;
+
+        private void OnDestroy() => _isEnabled = false;
 
         public void SetCoolTimePanel(CoolTimePanel panel)
         {
@@ -47,10 +54,13 @@ namespace Components.AbilitySystemComponent.Abilities
             Owner = owner;
             _timer = CurrentExecuteInterval;
             SoundManagerInstance = SoundManager.Instance;
+            _isEnabled = true;
         }
         
         public void UpdateTimer(float deltaTime)
         {
+            if(!_isEnabled) return;
+            
             _timer += deltaTime;
             
             UpdateCoolTimePanel();

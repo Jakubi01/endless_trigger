@@ -4,6 +4,7 @@ using System.Globalization;
 using Character.Player.Upgrade;
 using Components;
 using Components.AbilitySystemComponent;
+using Components.AbilitySystemComponent.Abilities;
 using Effects.DamageText;
 using Items.Weapon;
 using Managers;
@@ -24,6 +25,7 @@ namespace Character.Player
 
         public readonly List<WeaponAttackBase> EquippedWeapons = new();
         private EnemyManager _enemyManager;
+        private UIManager _uiManagerInstance;
         private HealthComponent _healthComponent;
         private PlayerLevelComponent _levelComponent;
         private float _currentMoveSpeed;
@@ -31,6 +33,8 @@ namespace Character.Player
         private const string StateName = "Death";
 
         public float ExperiencePickupRange => _levelComponent ? _levelComponent.ExperiencePickupRange : 2.5f;
+
+        [SerializeField] private AbilityBase daggerAbility;
 
         protected override void Awake()
         {
@@ -68,6 +72,11 @@ namespace Character.Player
             }
             
             GetComponent<SpriteRenderer>().sortingLayerName = "Player";
+        }
+
+        private void Start()
+        {
+            _uiManagerInstance = UIManager.Instance;
         }
 
         private void OnDestroy()
@@ -179,7 +188,7 @@ namespace Character.Player
         {
             yield return new WaitForSeconds(seconds);
             
-            UIManager.Instance.ShowGameOverWindow();
+            _uiManagerInstance.ShowGameOverWindow();
         }
 
         public int GetUpgradeStackCount(PlayerUpgradeDefinition definition)
@@ -204,7 +213,9 @@ namespace Character.Player
 
         private void ShowLevelUpSelection()
         {
-            List<PlayerUpgradeDefinition> choices = PlayerUpgradeDefinition.GetRandomChoices(this, upgradeDefinitions, 3);
+            if (!_uiManagerInstance) return;
+            
+            var choices = PlayerUpgradeDefinition.GetRandomChoices(this, upgradeDefinitions, 3);
             if (choices.Count == 0)
             {
                 Debug.LogError("PlayerCharacter에 선택 가능한 PlayerUpgradeDefinition이 없습니다.", this);
@@ -212,30 +223,23 @@ namespace Character.Player
                 return;
             }
 
-            if (UIManager.Instance)
-            { 
-                UIManager.Instance.ShowLevelUpSelection(choices, SelectUpgrade);
-            }
-            else
-            {
-                SelectUpgrade(choices[0]);
-            }
+            _uiManagerInstance.SetGameHUDVisibility(false);
+            _uiManagerInstance.ShowLevelUpSelection(choices, SelectUpgrade);
         }
 
         private void SelectUpgrade(PlayerUpgradeDefinition definition)
         {
+            if (!_levelComponent) return;
+            
             ApplyUpgrade(definition);
             SpawnLevelUpVfx(_levelComponent ? _levelComponent.LevelUpVFXPrefab : null);
             _levelComponent.CompleteUpgradeSelection();
+            _uiManagerInstance.SetGameHUDVisibility(true);
         }
 
         private void SpawnLevelUpVfx(GameObject levelUpVFXPrefab)
         {
-            if (EquippedWeapons.Count == 0) return;
-
-            // TODO : 이 랜덤 무기 강화를 덱으로 넣어버리고 여기에 덱 카드 선택 추가
-            // enhance weapon status
-            if (!levelUpVFXPrefab) return;
+            if (EquippedWeapons.Count == 0 || !levelUpVFXPrefab) return;
             
             var levelUpVFX = Instantiate(levelUpVFXPrefab, transform);
             if (!levelUpVFX) return;

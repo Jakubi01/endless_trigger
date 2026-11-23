@@ -361,6 +361,13 @@ namespace Managers
             
             _gameHUD.gameObject.SetActive(bVisible);
         }
+
+        public void SetGameHUDVisibility(bool bVisible)
+        {
+            if(!_gameHUD) return;
+            
+            _gameHUD.gameObject.SetActive(bVisible);
+        }
         
 #endregion
     }
