@@ -370,7 +370,9 @@ namespace Managers
             
             _gameHUD.gameObject.SetActive(bVisible);
         }
-        
-#endregion
+
+        public GameHUD GetGameHud() => _gameHUD;
+
+        #endregion
     }
 }

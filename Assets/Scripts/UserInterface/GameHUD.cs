@@ -12,6 +12,7 @@ namespace UserInterface
         [SerializeField] private Slider hpBarSlider;
         [SerializeField] private TMP_Text hpBarText;
         [SerializeField] private Slider expBarSlider;
+        [SerializeField] private GameObject timer;
         [SerializeField] private TMP_Text timerText;
         [SerializeField] private TMP_Text levelText;
         [SerializeField] private StatusWindow statusWindow;
@@ -22,6 +23,7 @@ namespace UserInterface
         private EnemySpawner _enemySpawner;
         private int _lastTimerMode = -1;
         private int _lastTimerSecond = -1;
+        private bool _isBossSpawned;
 
         protected override void Awake()
         {
@@ -51,7 +53,7 @@ namespace UserInterface
 
         private void RefreshTimer()
         {
-            if (!timerText || !_enemySpawner) return;
+            if (!timerText || !_enemySpawner || _isBossSpawned) return;
 
             int mode;
             float time;
@@ -164,5 +166,15 @@ namespace UserInterface
                 levelText.text = "Lv 0";
             }
         }
+
+        public void HideTimer()
+        {
+            if (!timer) return;
+            
+            timer.SetActive(false);
+            _isBossSpawned = true;
+        }
+
+        public StatusWindow GetStatusWindow() => statusWindow;
     }
 }

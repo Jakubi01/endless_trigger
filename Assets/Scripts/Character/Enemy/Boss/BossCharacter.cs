@@ -2,6 +2,7 @@
 using Components;
 using Managers;
 using UnityEngine;
+using UserInterface;
 
 namespace Character.Enemy.Boss
 {
@@ -16,6 +17,8 @@ namespace Character.Enemy.Boss
             ExecutePattern,
             Dead
         }
+
+        [SerializeField] private BossHealthBar healthBar;
         
         private EnemyBossCombatComponent _bossCombatComponent;
         private EBehaviourState _behaviourState = EBehaviourState.None;
@@ -31,6 +34,14 @@ namespace Character.Enemy.Boss
             SetPlayerRef();
 
             IgnoreManager = true;
+
+            var gameHUD = UIManager.Instance.GetGameHud();
+            if (!gameHUD) return;
+            
+            gameHUD.HideTimer();
+            var hpBar = Instantiate(healthBar, gameHUD.transform, false);
+            if (!hpBar) return;
+            hpBar.Init(EnemyHealthComponent);
         }
 
         private void Start()

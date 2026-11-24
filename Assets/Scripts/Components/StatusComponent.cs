@@ -2,6 +2,7 @@ using Character.Player;
 using Components.AbilitySystemComponent.Abilities;
 using Components.AbilitySystemComponent;
 using Items.Weapon;
+using Managers;
 using UnityEngine;
 using UserInterface;
 
@@ -29,7 +30,8 @@ namespace Components
 
         private void Start()
         {
-            _statusWindow = FindFirstObjectByType<StatusWindow>();
+            var gameHUD = UIManager.Instance.GetGameHud();
+            _statusWindow = gameHUD ? gameHUD.GetStatusWindow() : FindFirstObjectByType<StatusWindow>();
             if (!_statusWindow) return;
 
             if (_swordAttack)

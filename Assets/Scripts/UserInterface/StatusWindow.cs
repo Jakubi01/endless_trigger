@@ -16,8 +16,8 @@ namespace UserInterface
             }
 
             verticalLayoutGroup.spacing = 0f;
-            verticalLayoutGroup.padding = new RectOffset(20, 0, 0, 0);
-            verticalLayoutGroup.childAlignment = TextAnchor.MiddleLeft;
+            verticalLayoutGroup.padding = new RectOffset(0, 20, 0, 0);
+            verticalLayoutGroup.childAlignment = TextAnchor.MiddleRight;
             verticalLayoutGroup.childControlWidth = false;
             verticalLayoutGroup.childControlHeight = false;
             verticalLayoutGroup.childScaleWidth = true;

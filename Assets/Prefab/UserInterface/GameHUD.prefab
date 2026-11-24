@@ -410,9 +410,10 @@ MonoBehaviour:
   hpBarSlider: {fileID: 54478181195274756}
   hpBarText: {fileID: 3717527921524649553}
   expBarSlider: {fileID: 5996596668865366811}
+  timer: {fileID: 6265813013141740216}
   timerText: {fileID: 1729665983729917258}
   levelText: {fileID: 8832829899137092960}
-  statusWindow: {fileID: 0}
+  statusWindow: {fileID: 8569823820307177278}
 --- !u!1 &4728904404825376039
 GameObject:
   m_ObjectHideFlags: 0
@@ -1392,3 +1393,14 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 9197961142413733786, guid: e7456473d3322544ba9e53bbcb92692a, type: 3}
   m_PrefabInstance: {fileID: 6449336303126431133}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8569823820307177278 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3417814777583819427, guid: e7456473d3322544ba9e53bbcb92692a, type: 3}
+  m_PrefabInstance: {fileID: 6449336303126431133}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30272eddce404171b9ece76a73c58de8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UserInterface.StatusWindow

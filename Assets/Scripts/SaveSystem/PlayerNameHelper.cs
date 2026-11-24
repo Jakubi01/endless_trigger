@@ -42,7 +42,7 @@ namespace SaveSystem
                 return GetFallbackName();
 
 #elif UNITY_ANDROID || UNITY_IOS
-                // 모바일은 Environment.UserName 대신 기기 이름(예: "민수의 iPhone", "Galaxy S24")을 활용
+                // 모바일은 기기 이름을 활용
                 string deviceName = SystemInfo.deviceName;
                 if (IsValidName(deviceName) && !IsGenericMobileDeviceName(deviceName))
                 {
