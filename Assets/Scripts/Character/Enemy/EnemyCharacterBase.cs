@@ -63,6 +63,12 @@ namespace Character.Enemy
         protected override void Awake()
         {
             base.Awake();
+
+            // NavMeshAgent owns enemy movement. A dynamic body lets player/enemy
+            // contacts push the Rigidbody away from the agent's path.
+            CharacterRigidbody.bodyType = RigidbodyType2D.Kinematic;
+            CharacterRigidbody.gravityScale = 0f;
+            CharacterRigidbody.linearVelocity = Vector2.zero;
             
             InitializeHealthComponent();
             
@@ -178,6 +184,23 @@ namespace Character.Enemy
         public void MoveToTargetPosition(Vector2 targetPosition)
         {
             if (!IsAlive) return;
+
+            // A dynamic Rigidbody2D can be displaced by collisions while the agent
+            // still tracks its old position. Reattach it before issuing the next
+            // chase destination, including when the agent reports itself on mesh.
+            var agentPosition = _navMeshAgent.nextPosition;
+            var positionDelta = (agentPosition - transform.position).sqrMagnitude;
+            if (!_navMeshAgent.isOnNavMesh || positionDelta > 0.25f)
+            {
+                if (NavMesh.SamplePosition(transform.position, out var hit, 5f, NavMesh.AllAreas))
+                {
+                    _navMeshAgent.Warp(hit.position);
+                }
+                else
+                {
+                    return;
+                }
+            }
 
             AIFlipSprite(targetPosition);
             _navMeshAgent.isStopped = false;

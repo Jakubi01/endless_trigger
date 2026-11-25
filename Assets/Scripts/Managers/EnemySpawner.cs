@@ -45,6 +45,7 @@ namespace Managers
         }
 
         [Header("Spawn Settings")]
+        [SerializeField] private BoxCollider2D spawnAreaCollider;
         [SerializeField] private EnemyData[] enemyData;                   // 스폰 가능한 적들의 ScriptableObject 데이터 배열
         [SerializeField] private float minSpawnDistanceFromPlayer = 5f;   // 플레이어 기준 최소 스폰 거리
         [SerializeField] private float maxSpawnDistanceFromPlayer = 9f;   // 플레이어 기준 최대 스폰 거리
@@ -102,6 +103,20 @@ namespace Managers
 
         private void Awake()
         {
+            if (!spawnAreaCollider)
+            {
+                var tilemapObject = GameObject.Find("Grid/Tilemap");
+                if (tilemapObject)
+                {
+                    spawnAreaCollider = tilemapObject.GetComponent<BoxCollider2D>();
+                }
+            }
+
+            if (!spawnAreaCollider)
+            {
+                Debug.LogError($"{nameof(EnemySpawner)} could not find Grid/Tilemap BoxCollider2D.", this);
+            }
+
             // 최대 거리가 최소 거리보다 작다면 최소 거리와 같게 맞춰줌
             if (maxSpawnDistanceFromPlayer < minSpawnDistanceFromPlayer)
             {
@@ -169,7 +184,7 @@ namespace Managers
 
                 case Phase.Intermission:
                     _phaseTimer -= Time.deltaTime;
-                    if (_phaseTimer <= 0f) StartRound(_roundNumber + 1);
+                    if (_phaseTimer <= 0f) StartRound(++_roundNumber);
                     break;
             }
 #endif
@@ -442,20 +457,39 @@ namespace Managers
         /// </summary>
         private Vector3 GetSpawnPosition()
         {
-            // 반지름이 1인 원 내부의 임의의 점 벡터를 뽑고 노멀라이즈하여 무작위 방향 점 벡터 추출
-            var direction = Random.insideUnitCircle.normalized;
-            
-            // 혹시라도 (0,0)이 뽑혀 노멀라이즈가 깨졌을 때를 대비한 예외 처리
-            if (direction.sqrMagnitude < 0.01f)
+            if (!spawnAreaCollider)
             {
-                direction = Vector2.right;
+                return _player.transform.position;
             }
 
-            // 최소~최대 거리 사이의 임의의 스폰 거리 계산
-            var distance = Random.Range(minSpawnDistanceFromPlayer, maxSpawnDistanceFromPlayer);
-            
-            // 플레이어의 현재 평면 위치에 방향 * 거리를 더해 최종 Vector3 월드 좌표 연산
-            return _player.transform.position + (Vector3)(direction * distance);
+            var playerPosition = (Vector2)_player.transform.position;
+            var minDistanceSqr = minSpawnDistanceFromPlayer * minSpawnDistanceFromPlayer;
+            var maxDistanceSqr = maxSpawnDistanceFromPlayer * maxSpawnDistanceFromPlayer;
+
+            // Prefer positions that also respect the configured player distance.
+            for (var i = 0; i < 100; i++)
+            {
+                var candidateWorld = GetRandomPointInsideSpawnArea();
+                var candidate = (Vector2)candidateWorld;
+                var distanceSqr = (candidate - playerPosition).sqrMagnitude;
+
+                if (distanceSqr >= minDistanceSqr && distanceSqr <= maxDistanceSqr)
+                {
+                    return candidateWorld;
+                }
+            }
+
+            // Keep the spawn inside the collider if its area does not intersect
+            // the configured player-distance ring.
+            return GetRandomPointInsideSpawnArea();
+        }
+
+        private Vector3 GetRandomPointInsideSpawnArea()
+        {
+            var halfSize = spawnAreaCollider.size * 0.5f;
+            var localPoint = spawnAreaCollider.offset + Vector2.Scale(Random.insideUnitCircle, halfSize);
+            var worldPoint = spawnAreaCollider.transform.TransformPoint(localPoint);
+            return new Vector3(worldPoint.x, worldPoint.y, _player.transform.position.z);
         }
 
         private void SpawnBoss()

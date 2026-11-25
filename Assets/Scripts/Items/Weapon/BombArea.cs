@@ -38,7 +38,7 @@ namespace Items.Weapon
             _elapsed = 0f;
             _nextDamageTime = 0f;
 
-            transform.localScale = Vector3.one * (_radius * 2f);
+            transform.localScale = Vector3.one * _radius;
             
             if (_animator)
                 _animator.SetTrigger(AnimatorParamToHash.Execute);

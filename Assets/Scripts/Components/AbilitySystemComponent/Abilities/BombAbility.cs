@@ -29,7 +29,7 @@ namespace Components.AbilitySystemComponent.Abilities
         {
             base.Initialize(owner);
             _damagePerSecond = 20f;
-            _areaRadius = 1.5f;
+            _areaRadius = 1f;
             _throwCount = 1;
             _shotsRemaining = 0;
             _activeAreas = 0;

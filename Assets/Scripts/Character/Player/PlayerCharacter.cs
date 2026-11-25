@@ -1,3 +1,6 @@
+#define DEBUG_ABILITY
+#undef DEBUG_ABILITY
+
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
@@ -33,8 +36,8 @@ namespace Character.Player
         private const string StateName = "Death";
 
         public float ExperiencePickupRange => _levelComponent ? _levelComponent.ExperiencePickupRange : 2.5f;
-
-        [SerializeField] private AbilityBase daggerAbility;
+        
+        [SerializeField] private AbilityBase testAbility;
 
         protected override void Awake()
         {
@@ -46,22 +49,14 @@ namespace Character.Player
 
             var swordAttack = GetComponentInChildren<SwordAttack>();
             var spearAttack = GetComponentInChildren<SpearAttack>();
-            if (!swordAttack || !spearAttack)
-            {
-                Debug.LogError("PlayerPrefab 자식 오브젝트에 weapon이 없음.");
-                return;
-            }
+            if (!swordAttack || !spearAttack) return;
             
             EquippedWeapons.Add(swordAttack);
             EquippedWeapons.Add(spearAttack);
             StartAllWeapons();
 
             _enemyManager = FindFirstObjectByType<EnemyManager>();
-            if (!_enemyManager)
-            {
-                Debug.LogError("씬에 EnemyManager가 없음.");
-                return;
-            }
+            if (!_enemyManager) return;
 
             _enemyManager.Player = this;
 
@@ -77,6 +72,11 @@ namespace Character.Player
         private void Start()
         {
             _uiManagerInstance = UIManager.Instance;
+#if DEBUG_ABILITY
+            if (!testAbility) return;
+            var sys = GetComponent<AbilitySystem>();
+            if (sys) sys.AddAbility(testAbility);
+#endif
         }
 
         private void OnDestroy()

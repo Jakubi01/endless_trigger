@@ -513,7 +513,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 60729c22ea4eb9442b427c9e04ca5850, type: 2}
   - {fileID: 11400000, guid: f1adf23cb7fc403daab49687d111fcc9, type: 2}
   - {fileID: 11400000, guid: c71902410e734adbb495d67cb7002164, type: 2}
-  daggerAbility: {fileID: 11400000, guid: a1974e31bdd8461a802755b5cb28e706, type: 2}
+  testAbility: {fileID: 11400000, guid: a0d0f51ef0ac82644bf1966b810f0ebe, type: 2}
 --- !u!114 &5082065188802312462
 MonoBehaviour:
   m_ObjectHideFlags: 0

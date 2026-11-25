@@ -2583,11 +2583,11 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
+    m_Bits: 128
+  m_LayerOverridePriority: 10
   m_ForceSendLayers:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -403575,6 +403575,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2bdcf945f72c4131a267dfc9a8825cf7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Managers.EnemySpawner
+  spawnAreaCollider: {fileID: 574660354}
   enemyData:
   - {fileID: 11400000, guid: 7f36d5c826508e84aa3967206295cb54, type: 2}
   - {fileID: 11400000, guid: e933cc14d0b17484db7b7d5a4a57ceab, type: 2}
