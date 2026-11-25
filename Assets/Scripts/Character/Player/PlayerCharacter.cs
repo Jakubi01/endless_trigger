@@ -177,6 +177,8 @@ namespace Character.Player
         {
             base.OnDeath();
             
+            GameManager.Instance?.EndRun();
+            
             StopAllWeapons();
             animator.SetTrigger(AnimatorParamToHash.PlayerDeath);
             

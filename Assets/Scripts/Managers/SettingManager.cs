@@ -80,17 +80,35 @@ namespace Managers
             }
 
             if (!string.IsNullOrEmpty(_inGameSaveData.playerName)) return;
-            
-            Debug.Log($"[{this}] Alloc New InGameData.");
-            _inGameSaveData = new InGameSaveData();
-            Debug.Log($"[{this}] set new player name.");
-            _inGameSaveData.playerName = PlayerNameHelper.GetDefaultPlayerName();
-            Debug.Log($"[{this}] {_inGameSaveData.playerName}.");
-            _inGameSaveData.currentStageIndex = 0;
-            _inGameSaveData.totalKillCount = 0;
-            _inGameSaveData.totalPlayTimeSec = 0;
+
+            _inGameSaveData = CreateSaveData();
             SaveInGameProgress();
-            Debug.Log(_inGameSaveData.playerName);
+        }
+
+        public SettingData GetSettingData()
+        {
+            if (_currentSettings != null) return _currentSettings;
+            _currentSettings = new SettingData();
+            SetDefaultInitSettings();
+            return _currentSettings;
+        }
+
+        public InGameSaveData GetInGameSaveData()
+        {
+            return _inGameSaveData ??= CreateSaveData();
+        }
+
+        private InGameSaveData CreateSaveData()
+        {
+            return new InGameSaveData
+            {
+                playerName = PlayerNameHelper.GetDefaultPlayerName(),
+                currentStageIndex = 0,
+                killCount = 0,
+                totalKillCount = 0,
+                totalPlayTimeSec = 0,
+                highScore = 0
+            };
         }
         
         /// <summary>
@@ -122,16 +140,15 @@ namespace Managers
             // 만약 모니터가 1920x1080 자체를 지원하지 않는 기괴한 디스플레이 환경일 때
             if (targetIndex == -1)
             {
-                double maxHz = 0;
                 for (int i = 0; i < Screen.resolutions.Length; i++)
                 {
                     var res = Screen.resolutions[i];
                     if (res.width == Screen.currentResolution.width && res.height == Screen.currentResolution.height)
                     {
                         double hz = res.refreshRateRatio.value;
-                        if (hz > maxHz)
+                        if (hz > maxRefreshRate)
                         {
-                            maxHz = hz;
+                            maxRefreshRate = hz;
                             targetIndex = i;
                         }
                     }
@@ -140,10 +157,13 @@ namespace Managers
 
             _currentSettings.resolutionIndex = targetIndex >= 0 ? targetIndex : 0;
 
-            // 주사율에 맞게 프레임 레이트 모드도 매칭 (240hz 모니터면 FPS240, 144hz면 FPS120이나 Uncapped 등 원하는 방식으로 분기 가능)
-            if (maxRefreshRate >= 240) _currentSettings.frameRateMode = FrameRateMode.FPS240;
-            else if (maxRefreshRate >= 120) _currentSettings.frameRateMode = FrameRateMode.FPS120;
-            else _currentSettings.frameRateMode = FrameRateMode.FPS60;
+            _currentSettings.frameRateMode = maxRefreshRate switch
+            {
+                // 주사율에 맞게 프레임 레이트 모드도 매칭 (240hz 모니터면 FPS240, 144hz면 FPS120이나 Uncapped 등 원하는 방식으로 분기 가능)
+                >= 240 => FrameRateMode.FPS240,
+                >= 120 => FrameRateMode.FPS120,
+                _ => FrameRateMode.FPS60
+            };
         }
 
         /// <summary>
@@ -183,12 +203,17 @@ namespace Managers
             SaveSystem.SaveSystem.Save(IngameSaveFileName, _inGameSaveData);
         }
 
+        public void SaveInGameProgress(InGameSaveData inGameSaveData)
+        {
+            SaveSystem.SaveSystem.Save(IngameSaveFileName, inGameSaveData);
+        }
+
         public void AddTotalKillCount(int amount)
         {
             if (amount <= 0) return;
 
             _inGameSaveData ??= new InGameSaveData();
-            _inGameSaveData.totalKillCount += amount;
+            _inGameSaveData.killCount += amount;
         }
 
         // --- Setter APIs ---

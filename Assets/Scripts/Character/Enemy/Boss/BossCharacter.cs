@@ -133,6 +133,8 @@ namespace Character.Enemy.Boss
         {
             base.Death();
             
+            GameManager.Instance?.EndRun();
+            
             // Clear UI pop up
             _playerCharacter = null;
             _behaviourState = EBehaviourState.Idle;

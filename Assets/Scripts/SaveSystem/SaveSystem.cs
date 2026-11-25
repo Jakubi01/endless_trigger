@@ -48,10 +48,15 @@ namespace SaveSystem
     public class InGameSaveData
     {
         public string playerName = string.Empty;
+        
         public int currentStageIndex;
+        
         public int totalPlayTimeSec;
+
+        public int killCount;
         public int totalKillCount;
-    
+        public int highScore;
+
         // 필요 시 인벤토리 목록 등 추가 확장 가능
     }
     
@@ -86,12 +91,10 @@ namespace SaveSystem
                 // JSON 문자열을 암호화된 바이트 배열로 변환 후 저장
                 var encryptedBytes = EncryptStringToBytes(json);
                 File.WriteAllBytes(fullPath, encryptedBytes);
-                
-                Debug.Log($"[SaveSystem] 암호화 저장 완료 -> 경로: {fullPath}");
             }
             catch (Exception e)
             {
-                Debug.LogError($"[SaveSystem] 저장 실패 ({fileName}): {e.Message}");
+                Debug.LogException(e);
             }
 #endif
         }
@@ -125,14 +128,13 @@ namespace SaveSystem
             catch (CryptographicException)
             {
                 // 유저가 메모장이나 헥스 에디터로 파일을 임의 수정해 복호화가 깨진 경우
-                Debug.LogWarning($"[SaveSystem] {fileName} 데이터 변조가 감지되어 초기화합니다.");
                 var resetData = new T();
                 Save(fileName, resetData);
                 return resetData;
             }
             catch (Exception e)
             {
-                Debug.LogError($"[SaveSystem] 로드 실패 예외 ({fileName}): {e.Message}");
+                Debug.LogException(e);
                 return new T();
             }
 #endif

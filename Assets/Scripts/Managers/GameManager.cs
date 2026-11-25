@@ -1,4 +1,5 @@
-﻿using Components;
+﻿using System;
+using Components;
 using UnityEngine;
 
 namespace Managers
@@ -8,11 +9,23 @@ namespace Managers
         public static GameManager Instance { get; private set; }
 
         private int _unsavedKillCount;
+        private bool _isRunActive;
 
         public int KillCount { get; private set; }
 
         public int WaveClearedCount { get; private set; }
+        
+        public float PlayTime { get; private set; }
 
+        public string FormattedPlayTime
+        {
+            get
+            {
+                var timeSpan = TimeSpan.FromSeconds(PlayTime);
+                return $"{(int)timeSpan.TotalMinutes:D2}:{timeSpan.Seconds:D2}";
+            }
+        }
+        
         public int LevelReached
         {
             get
@@ -28,8 +41,6 @@ namespace Managers
             }
         }
 
-        public int TotalKillCount => SettingManager.Instance ? SettingManager.Instance.TotalKillCount : 0;
-
         private void Awake()
         {
             if (!Instance)
@@ -43,6 +54,14 @@ namespace Managers
             }
         }
 
+        private void Update()
+        {
+            if (_isRunActive)
+            {
+                PlayTime += Time.deltaTime;
+            }
+        }
+        
         private void OnDestroy()
         {
             if (Instance == this)
@@ -56,6 +75,14 @@ namespace Managers
             KillCount = 0;
             WaveClearedCount = 0;
             _unsavedKillCount = 0;
+            PlayTime = 0f;
+            _isRunActive = true;
+        }
+
+        public void EndRun()
+        {
+            _isRunActive = false;
+            SaveRunProgress();
         }
 
         public void RegisterKill()
@@ -69,7 +96,8 @@ namespace Managers
         {
             WaveClearedCount++;
         }
-
+        
+        // ReSharper disable Unity.PerformanceAnalysis
         public void SaveRunProgress()
         {
             if (_unsavedKillCount <= 0) return;
