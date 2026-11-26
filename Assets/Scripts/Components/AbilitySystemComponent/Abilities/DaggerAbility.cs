@@ -48,10 +48,9 @@ namespace Components.AbilitySystemComponent.Abilities
                 aimDirection = Vector2.right;
             }
 
-            SoundManagerInstance?.PlaySfx(executeClip);
-
             var startAngle = -spreadAngle / 2f;
             var angleStep = _daggerCount > 1 ? spreadAngle / (_daggerCount - 1) : 0f;
+            var spawnedCount = 0;
 
             for (var i = 0; i < _daggerCount; i++)
             {
@@ -64,12 +63,19 @@ namespace Components.AbilitySystemComponent.Abilities
                     direction,
                     _damage);
 
-                if (projectile && projectile.TryGetComponent(out Dagger dagger))
+                if (!projectile) continue;
+
+                spawnedCount++;
+                if (projectile.TryGetComponent(out Dagger dagger))
                 {
                     dagger.Init(direction);
                 }
             }
 
+            if (spawnedCount <= 0) return false;
+
+            SoundManagerInstance?.PlaySfx(executeClip);
+            StartCooldown();
             return true;
         }
 

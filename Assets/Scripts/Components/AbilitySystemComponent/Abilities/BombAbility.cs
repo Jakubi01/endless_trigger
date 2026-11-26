@@ -19,9 +19,9 @@ namespace Components.AbilitySystemComponent.Abilities
         private float _areaRadius;
         private int _throwCount;
         private int _shotsRemaining;
-        private int _activeAreas;
         private float _nextShotTime;
         private bool _burstActive;
+        private bool _cooldownStartedForBurst;
         
         private readonly List<Collider2D> _colliderBuffer = new();
 
@@ -32,8 +32,8 @@ namespace Components.AbilitySystemComponent.Abilities
             _areaRadius = 1f;
             _throwCount = 1;
             _shotsRemaining = 0;
-            _activeAreas = 0;
             _burstActive = false;
+            _cooldownStartedForBurst = false;
         }
 
         public override bool Execute()
@@ -45,19 +45,27 @@ namespace Components.AbilitySystemComponent.Abilities
                 if (!base.Execute()) return false;
 
                 _burstActive = true;
+                _cooldownStartedForBurst = false;
                 _shotsRemaining = _throwCount;
                 _nextShotTime = Time.time;
             }
 
+            var launchedBomb = false;
             if (_shotsRemaining > 0 && Time.time >= _nextShotTime)
             {
-                LaunchBomb();
+                launchedBomb = LaunchBomb();
+                if (launchedBomb && !_cooldownStartedForBurst)
+                {
+                    StartCooldown();
+                    _cooldownStartedForBurst = true;
+                }
+
                 _shotsRemaining--;
                 _nextShotTime = Time.time + ShotInterval;
             }
 
             CompleteBurstIfReady();
-            return true;
+            return launchedBomb;
         }
 
         public override void Upgrade(float amount)
@@ -70,10 +78,10 @@ namespace Components.AbilitySystemComponent.Abilities
             _areaRadius *= 1.2f;
         }
 
-        private void LaunchBomb()
+        private bool LaunchBomb()
         {
             var result = Physics2D.OverlapCircle(Owner.transform.position, TargetRange, ContactFilter2D.noFilter, _colliderBuffer);
-            if (result <= 0) return;
+            if (result <= 0) return false;
             
             List<EnemyCharacterBase> targets = new();
 
@@ -89,31 +97,25 @@ namespace Components.AbilitySystemComponent.Abilities
                     targets.Add(enemy);
             }
 
-            if (targets.Count == 0 || !bombPrefab) return;
+            if (targets.Count == 0 || !bombPrefab) return false;
 
             EnemyCharacterBase target = targets[Random.Range(0, targets.Count)];
             
-            SoundManagerInstance.PlaySfx(executeClip);
             var bombObject = Instantiate(bombPrefab, Owner.transform.position, Quaternion.identity);
             if (!bombObject.TryGetComponent(out Bomb bomb))
             {
                 Destroy(bombObject);
-                return;
+                return false;
             }
             
-            bomb.Initialize(target, BombSpeed, _damagePerSecond, AreaDuration, _areaRadius, OnAreaFinished);
-            _activeAreas++;
-        }
-
-        private void OnAreaFinished()
-        {
-            _activeAreas = Mathf.Max(0, _activeAreas - 1);
-            CompleteBurstIfReady();
+            bomb.Initialize(target, BombSpeed, _damagePerSecond, AreaDuration, _areaRadius, null);
+            SoundManagerInstance?.PlaySfx(executeClip);
+            return true;
         }
 
         private void CompleteBurstIfReady()
         {
-            if (_burstActive && _shotsRemaining == 0 && _activeAreas == 0)
+            if (_burstActive && _shotsRemaining == 0)
                 _burstActive = false;
         }
     }

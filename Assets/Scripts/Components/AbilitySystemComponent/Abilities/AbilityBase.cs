@@ -61,7 +61,7 @@ namespace Components.AbilitySystemComponent.Abilities
         {
             if(!_isEnabled) return;
             
-            _timer += deltaTime;
+            _timer = Mathf.Min(CurrentExecuteInterval, _timer + deltaTime);
             
             UpdateCoolTimePanel();
         }
@@ -78,11 +78,10 @@ namespace Components.AbilitySystemComponent.Abilities
                 return false;
             }
 
-            ResetTimer();
             return true;
         }
 
-        private void ResetTimer()
+        protected void StartCooldown()
         {
             _timer = 0f;
             UpdateCoolTimePanel();

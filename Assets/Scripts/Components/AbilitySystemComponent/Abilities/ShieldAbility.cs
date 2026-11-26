@@ -33,21 +33,28 @@ namespace Components.AbilitySystemComponent.Abilities
 
         public override bool Execute()
         {
-            if (!base.Execute()) return false;
+            if (!_projectilePoolManager || !base.Execute()) return false;
 
             float startAngle = _shieldCount == 4 ? 45f : 90f;
             float step = 360f / _shieldCount;
 
-            SoundManagerInstance.PlaySfx(executeClip);
+            var spawnedCount = 0;
             for (int i = 0; i < _shieldCount; i++)
             {
                 GameObject go = _projectilePoolManager.Spawn(Owner.transform.position, Quaternion.identity, Vector2.zero, _damage, pierceCount: 999);
+                if (!go) continue;
+
+                spawnedCount++;
                 if (go.TryGetComponent(out Shield shield))
                 {
                     shield.Init(Owner.transform, startAngle + step * i);
                 }
             }
 
+            if (spawnedCount <= 0) return false;
+
+            SoundManagerInstance?.PlaySfx(executeClip);
+            StartCooldown();
             return true;
         }
         

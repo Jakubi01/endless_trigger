@@ -36,10 +36,10 @@ namespace Components.AbilitySystemComponent.Abilities
 
         public override bool Execute()
         {
-            if (!base.Execute()) return false;
+            if (!_projectilePoolManager || !base.Execute()) return false;
 
-            SoundManagerInstance.PlaySfx(executeClip);
             _targets.Clear();
+            var spawnedCount = 0;
             for (int i = 0; i < _throwCount; i++)
             {
                 var target = EnemyManager.Instance.FindNearestEnemy(Owner.transform, 5f, _targets);
@@ -56,11 +56,19 @@ namespace Components.AbilitySystemComponent.Abilities
                 }
 
                 GameObject go = _projectilePoolManager.Spawn(Owner.transform.position, Quaternion.identity, aimDir, _damage, pierceCount: 999);
+                if (!go) continue;
+
+                spawnedCount++;
                 if (go.TryGetComponent(out Boomerang boomerang))
                 {
                     boomerang.Throw(Owner.transform, aimDir);
                 }
             }
+
+            if (spawnedCount <= 0) return false;
+
+            SoundManagerInstance?.PlaySfx(executeClip);
+            StartCooldown();
             return true;
         }
 

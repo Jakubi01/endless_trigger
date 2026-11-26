@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c902fd7913dd44f5928ad0a305fb07a6, type: 3}
   m_Name: Bomb Ability
   m_EditorClassIdentifier: Assembly-CSharp::Components.AbilitySystem.Abilities.BombAbility
-  baseExecuteInterval: 0.1
+  baseExecuteInterval: 3
   abilityType: 2
   abilityImage: {fileID: 21300000, guid: 6db56de1b450cad41afd1b04afe77edf, type: 3}
   executeClip: {fileID: 8300000, guid: 47984e6363def7e4ba2033c4f1a81bbe, type: 3}

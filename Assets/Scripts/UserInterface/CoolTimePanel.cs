@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Globalization;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,6 +10,14 @@ namespace UserInterface
     {
         [SerializeField] private Image weaponImage;
         [SerializeField] private TMP_Text coolTimeText;
+
+        private void Awake()
+        {
+            if (coolTimeText)
+            {
+                coolTimeText.color = Color.yellow;
+            }
+        }
 
         public void SetWeaponImage(Sprite image)
         {

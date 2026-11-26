@@ -1,3 +1,4 @@
+using System.Globalization;
 using Character.Player;
 using Components;
 using Managers;
@@ -142,7 +143,8 @@ namespace UserInterface
             hpBarSlider.minValue = 0f;
             hpBarSlider.maxValue = maxHealth;
             hpBarSlider.value = currentHealth;
-            hpBarText.text = currentHealth + " / " + maxHealth;
+            hpBarText.text = currentHealth.ToString("F0", CultureInfo.InvariantCulture) + " / "
+                             + maxHealth.ToString("F0", CultureInfo.InvariantCulture);
         }
 
         private void RefreshExperience()
