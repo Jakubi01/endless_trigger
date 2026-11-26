@@ -37,6 +37,7 @@ namespace UserInterface
 
         private void OnAcceptClicked()
         {
+            GameManager.Instance.EndRun();
             UIManager.Instance.OnGoToTitleButtonClicked();
         }
 

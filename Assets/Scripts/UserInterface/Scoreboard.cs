@@ -22,13 +22,13 @@ namespace UserInterface
                 var playTime = GameManager.Instance.PlayTime;
                 
                 var newScore = Mathf.RoundToInt(killCount * ScorePerKill + reachedRound * ScorePerRound + playTime * ScorePerSecond);
-                var highScore = inGameSaveData.highScore;
-                
-                inGameSaveData.highScore = newScore >= highScore ? newScore : highScore;
+                inGameSaveData.highScore = newScore >= inGameSaveData.highScore ? newScore : inGameSaveData.highScore;
                 SettingManager.Instance?.SaveInGameProgress(inGameSaveData);
                 
-                return (newScore, highScore);
+                return (newScore, inGameSaveData.highScore);
             }
         }
+
+        public static int GetHighScore() => SettingManager.Instance.GetInGameSaveData().highScore;
     }
 }

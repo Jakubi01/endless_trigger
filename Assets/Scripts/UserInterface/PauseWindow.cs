@@ -58,6 +58,7 @@ namespace UserInterface
 
         private void OnExitButtonClicked()
         {
+            GameManager.Instance.EndRun();
             UIManager.Instance.OnExitButtonClicked();
         }
     }

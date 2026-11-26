@@ -52,8 +52,7 @@ namespace SaveSystem
         public int currentStageIndex;
         
         public int totalPlayTimeSec;
-
-        public int killCount;
+        
         public int totalKillCount;
         public int highScore;
 

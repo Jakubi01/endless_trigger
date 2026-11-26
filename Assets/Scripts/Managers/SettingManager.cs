@@ -11,7 +11,7 @@ namespace Managers
         
         // 고정된 독립 파일 이름 정의
         private const string SettingsFileName = "sys_opt.dat";
-        private const string IngameSaveFileName = "usr_cache.bin";
+        private const string IngameSaveFileName = "usr_cache.dat";
 
         // 런타임 메모리 데이터 홀더
         private SettingData _currentSettings;
@@ -104,7 +104,6 @@ namespace Managers
             {
                 playerName = PlayerNameHelper.GetDefaultPlayerName(),
                 currentStageIndex = 0,
-                killCount = 0,
                 totalKillCount = 0,
                 totalPlayTimeSec = 0,
                 highScore = 0
@@ -208,12 +207,12 @@ namespace Managers
             SaveSystem.SaveSystem.Save(IngameSaveFileName, inGameSaveData);
         }
 
-        public void AddTotalKillCount(int amount)
+        public void AddKillCount(int amount)
         {
             if (amount <= 0) return;
 
             _inGameSaveData ??= new InGameSaveData();
-            _inGameSaveData.killCount += amount;
+            _inGameSaveData.totalKillCount += amount;
         }
 
         // --- Setter APIs ---

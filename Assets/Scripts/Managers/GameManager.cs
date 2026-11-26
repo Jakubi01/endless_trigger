@@ -1,6 +1,7 @@
 ﻿using System;
 using Components;
 using UnityEngine;
+using UserInterface;
 
 namespace Managers
 {
@@ -16,15 +17,6 @@ namespace Managers
         public int WaveClearedCount { get; private set; }
         
         public float PlayTime { get; private set; }
-
-        public string FormattedPlayTime
-        {
-            get
-            {
-                var timeSpan = TimeSpan.FromSeconds(PlayTime);
-                return $"{(int)timeSpan.TotalMinutes:D2}:{timeSpan.Seconds:D2}";
-            }
-        }
         
         public int LevelReached
         {
@@ -89,7 +81,7 @@ namespace Managers
         {
             KillCount++;
             _unsavedKillCount++;
-            SettingManager.Instance?.AddTotalKillCount(1);
+            SettingManager.Instance?.AddKillCount(1);
         }
 
         public void RegisterWaveCleared()
@@ -102,7 +94,11 @@ namespace Managers
         {
             if (_unsavedKillCount <= 0) return;
 
-            SettingManager.Instance?.SaveInGameProgress();
+            var ingameData = SettingManager.Instance.GetInGameSaveData();
+            ingameData.totalPlayTimeSec += Mathf.RoundToInt(PlayTime);
+            ingameData.highScore = Scoreboard.CalcScore.Item2;
+            
+            SettingManager.Instance?.SaveInGameProgress(ingameData);
             _unsavedKillCount = 0;
         }
     }
