@@ -12,6 +12,7 @@ namespace UserInterface
         [SerializeField] private Button exitButton;
         [SerializeField] private TMP_Text waveClearedText;
         [SerializeField] private TMP_Text killCountText;
+        [SerializeField] private TMP_Text scoreText;
 
         private void Start()
         {
@@ -69,9 +70,9 @@ namespace UserInterface
 
         private void RefreshResultTexts()
         {
-            GameManager gameManager = GameManager.Instance;
-            int waveClearedCount = gameManager ? gameManager.WaveClearedCount : 0;
-            int killCount = gameManager ? gameManager.KillCount : 0;
+            var gameManager = GameManager.Instance;
+            var waveClearedCount = gameManager ? gameManager.WaveClearedCount : 0;
+            var killCount = gameManager ? gameManager.KillCount : 0;
 
             if (waveClearedText)
             {
@@ -81,6 +82,11 @@ namespace UserInterface
             if (killCountText)
             {
                 killCountText.SetText("{0}", killCount);
+            }
+
+            if (scoreText)
+            {
+                scoreText.SetText("{0}", Scoreboard.CalcScore.Item1);
             }
 
             gameManager?.SaveRunProgress();

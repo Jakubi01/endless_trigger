@@ -12,6 +12,7 @@ namespace SaveSystem
     {
         private const string DefaultName = "player";
 
+        // ReSharper disable Unity.PerformanceAnalysis
         public static string GetDefaultPlayerName()
         {
             // 플랫폼 SDK (Steamworks.NET 기준, Project Settings > Scripting Define Symbols에 등록 필요)

@@ -9,6 +9,7 @@ namespace UserInterface
     public class GameClearWindow : UserInterface
     {
         [SerializeField] private TMP_Text roundCleared;
+        [SerializeField] private TMP_Text scoreGet;
         [SerializeField] private TMP_Text levelRechead;
         [SerializeField] private TMP_Text enemiesSlain;
         [SerializeField] private Button goToTitle;
@@ -52,6 +53,11 @@ namespace UserInterface
             if (roundCleared)
             {
                 roundCleared.text = gameManagerInstance.WaveClearedCount + " / 10";
+            }
+
+            if (scoreGet)
+            {
+                scoreGet.text = Scoreboard.CalcScore.Item1.ToString();
             }
 
             if (levelRechead)

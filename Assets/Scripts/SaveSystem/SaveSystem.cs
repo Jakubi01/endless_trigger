@@ -68,6 +68,7 @@ namespace SaveSystem
         private static readonly string EncryptKey = "HaHaHuHe_SecretKey_32Bytes_Long!"; 
         private static readonly string EncryptIV = "HaHaHuHe_IV_16B!";
         
+        // ReSharper disable Unity.PerformanceAnalysis
         /// <summary>
         /// 지정한 파일명으로 데이터를 JSON 저장합니다.
         /// </summary>

@@ -758,7 +758,7 @@ GameObject:
   - component: {fileID: 7970221398315797869}
   - component: {fileID: 2978649456977744429}
   m_Layer: 5
-  m_Name: BossDefeated
+  m_Name: ScoreGet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -812,7 +812,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Boss Defeated
+  m_text: Score
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: c2997ef9766e8f343bcec7d1b94784a9, type: 2}
   m_sharedMaterial: {fileID: -3519196183170562049, guid: c2997ef9766e8f343bcec7d1b94784a9, type: 2}
@@ -1806,6 +1806,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::UserInterface.GameClearWindow
   owner: {fileID: 0}
   roundCleared: {fileID: 278756912376214691}
+  scoreGet: {fileID: 0}
   levelRechead: {fileID: 5724049625344502224}
   enemiesSlain: {fileID: 2158925844277591320}
   goToTitle: {fileID: 1291122944568816914}
@@ -1834,7 +1835,7 @@ GameObject:
   - component: {fileID: 1446859510657090465}
   - component: {fileID: 2052933502669254262}
   m_Layer: 5
-  m_Name: BossDefeatedText
+  m_Name: ScoreGetText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1887,7 +1888,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Dungeon King
+  m_text: 999999
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: c2997ef9766e8f343bcec7d1b94784a9, type: 2}
   m_sharedMaterial: {fileID: -3519196183170562049, guid: c2997ef9766e8f343bcec7d1b94784a9, type: 2}
@@ -1896,8 +1897,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190265
-  m_fontColor: {r: 0.7264151, g: 0, b: 0, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
